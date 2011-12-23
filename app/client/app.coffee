@@ -219,6 +219,11 @@ commandHelp = (cmd, verbose) ->
   if cmd == "userinfo"
     parts.push "userinfo [artist] -- Vitals on any user on SoundCloud.com"
 
+  # Clear
+  # ===========================================================================
+  if cmd == "clear"
+    parts.push "... what the fuck do you think it does?"
+
   # Wrap it up...
   # ===========================================================================  
   if verbose then parts.push("<br />")
