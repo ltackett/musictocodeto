@@ -1,0 +1,98 @@
+// Example Stylus file
+// All changes are detected and automatically compiled into CSS
+
+@import 'helpers'
+
+phosphorous = #28db49
+glow = 0 0 10px
+line-height = 20px
+
+// Main
+
+body, html
+  height: 100%
+
+body
+  font: normal 12px/line-height mplus-1m, monospace
+  letter-spacing: 1px
+  vertical-gradient: #0a0a0a, #000
+  color: phosphorous
+  text-shadow: phosphorous glow
+  margin: 0
+  padding: 0
+
+p
+  margin-bottom: 1em
+
+a
+  color: #000a68
+
+h1
+  font-size: 1.5em
+  font-weight: normal
+  margin: 1.5em
+  color: #0057c5
+  text-shadow: 1px 1px 2px white
+
+// MTCT
+
+#container
+  position: absolute
+  top: 0
+  bottom: 0
+  right: 0
+  left: 0
+  overflow: auto
+  padding: 10px
+
+#lines
+  .inner
+    padding-left: 3em
+  span.error
+    text-shadow: red glow
+    color: red
+
+  span.command
+    text-shadow: #fff glow
+    color: #fff
+  
+  span.flag
+    display: inline-block
+    vertical-align: top
+    width: 150px
+  
+  span.description
+    display: inline-block
+    vertical-align: top
+  
+  .help span.command
+    display: inline-block
+    vertical-align: top
+    width: 150px
+
+#cli
+  input
+    display: inline-block
+    width: auto
+
+  span.cursor
+    display: inline-block
+    background: phosphorous
+    box-shadow: phosphorous glow
+    height: 18px
+    width: 10px
+    opacity: 0
+    -webkit-transition: opacity 0.4s linear
+
+    &.blink
+      opacity: 1
+      -webkit-transition: opacity 0.1s linear
+      
+
+#scanlines
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  background: url(/images/noise.png), url(/images/scanlines.png)
