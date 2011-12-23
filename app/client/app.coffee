@@ -75,7 +75,7 @@ programs=
     stdout "Ell Ess. Yeah, this isn't implemented yet."
   
   clear: (cmd, command, params) ->
-    $("#lines").empty()
+    $("ul", "#lines").empty()
 
 ## Line Utilities
 ## ============================================================================
