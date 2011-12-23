@@ -289,6 +289,26 @@ exports.init = ->
   ## Client stuff, post-init
   ## ==========================================================================
 
+  # Spinner
+  $("#spinner").each ->
+    spinner = $(@)
+    state = 0
+
+    setInterval ->
+      if state == 0
+        spinner.text("|")
+      else if state == 1
+        spinner.text("/")
+      else if state == 2
+        spinner.text("‒")
+      else if state == 3
+        spinner.text("\\")
+
+      state = state+1
+      if state == 4 then state = 0
+    , 50
+
+
   # Initial help info
   SS.client.app.stdout "Type <span class='command'>help</span> for a list of useful commands."
 
