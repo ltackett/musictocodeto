@@ -13,12 +13,12 @@ Object.prototype.keys = (obj) ->
 
 stdout= (text) ->
   SS.server.app.stdout(text)
+  SS.server.app.hideSpinner()
   return ""
 
 play_audio= (obj) ->
   SS.server.app.play_audio(obj)
   return ""
-
 
 programs=
   userinfo: (cmd, command, params) ->
@@ -70,11 +70,14 @@ exports.actions =
     @session.attributes = {sessID: sessionid}
     @session.save cb
 
-  stdout: (text, cp) ->
+  stdout: (text, cb) ->
     SS.publish.socket(@session.attributes.sessID, 'stdout', text)
   
   play_audio: (obj, cb) ->
     SS.publish.socket(@session.attributes.sessID, 'play_audio', obj)
+  
+  hideSpinner: (cb) ->
+    SS.publish.socket(@session.attributes.sessID, 'hideSpinner')
   
   serverCommand: (cmd, command, params, cb) ->
     if typeof programs[command] == "function"

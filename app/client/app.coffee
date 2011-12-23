@@ -134,10 +134,17 @@ returnCommand = (cmd, command, params) ->
 # Send Command
 # Issues the command to the backend, for API calls and other heavy stuff.
 serverCommand = (cmd, command, params) ->
+  showSpinner()
   SS.server.app.serverCommand cmd, command, params
 
 ## Presentation Utilities
 ## ============================================================================
+
+showSpinner = ->
+  $("#spinner").show()
+
+hideSpinner = ->
+  $("#spinner").hide()
 
 scrollBottom = ->
   $("#container").scrollTop(parseInt($("#container").outerHeight()) + 4000)
@@ -257,6 +264,7 @@ exports.init = ->
   SS.events.on "previousDirectory", (dir) -> previousDirectory()
   SS.events.on "commandHelp", (cmd) -> commandHelp(cmd)
   SS.events.on "play_audio", (obj) -> mtct_play(obj)
+  SS.events.on "hideSpinner", () -> hideSpinner()
 
   ## SoundManager
   ## ============================================================================
