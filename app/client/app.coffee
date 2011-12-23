@@ -73,6 +73,9 @@ programs=
   
   ls: (cmd, command, params) ->
     stdout "Ell Ess. Yeah, this isn't implemented yet."
+  
+  clear: (cmd, command, params) ->
+    $("#lines").empty()
 
 ## Line Utilities
 ## ============================================================================
