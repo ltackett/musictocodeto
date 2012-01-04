@@ -23,6 +23,9 @@ programs=
 
   userinfo: (cmd, command, params) ->
     serverCommand(cmd, command, params)
+  
+  login: (cmd, command, params) ->
+    serverCommand(cmd, command, params)
 
   player: (cmd, command, params) ->
     if params.length > 0
@@ -68,7 +71,10 @@ programs=
       changeDirectory(params[0])
   
   ls: (cmd, command, params) ->
-    stdout "Ell Ess. Yeah, this isn't implemented yet."
+    if params[0] == "online"
+      serverCommand(cmd, command, params)
+    else
+      stdout "This isn't implemented yet."
   
   clear: (cmd, command, params) ->
     $("#lines ul").empty()

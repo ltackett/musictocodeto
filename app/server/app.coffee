@@ -12,29 +12,38 @@ stdout= (text) ->
   SS.server.app.hideSpinner()
   return ""
 
+error=
+  requiredParameters: (command, params, reqParams) -> 
+    stdout "#{formatError()} #{formatCommand(command)} requires #{reqParams} parameters, you provided #{params.length}"
+
 play_audio= (obj) ->
   SS.server.app.play_audio(obj)
   return ""
 
 programs=
   userinfo: (cmd, command, params) ->
-    url = "#{sc.http}/users/#{params[0]}.json?client_id=#{sc.clientID}"
-    request url, (error, response, body) ->
-      if !error && response.statusCode == 200
-        obj = JSON.parse body
-        stdout "#{formatCommand("id:")} #{obj.id}"
-        stdout "#{formatCommand("username:")} #{obj.username}"
-        stdout "#{formatCommand("full_name:")} #{obj.full_name}"
-        stdout "#{formatCommand("city:")} #{obj.city}"
-        stdout "#{formatCommand("description:")} #{obj.description}"
-        stdout "&nbsp;"
-      
-      if error
-        stdout formatError(error)
+    reqParams = 1
+    if params.length == reqParams
+      url = "#{sc.http}/users/#{params[0]}.json?client_id=#{sc.clientID}"
+      request url, (error, response, body) ->
+        if !error && response.statusCode == 200
+          obj = JSON.parse body
+          stdout "#{formatCommand("id:")} #{obj.id}"
+          stdout "#{formatCommand("username:")} #{obj.username}"
+          stdout "#{formatCommand("full_name:")} #{obj.full_name}"
+          stdout "#{formatCommand("city:")} #{obj.city}"
+          stdout "#{formatCommand("description:")} #{obj.description}"
+          stdout "&nbsp;"
+        
+        if error
+          stdout formatError(error)
+    
+    else
+      error.requiredParameters(command, params, reqParams)
 
   play: (cmd, command, params) ->
     reqParams = 2
-    if params[0] && params[1]
+    if params.length == reqParams
 
       # Get the track ID
       url = "#{sc.http}/resolve.json?client_id=#{sc.clientID}&url=http://soundcloud.com/#{params[0]}/#{params[1]}"
@@ -50,7 +59,24 @@ programs=
           stdout formatError(error)
     
     else
-      stdout "#{formatError()} #{formatCommand(command)} requires #{reqParams} parameters, you provided #{params.length}"
+      error.requiredParameters(command, params, reqParams)
+    
+  login: (cmd, command, params) ->
+    reqParams = 1
+    if params.length == reqParams
+      url = "https://soundcloud.com/connect?"
+      url = url + "scope=non-expiring&"
+      url = url + "response_type=code&"
+      url = url + "redirect_uri="
+      stdout "Booyah."
+    else
+      stdout "No."
+  
+  ls: (cmd, command, params) ->
+    if params[0] == "online"
+      SS.users.online.now (data) ->
+        stdout "Users currently online: #{data}"
+
   
 
 
