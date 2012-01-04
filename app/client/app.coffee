@@ -1,7 +1,3 @@
-# Bind to socket events
-SS.socket.on 'disconnect', ->  console.log('SocketStream server is down :-(')
-SS.socket.on 'reconnect', ->   console.log('SocketStream server is up :-)')
-
 ## Object Utilities
 ## ============================================================================
 
@@ -142,9 +138,11 @@ serverCommand = (cmd, command, params) ->
 
 showSpinner = ->
   $("#spinner").show()
+  $("#cli").hide()
 
 hideSpinner = ->
   $("#spinner").hide()
+  $("#cli").show()
 
 scrollBottom = ->
   $("#container").scrollTop(parseInt($("#container").outerHeight()) + 4000)
@@ -243,11 +241,26 @@ exports.stdout          = (output)  -> stdout(output)
 exports.changeDirectory = (dir)     -> changeDirectory(dir)
 exports.commandHelp     = (cmd)     -> commandHelp(cmd)
 
+# Bind to socket events
+## ============================================================================
+SS.socket.on 'disconnect', ->
+  stdout("#{formatError()} Disconnected from server.")
+
+SS.socket.on 'reconnect', ->
+  stdout("#{formatCommand("[INFO]")} Reconnected to server.")
+  SS.server.app.init(SS.socket.socket.sessionid)
+
+
+
+
+
+
+
+
+
+
+
 ## CLIENT INIT
-## ============================================================================
-## ============================================================================
-## ============================================================================
-## ============================================================================
 ## ============================================================================
 
 # This method is called automatically when the websocket connection is established. Do not rename/delete
