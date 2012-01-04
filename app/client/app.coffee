@@ -14,6 +14,11 @@ programsArray = () ->
 
   return keys
 
+# Global command list (initiate on load, eventually I'll store this in the session)
+window.commandList =
+  list: []
+  position: 0
+
 ## Programs
 ## ============================================================================
 
@@ -99,6 +104,25 @@ returnLine = (cmd) ->
 
   returnCommand cmd, command, params
 
+storeCommand = (cmd) ->
+  commandList.list.push(cmd)
+  commandList.position = commandList.list.length
+
+readCommand = ->
+  $("#cli-input").empty().append(commandList.list[commandList.position])
+
+prevCommand = () ->
+  unless commandList.position == 0
+    commandList.position = commandList.position - 1
+    console.log commandList.position
+  readCommand()
+
+nextCommand = () ->
+  if commandList.position < commandList.list.length
+    commandList.position = parseInt(commandList.position) + 1
+    console.log commandList.position
+  readCommand()
+
 backspace = ($cliInput) ->
   s = $cliInput.text()
   a = s.split("")
@@ -128,6 +152,7 @@ stdout = (output, indent) ->
 # to the local program to decide if it needs to issue itself to the server.
 returnCommand = (cmd, command, params) ->
   stdout formatCursor(cmd) # Echo the command in the CLI
+  storeCommand(cmd)
   if typeof programs[command] == "function"
     programs[command](cmd, command, params)
   else
@@ -383,3 +408,13 @@ exports.init = ->
     # Tab
     if e.which == 9
       e.preventDefault()
+    
+    # Up
+    if e.which == 38
+      e.preventDefault()
+      prevCommand()
+
+    # Down
+    if e.which == 40
+      e.preventDefault()
+      nextCommand()
