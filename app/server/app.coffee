@@ -2,14 +2,10 @@
 
 request = require("request")
 
-soundcloudApiKey = "htuiRd1JP11Ww0X72T1C3g"
-
-Object.prototype.keys = (obj) ->
-  keys = []
-  for key in obj
-    keys.push(key)
-  
-  return keys
+sc =
+  http:         "http://api.soundcloud.com"
+  https:        "https://api.soundcloud.com"
+  clientID:     "cfa2b68b053460c17008a1c1719b7c92"
 
 stdout= (text) ->
   SS.server.app.stdout(text)
@@ -22,7 +18,7 @@ play_audio= (obj) ->
 
 programs=
   userinfo: (cmd, command, params) ->
-    url = "http://api.soundcloud.com/users/#{params[0]}.json?client_id=#{soundcloudApiKey}"
+    url = "#{sc.http}/users/#{params[0]}.json?client_id=#{sc.clientID}"
     request url, (error, response, body) ->
       if !error && response.statusCode == 200
         obj = JSON.parse body
@@ -41,7 +37,7 @@ programs=
     if params[0] && params[1]
 
       # Get the track ID
-      url = "http://api.soundcloud.com/resolve.json?client_id=#{soundcloudApiKey}&url=http://soundcloud.com/#{params[0]}/#{params[1]}"
+      url = "#{sc.http}/resolve.json?client_id=#{sc.clientID}&url=http://soundcloud.com/#{params[0]}/#{params[1]}"
       request url, (error, response, body) ->
         if !error && response.statusCode == 200
           obj = JSON.parse body
