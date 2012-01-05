@@ -53,7 +53,7 @@ programs=
           stdout "#{formatCommand("Now Playing:")} #{obj.user.username} - #{obj.title}"
           play_audio
             id: obj.id
-            url: "#{obj.stream_url}?client_id=#{soundcloudApiKey}"
+            url: "#{obj.stream_url}?client_id=#{sc.clientID}"
 
         if error
           stdout formatError(error)
@@ -65,10 +65,11 @@ programs=
     reqParams = 1
     if params.length == reqParams
       url = "https://soundcloud.com/connect?"
+      url = url + "client_id=#{sc.clientID}&"
       url = url + "scope=non-expiring&"
       url = url + "response_type=code&"
       url = url + "redirect_uri="
-      stdout "Booyah."
+      stdout url
     else
       stdout "No."
   
