@@ -83,6 +83,8 @@ programs=
   
   clear: (cmd, command, params) ->
     $("#lines ul").empty()
+    scrollTop()
+    scanlineHeight()
 
 ## Line Utilities
 ## ============================================================================
@@ -177,6 +179,9 @@ hideSpinner = ->
 
 scrollBottom = ->
   $("#container").scrollTop(parseInt($("#container").outerHeight()) + 4000)
+
+scrollTop = ->
+  $("#container").scrollTop(0)
 
 scanlineHeight = ->
   if $("#lines").outerHeight() > (parseInt($("#container").outerHeight()) - 40)
