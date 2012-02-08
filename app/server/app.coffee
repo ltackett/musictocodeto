@@ -70,6 +70,7 @@ programs=
       url = url + "response_type=code&"
       url = url + "redirect_uri="
       stdout url
+      console.log SS
     else
       stdout "No."
   
