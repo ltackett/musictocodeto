@@ -383,12 +383,12 @@ exports.init = ->
   SS.client.app.stdout "M::::::M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M::::::M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T:::::::::T&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CC:::::::::::::::C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T:::::::::T"
   SS.client.app.stdout "M::::::M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M::::::M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T:::::::::T&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CCC::::::::::::C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T:::::::::T"
   SS.client.app.stdout "MMMMMMMM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MMMMMMMM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TTTTTTTTTTT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CCCCCCCCCCCCC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TTTTTTTTTTT"
-  SS.client.app.stdout ""
+  SS.client.app.stdout "&nbsp;"
   SS.client.app.stdout "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&nbsp;|&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|"
   SS.client.app.stdout "|/~\\/~\\/~~|_/&nbsp;&nbsp;/~\\|&nbsp;&nbsp;&nbsp;|~|~&nbsp;&nbsp;\\&nbsp;&nbsp;&nbsp;&nbsp;/|~|~|/~\\&nbsp;&nbsp;&nbsp;\\&nbsp;&nbsp;//~\\|&nbsp;&nbsp;&nbsp;||/~\\&nbsp;&nbsp;/~~||/~\\/~\\|_/&nbsp;&nbsp;/~\\|&nbsp;&nbsp;&nbsp;|~|~"
   SS.client.app.stdout "|&nbsp;&nbsp;&nbsp;\\_/\\__|&nbsp;\\&nbsp;&nbsp;\\_/&nbsp;\\_/|&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;\\/\\/&nbsp;|&nbsp;|&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;\\/&nbsp;\\_/&nbsp;\\_/||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\__||&nbsp;&nbsp;&nbsp;\\_/|&nbsp;\\&nbsp;&nbsp;\\_/&nbsp;\\_/|&nbsp;|&nbsp;&nbsp;.&nbsp;.&nbsp;."
   SS.client.app.stdout "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\__|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-  SS.client.app.stdout ""
+  SS.client.app.stdout "&nbsp;"
   SS.client.app.stdout "Type <span class='command'>help</span> for a list of useful commands."
 
   # Event forwarding
