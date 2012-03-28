@@ -324,6 +324,7 @@ exports.init = ->
   ## ==========================================================================
 
   SS.events.on "stdout", (text) -> stdout(text)
+  SS.events.on "stderr", (obj) -> stderr(obj.text, obj.prefix)
   SS.events.on 'changeDirectory', (dir) -> changeDirectory(dir)
   SS.events.on "previousDirectory", (dir) -> previousDirectory()
   SS.events.on "commandHelp", (cmd) -> commandHelp(cmd)

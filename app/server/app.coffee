@@ -12,9 +12,15 @@ stdout= (text) ->
   SS.server.app.hideSpinner()
   return ""
 
+stderr= (text, prefix) ->
+  obj = {text: text, prefix: prefix}
+  SS.server.app.stderr(obj)
+  SS.server.app.hideSpinner()
+  return ""
+
 error=
   requiredParameters: (command, params, reqParams) -> 
-    stdout "#{formatError()} #{formatCommand(command)} requires #{reqParams} parameters, you provided #{params.length}"
+    stderr "#{formatCommand(command)} requires #{reqParams} parameters, you provided #{params.length}"
 
 play_audio= (obj) ->
   SS.server.app.play_audio(obj)
@@ -36,7 +42,7 @@ programs=
           stdout "&nbsp;"
         
         if error
-          stdout formatError(error)
+          stderr error
     
     else
       error.requiredParameters(command, params, reqParams)
@@ -97,6 +103,9 @@ exports.actions =
   stdout: (text, cb) ->
     SS.publish.socket(@session.attributes.sessID, 'stdout', text)
   
+  stderr: (obj, cb) ->
+    SS.publish.socket(@session.attributes.sessID, 'stderr', obj)
+  
   play_audio: (obj, cb) ->
     SS.publish.socket(@session.attributes.sessID, 'play_audio', obj)
   
@@ -107,4 +116,4 @@ exports.actions =
     if typeof programs[command] == "function"
       programs[command](cmd, command, params)
     else
-      stdout "#{formatError()} #{formatCommand(command)} was issued to the server, but no application exists on the server which matched the request."
+      stderr "#{formatCommand(command)} was issued to the server, but no application exists on the server which matched the request."
