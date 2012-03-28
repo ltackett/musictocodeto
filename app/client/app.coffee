@@ -37,8 +37,11 @@ programs=
       if params[0] == "play"
         soundManager.resumeAll()
       
-      if params[0] == "pause"
+      else if params[0] == "pause"
         soundManager.pauseAll()
+
+      else
+        stderr "Parameter not recognized"
 
   help: (cmd, command, params) ->
     if params.length == 0
@@ -58,7 +61,7 @@ programs=
   cd: (cmd, command, params) ->
     # Validate presence of parameters
     if params[0] == "" || params.length == 0
-      stdout "#{formatError()} Missing path parameter"
+      stderr "Missing path parameter"
       return false
 
     # Help flags
@@ -148,10 +151,13 @@ stdout = (output, indent) ->
   line = $("<li class='line'>#{output}</li>").appendTo("ul",'#lines')
   if indent
     line.wrapInner("<div class='inner'></div>")
-    
+
 
   scrollBottom()
   scanlineHeight()
+
+stderr = (output, prefix) ->
+  stdout "#{formatError(prefix if prefix)} #{output}"
 
 # Return Command
 # Issue the command locally, in the client. This is always done first. It's up
@@ -162,7 +168,7 @@ returnCommand = (cmd, command, params) ->
   if typeof programs[command] == "function"
     programs[command](cmd, command, params)
   else
-    stdout "#{formatError()} #{formatCommand(command)} command not found"
+    stderr "#{formatCommand(command)} command not found"
 
 # Send Command
 # Issues the command to the backend, for API calls and other heavy stuff.
@@ -289,7 +295,7 @@ exports.commandHelp     = (cmd)     -> commandHelp(cmd)
 # Bind to socket events
 ## ============================================================================
 SS.socket.on 'disconnect', ->
-  stdout("#{formatError()} Disconnected from server.")
+  stderr("Disconnected from server.")
 
 SS.socket.on 'reconnect', ->
   stdout("#{formatCommand("[INFO]")} Reconnected to server.")
