@@ -264,7 +264,7 @@ commandHelp = (cmd, verbose) ->
   if cmd == "userinfo"
     parts.push "userinfo [artist] -- Vitals on any user on SoundCloud.com"
 
-  # Clear
+  # Fork
   # ===========================================================================
   if cmd == "fork"
     parts.push "Fork me on GitHub!"
