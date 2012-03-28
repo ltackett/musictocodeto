@@ -74,6 +74,10 @@ programs=
     # Default behavior, change directory
     if params.length > 0
       changeDirectory(params[0])
+
+  fork: () ->
+    stdout "#{formatCommand('Redirecting to GitHub...')}"
+    window.location.href = "http://github.com/ltackett/musictocodeto.com"
   
   ls: (cmd, command, params) ->
     if params[0] == "online"
@@ -259,6 +263,11 @@ commandHelp = (cmd, verbose) ->
   # ===========================================================================
   if cmd == "userinfo"
     parts.push "userinfo [artist] -- Vitals on any user on SoundCloud.com"
+
+  # Clear
+  # ===========================================================================
+  if cmd == "fork"
+    parts.push "Fork me on GitHub!"
 
   # Clear
   # ===========================================================================
