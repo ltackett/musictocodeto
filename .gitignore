@@ -1,6 +1,19 @@
-.DS_Store
-node_modules
-dump.rdb
+# Node / Bower
 npm-debug.log
-tmp
-public/assets
+node_modules
+bower_components
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Etc.
+build
+coverage
+data/db/**/*
