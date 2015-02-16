@@ -4,11 +4,12 @@ module.exports = (context) ->
 
 
   programs =
-    play:     require('./programs/play')(context)
-    userinfo: require('./programs/userinfo')(context)
-    ls:       require('./programs/ls')(context)
-    cd:       require('./programs/cd')(context)
-    fork:     require('./programs/fork')(context)
+    play:       require('./programs/play')(context)
+    userinfo:   require('./programs/userinfo')(context)
+    usertracks: require('./programs/usertracks')(context)
+    ls:         require('./programs/ls')(context)
+    cd:         require('./programs/cd')(context)
+    fork:       require('./programs/fork')(context)
 
     help:
       helpText: '''

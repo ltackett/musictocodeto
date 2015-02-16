@@ -6,23 +6,33 @@ module.exports = (context) ->
   {events, errors, formatting, api} = context
 
   new Object
-    helpText: 'userinfo [artist] -- Get vitals on any user on SoundCloud.com'
+    helpText: 'usertracks [artist] -- Get all tracks belonging to an user'
     run: (cmd, params) ->
       reqParams = 1
 
       if params.length == reqParams
         artistSlug = params[0]
-        request    = api.userinfo(artistSlug)
+        request    = api.usertracks(artistSlug)
 
         request.onValue (data) ->
+          console.log data
           if !data.errors
+            trackLinks = data.map (track) ->
+              return new Object
+                username: track.user.username
+                id: track.id
+
+            localStorage.clear()
+            localStorage.setItem('usertracks', JSON.stringify(trackLinks))
+
             stdout " "
-            stdout "#{formatting.highlight("id:")}          #{data.id}"
-            stdout "#{formatting.highlight("username:")}    #{data.username}"
-            stdout "#{formatting.highlight("full_name:")}   #{data.full_name}"
-            stdout "#{formatting.highlight("city:")}        #{data.city}"
-            stdout "#{formatting.highlight("description:")} #{data.description}"
+            data.map (track, index) ->
+              stdout "#{formatting.highlight("#{index}:")} #{track.title}"
+
             stdout " "
+            stdout "run `play [number]` to play a track from the list."
+            stdout " "
+
           else
             stdout "#{formatting.error('error:')} #{data.errors[0].error_message}"
             stdout " "

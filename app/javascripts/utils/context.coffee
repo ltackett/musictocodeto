@@ -1,17 +1,27 @@
-{EventEmitter} = require('events')
+module.exports = (config) ->
+  api_wrapper = require("./api_wrapper")(config)
+  api         = require("./api")({api_wrapper})
 
-checkFlag = (params, flag) ->
-  i = params.indexOf flag
+  {EventEmitter} = require('events')
 
-  if i >= 0 then return true
-  else           return false
+  checkFlag = (params, flag) ->
+    i = params.indexOf flag
 
-formatting =
-  highlight: (text) -> "<span class='highlight'>#{text}</span>"
-  error:     (text) -> "<span class='error'>#{text}</span>"
+    if i >= 0 then return true
+    else           return false
 
-module.exports = (config) -> {
-  events:    new EventEmitter()
-  checkFlag: checkFlag
-  formatting:  formatting
-}
+  formatting =
+    highlight: (text) -> "<span class='highlight'>#{text}</span>"
+    error:     (text) -> "<span class='error'>#{text}</span>"
+
+  errors =
+    requiredParameters: (cmd, params, reqParams) ->
+      "#{formatting.error('Error:')} #{formatting.highlight(cmd)} requires #{reqParams} parameters, you provided #{params.length}."
+
+  return new Object
+    events:      new EventEmitter()
+    checkFlag:   checkFlag
+    formatting:  formatting
+    errors:      errors
+    api_wrapper: api_wrapper
+    api:         api

@@ -24,6 +24,7 @@ module.exports = (context) ->
       lines: []
 
     handleCmd: (event) ->
+      # Run the command on enter key
       if event.which == @keys.ENTER
         cmd         = @state.cmd
         lines       = @state.lines
@@ -107,8 +108,8 @@ module.exports = (context) ->
 
       # Command not found
       else
-        stdout "#{formatting.error('command not found:')} #{cmd}"
+        stdout "#{formatting.error('error:')} command not found #{formatting.highlight('cmd')}"
         events.emit('command:running', false)
 
-      # Add blankline
-      stdout " "
+        # Add blankline
+        stdout " "
