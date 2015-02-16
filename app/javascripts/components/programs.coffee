@@ -1,27 +1,27 @@
 {stdout} = require('./stdout')
 
-programs =
-  play:     require('./programs/play')
-  userinfo: require('./programs/userinfo')
-  ls:       require('./programs/ls')
-  cd:       require('./programs/cd')
 
-  help:
-    run: (params) ->
-      stdout ' '
+module.exports = (context) -> {
+  programs:
+    play:     require('./programs/play')(context)
+    userinfo: require('./programs/userinfo')(context)
+    ls:       require('./programs/ls')(context)
+    cd:       require('./programs/cd')(context)
 
-      for key in Object.keys(programs)
-        if programs[key].helpText
-          stdout "<span class='highlight'>#{key}</span>"
-          stdout programs[key].helpText
+    help:
+      run: (params) ->
+        stdout ' '
 
-          if params[0] == /verbose|v/ && programs[key].helpTextVerbose
-            stdout programs[key].helpTextVerbose
+        for key in Object.keys(programs)
+          if programs[key].helpText
+            stdout "<span class='highlight'>#{key}</span>"
+            stdout programs[key].helpText
 
-          stdout ' '
+            console.log params
+            if (params[0] == "-v" || params[0] == "--verbose") && programs[key].helpTextVerbose
+              stdout ' '
+              stdout programs[key].helpTextVerbose
 
-
-
-module.exports =
-  programs: programs
-  programsArray: Object.keys(programs)
+            stdout ' '
+            events.emit('command:running', false)
+}

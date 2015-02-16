@@ -1,12 +1,15 @@
 React  = require('react/addons')
 
-
 {stdout} = require('./stdout')
 {scrollToBottom} = require('../utils/scroll_to_bottom')
-{programs, programsArray} = require('./programs')
 
 module.exports = (context) ->
+  {events}   = context
+  {programs} = require('./programs')(context)
+
   React.createClass
+    displayName: 'stdin'
+
     mixins: [React.addons.LinkedStateMixin],
 
     getInitialState: ->
@@ -45,6 +48,7 @@ module.exports = (context) ->
     # If it doesn't, it returns 'command not found'.
     # =========================================================================
     runCmd: (cmd) ->
+      events.emit('command:running', true)
       stdout("> #{cmd}")
 
       # Get cmd
@@ -56,11 +60,14 @@ module.exports = (context) ->
       params = cmdArray
 
       # Run the program
+      console.log programs
       if typeof programs[cmd] == "object"
         programs[cmd].run(params)
 
       # Command not found
-      else stdout "<span class='error'>command not found:</span> #{cmd}"
+      else
+        stdout "<span class='error'>command not found:</span> #{cmd}"
+        events.emit('command:running', false)
 
       # Add blankline
       stdout " "

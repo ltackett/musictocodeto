@@ -3,6 +3,8 @@ Merge = require('merge')
 
 module.exports = (context) ->
   React.createClass
+    displayName: 'Scanlines'
+
     getInitialState: ->
       offset: 0
 

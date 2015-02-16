@@ -1,7 +1,13 @@
-module.exports =
-  helpText: '''
-    lists shit.
-  '''
+{stdout} = require('../stdout')
 
-  run: ->
-    stdout "You ran the help program. Good job!"
+module.exports = (context) ->
+  {events} = context
+
+  new Object
+    helpText: '''
+      lists shit.
+    '''
+
+    run: ->
+      stdout "You ran the ls program. Good job!"
+      events.emit('command:running', false)

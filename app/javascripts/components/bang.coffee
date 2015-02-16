@@ -2,6 +2,8 @@ React = require('react')
 
 module.exports = (context) ->
   React.createClass
+    displayName: 'Bang'
+
     getDefaultProps: ->
       text: '>'
 

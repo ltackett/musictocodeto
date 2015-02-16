@@ -6,6 +6,8 @@ Merge = require('merge')
 
 module.exports = (context) ->
   React.createClass
+    displayName: 'Carat'
+
     getInitialState: ->
       i: 0
 

@@ -10,16 +10,18 @@ module.exports = (context) ->
   Banner    = require('./banner')(context)
   Lines     = require('./lines')(context)
   Spinner   = require('./spinner')(context)
-  ScanLines = require('./scanlines')(context)
+  Scanlines = require('./scanlines')(context)
 
   React.createClass
+    displayName: 'Layout'
+
     handleClick: ->
       # Ensure the input is always focused.
       document.getElementsByTagName('input')[0].focus()
 
     render: ->
       <div id="MTCT" style={@mainStyle} onClick={@handleClick}>
-        <ScanLines/>
+        <Scanlines/>
 
         <pre>
           <Banner/>

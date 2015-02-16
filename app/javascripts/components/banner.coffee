@@ -32,6 +32,8 @@ banner.push " "
 
 module.exports = (context) ->
   React.createClass
+    displayName: 'Banner'
+
     render: -> null
 
     componentDidMount: ->
