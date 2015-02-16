@@ -1,47 +1,69 @@
-Qajax = require('qajax')
-
 {stdout} = require('../stdout')
 
 module.exports = (context) ->
-  {events, errors, formatting, api} = context
+  { api
+    checkFlag
+    events
+    errors
+    formatting
+  } = context
 
-  new Object
-    helpText: 'usertracks [artist] -- Get all tracks belonging to an user'
-    run: (cmd, params) ->
-      reqParams = 1
+  errorFunctions = require('../../utils/error_functions')(context)
 
-      if params.length == reqParams
-        artistSlug = params[0]
-        request    = api.usertracks(artistSlug)
+  # Get user's tracks from permalink
+  # =============================================================================
+  getUserTracks = (cmd, params) ->
+    reqParams = 1
 
-        request.onValue (data) ->
-          console.log data
-          if !data.errors
-            trackLinks = data.map (track) ->
-              return new Object
-                username: track.user.username
-                id: track.id
+    if params.length == reqParams
+      artistSlug = params[0]
+      request    = api.usertracks(artistSlug)
 
-            localStorage.clear()
-            localStorage.setItem('usertracks', JSON.stringify(trackLinks))
+      # Request
+      request.onValue (data) ->
 
-            stdout " "
-            data.map (track, index) ->
-              stdout "#{formatting.highlight("#{index}:")} #{track.title}"
+        # Output
+        if !data.errors
+          trackLinks = data.map (track) ->
+            return new Object
+              username: track.user.username
+              id: track.id
 
-            stdout " "
-            stdout "run `play [number]` to play a track from the list."
-            stdout " "
+          localStorage.clear()
+          localStorage.setItem('usertracks', JSON.stringify(trackLinks))
 
-          else
-            stdout "#{formatting.error('error:')} #{data.errors[0].error_message}"
-            stdout " "
+          stdout " "
+          data.map (track, index) ->
+            stdout "#{formatting.highlight("#{index}:")} #{track.title}"
 
-          events.emit('command:running', false)
+          stdout " "
+          stdout "run `play [number]` to play a track from the list."
+          stdout " "
 
-        request.onError (data) ->
+        # Errors
+        else errorFunctions.requestError(data)
 
-      else
-        stdout errors.requiredParameters(cmd, params, reqParams)
-        stdout " "
+        # End program
         events.emit('command:running', false)
+
+      request.onError (data) ->
+
+    # Params mismatch
+    else errorFunctions.paramsMismatch(cmd, params, reqParams)
+
+  # Return object
+  # =============================================================================
+
+  return new Object
+    helpText: 'usertracks [artist-permalink] -- Get all tracks belonging to an user'
+    run: (cmd, params) ->
+      helpFlag = checkFlag(params, "-h") || checkFlag(params, "--help")
+
+      if helpFlag
+        stdout @helpText
+        stdout " "
+
+        events.emit('command:running', false)
+
+      # Run program
+      else getUserTracks(cmd, params)

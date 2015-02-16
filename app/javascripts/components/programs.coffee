@@ -1,20 +1,28 @@
+{stdout} = require('./stdout')
+
 module.exports = (context) ->
-  {stdout} = require('./stdout')
-  {events,checkFlag,formatting} = context
+  { api
+    checkFlag
+    events
+    errors
+    formatting
+  } = context
 
-
+  # Programs
+  # =============================================================================
   programs =
-    play:       require('./programs/play')(context)
     userinfo:   require('./programs/userinfo')(context)
     usertracks: require('./programs/usertracks')(context)
+    play:       require('./programs/play')(context)
     ls:         require('./programs/ls')(context)
     cd:         require('./programs/cd')(context)
+    about:      require('./programs/about')(context)
     fork:       require('./programs/fork')(context)
 
+    # Help Program
+    # =============================================================================
     help:
       helpText: '''
-        Displays a list of all programs and help information for each.
-
         -v, --verbose : Displays additional help information per program.
       '''
 
@@ -32,7 +40,9 @@ module.exports = (context) ->
 
         for key in keys
           if programs[key].helpText
+            stdout ' '
             stdout '--------------------------------------------------------------------------------'
+            stdout ' '
             stdout formatting.highlight(key)
 
             if verboseFlag && programs[key].helpTextVerbose
@@ -42,9 +52,12 @@ module.exports = (context) ->
 
             # Are we the last key in the array?
             if key == keys[keys.length-1]
+              stdout ' '
               stdout '--------------------------------------------------------------------------------'
 
             events.emit('command:running', false)
 
+  # Return object
+  # =============================================================================
   return new Object
     programs: programs

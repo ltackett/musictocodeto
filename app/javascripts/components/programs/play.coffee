@@ -1,43 +1,76 @@
 {stdout} = require('../stdout')
 
 module.exports = (context) ->
-  {events, formatting, errors, api} = context
+  { api
+    checkFlag
+    events
+    errors
+    formatting
+  } = context
 
-  new Object
+  errorFunctions = require('../../utils/error_functions')(context)
+
+  # Play from usertracks number
+  # =============================================================================
+  playFromUsertracks = (cmd, params) ->
+    reqParams = 1
+
+    if params.length == reqParams
+      usertracks = JSON.parse(localStorage.usertracks)
+      track      = usertracks[params[0]]
+      request    = api.play(track.id)
+
+      # Request
+      request.onValue (data) ->
+        if !data.errors
+          player     = document.getElementById('player')
+          player.src = api.streamURL(data.stream_url)
+
+          # Play audio
+          player.play()
+
+          # Output
+          stdout "#{formatting.highlight('now playing:')} #{track.username} - #{data.title}"
+          stdout " "
+          events.emit('command:running', false)
+
+        else
+
+        # End program
+        events.emit('command:running', false)
+
+    # Params mismatch
+    else errorFunctions.paramsMismatch(cmd, params, reqParams)
+
+  # Play from user/track permalink pair
+  # =============================================================================
+  playFromPermalinks = (cmd, params) ->
+    reqParams = 2
+
+    if params.length == reqParams
+      stdout "coming soon."
+      events.emit('command:running', false)
+
+    # Params mismatch
+    else errorFunctions.paramsMismatch(cmd, params, reqParams)
+
+
+  # Return object
+  # =============================================================================
+  return new Object
     helpText: "play [artist] [song] -- Play any song from SoundCloud.com"
 
     run: (cmd, params) ->
-      firstParamIsNumber = !isNaN(params[0])
+      helpFlag = checkFlag(params, "-h") || checkFlag(params, "--help")
 
-      if firstParamIsNumber && localStorage.usertracks
-        reqParams = 1
+      if helpFlag
+        stdout @helpText
 
-        if params.length == reqParams
-          usertracks = JSON.parse(localStorage.usertracks)
-          track      = usertracks[params[0]]
-          request    = api.play(track.id)
-
-          request.onValue (data) ->
-            player     = document.getElementById('player')
-            player.src = api.streamURL(data.stream_url)
-            player.play()
-
-            stdout "#{formatting.highlight('now playing:')} #{track.username} - #{data.title}"
-            events.emit('command:running', false)
-
-        else
-          stdout errors.requiredParameters(cmd, params, reqParams)
-          stdout " "
-          events.emit('command:running', false)
-
+      # Run program
       else
-        reqParams = 2
+        firstParamIsNumber = !isNaN(params[0])
+        hasUsertracks = (firstParamIsNumber && localStorage.usertracks)
 
-        if params.length == reqParams
-          stdout "coming soon."
-          events.emit('command:running', false)
+        if hasUsertracks then playFromUsertracks(cmd, params)
+        else                  playFromPermalinks(cmd, params)
 
-        else
-          stdout errors.requiredParameters(cmd, params, reqParams)
-          stdout " "
-          events.emit('command:running', false)

@@ -1,13 +1,31 @@
 {stdout} = require('../stdout')
 
 module.exports = (context) ->
-  {events} = context
+  { api
+    checkFlag
+    events
+    errors
+    formatting
+  } = context
 
-  new Object
+  # Return object
+  # =============================================================================
+  return new Object
     helpText: '''
-      lists shit.
+      lists of things.
     '''
 
-    run: ->
-      stdout "You ran the ls program. Good job!"
-      events.emit('command:running', false)
+    run: (cmd, params) ->
+      helpFlag = checkFlag(params, "-h") || checkFlag(params, "--help")
+
+      if helpFlag
+        stdout @helpText
+        stdout " "
+
+        events.emit('command:running', false)
+
+      else
+        stdout "coming soon"
+        stdout " "
+
+        events.emit('command:running', false)

@@ -6,7 +6,7 @@ module.exports = (context) ->
   {events} = context
 
   Bang  = require('../bang')(context)
-  Carat = require('../carat')(context)
+  Caret = require('../caret')(context)
   stdin = require('../stdin')(context)
 
   React.createClass
@@ -19,7 +19,7 @@ module.exports = (context) ->
       <div id="cli" style={@style()}>
         <Bang/>
         <stdin/>
-        <Carat/>
+        <Caret/>
       </div>
 
     componentDidMount: ->

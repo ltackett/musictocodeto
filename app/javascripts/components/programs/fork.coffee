@@ -1,11 +1,17 @@
-shuffle = require('lodash/collection/shuffle')
-
+shuffle  = require('lodash/collection/shuffle')
 {stdout} = require('../stdout')
 
 module.exports = (context) ->
-  {events, formatting} = context
+  { api
+    checkFlag
+    events
+    errors
+    formatting
+  } = context
 
-  new Object
+  # Return object
+  # =============================================================================
+  return new Object
     helpText: 'View musictocodeto on GitHub.'
 
     forkMessages: [
@@ -14,7 +20,7 @@ module.exports = (context) ->
       "could we spoon instead?"
       "fork you too, buddy!"
       "what the fork!"
-      "let's talk about fork lore"
+      "let's talk about fork lore..."
     ]
 
     redirect: ->

@@ -1,22 +1,35 @@
 {stdout} = require('../stdout')
 
 module.exports = (context) ->
-  {events} = context
+  { api
+    checkFlag
+    events
+    errors
+    formatting
+  } = context
 
-  new Object
-    helpText: 'This command helps you navigate like a boss.'
+  return new Object
+    helpText: 'Navigate like a boss.'
 
     helpTextVerbose: -> """
       #{@helpText}
-      ... or at least it will, when I finish writing it.
+      ... when I finish writing it.
       ... right now it does nothing.
     """
 
-    run: (params) ->
-      if (params[0] == "-h" || params[0] == "--help")
-        stdout @helpText
+    run: (cmd, params) ->
+      helpFlag    = checkFlag(params, "-h") || checkFlag(params, "--help")
+      verboseFlag = checkFlag(params, "-v") || checkFlag(params, "--verbose")
+
+      if helpFlag
+        if verboseFlag then stdout(@helpTextVerbose())
+        else                stdout(@helpText)
+        stdout " "
+
+        events.emit('command:running', false)
 
       else
         stdout "coming soon."
+        stdout " "
 
-      events.emit('command:running', false)
+        events.emit('command:running', false)
