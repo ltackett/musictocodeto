@@ -60,7 +60,6 @@ module.exports = (context) ->
       params = cmdArray
 
       # Run the program
-      console.log programs
       if typeof programs[cmd] == "object"
         programs[cmd].run(params)
 
