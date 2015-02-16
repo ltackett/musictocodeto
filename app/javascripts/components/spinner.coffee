@@ -23,8 +23,9 @@ module.exports = (context) ->
         @setState {visible: running}
 
       do spin = () =>
-        if   @state.phase == 3 then @setState {phase: 0}
-        else @setState {phase: @state.phase+1}
+        if @state.visible
+          if   @state.phase == 3 then @setState {phase: 0}
+          else @setState {phase: @state.phase+1}
 
         setTimeout(spin, 75)
 
