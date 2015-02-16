@@ -40,7 +40,7 @@ module.exports = (context) ->
 
         styles = new Object
           pointerEvents: 'none'
-          background:    'url(/images/scanlines.png)'
+          background:    'url(images/scanlines.png)'
 
         moveStyles = new Object
           backgroundPosition: "0 #{@state.offsetThin}px"

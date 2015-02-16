@@ -4,4 +4,4 @@ module.exports =
   styles: [
     './app/stylesheets/app.scss'
   ]
-  dest: './public'
+  dest: './build'
