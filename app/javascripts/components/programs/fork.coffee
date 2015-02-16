@@ -35,5 +35,6 @@ module.exports = (context) ->
         stdout ' '
         stdout formatting.highlight(shuffle(@forkMessages)[0])
         stdout formatting.error('exiting...')
+        stdout ' '
 
         setInterval @redirect, 2000

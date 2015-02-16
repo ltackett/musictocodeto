@@ -14,6 +14,7 @@ module.exports = (context) ->
     userinfo:   require('./programs/userinfo')(context)
     usertracks: require('./programs/usertracks')(context)
     play:       require('./programs/play')(context)
+    player:     require('./programs/player')(context)
     ls:         require('./programs/ls')(context)
     cd:         require('./programs/cd')(context)
     about:      require('./programs/about')(context)

@@ -32,12 +32,13 @@ module.exports = (context) ->
           localStorage.clear()
           localStorage.setItem('usertracks', JSON.stringify(trackLinks))
 
+          stdout formatting.highlight("Track list for #{data[0].user.username}.")
           stdout " "
           data.map (track, index) ->
             stdout "#{formatting.highlight("#{index}:")} #{track.title}"
 
           stdout " "
-          stdout "run `play [number]` to play a track from the list."
+          stdout "run #{formatting.highlight('play [i]')} to play a track from the list."
           stdout " "
 
         # Errors
@@ -56,11 +57,19 @@ module.exports = (context) ->
 
   return new Object
     helpText: 'usertracks [artist-permalink] -- Get all tracks belonging to an user'
+
+    helpTextVerbose: -> """
+      #{@helpText}
+      This program also populates localStorage with the list of tracks for easier playback.
+    """
+
     run: (cmd, params) ->
-      helpFlag = checkFlag(params, "-h") || checkFlag(params, "--help")
+      helpFlag    = checkFlag(params, "-h") || checkFlag(params, "--help")
+      verboseFlag = checkFlag(params, "-v") || checkFlag(params, "--verbose")
 
       if helpFlag
-        stdout @helpText
+        if verboseFlag then stdout(@helpTextVerbose())
+        else                stdout(@helpText)
         stdout " "
 
         events.emit('command:running', false)

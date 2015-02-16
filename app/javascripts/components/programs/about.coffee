@@ -32,8 +32,8 @@ module.exports = (context) ->
           It is powered by #{formatting.highlight('React.')}
 
           It's not particularly useful, but it was fun to build.
-          It's kindof my I-want-to-play-with-new-technology project.
-          Previously, it was powered by Angular, Ember, SocketStream, Backbone, and Rails.
+          This is my I-want-to-play-with-new-technology project.
+          Previously, it has been powered by Angular, Ember, SocketStream, Backbone, and Rails.
         """
         stdout " "
         stdout '--------------------------------------------------------------------------------'

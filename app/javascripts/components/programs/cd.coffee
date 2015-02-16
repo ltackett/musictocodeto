@@ -28,6 +28,7 @@ module.exports = (context) ->
 
         events.emit('command:running', false)
 
+      # Run program
       else
         stdout "coming soon."
         stdout " "
