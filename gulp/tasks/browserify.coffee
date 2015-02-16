@@ -1,10 +1,12 @@
-gulp         = require('gulp')
-browserify   = require('browserify')
-watchify     = require('watchify')
-source       = require('vinyl-source-stream')
-reactify     = require('coffee-reactify')
-connect      = require('gulp-connect')
-config       = require('../config')
+gulp       = require('gulp')
+uglify     = require('gulp-uglify');
+browserify = require('browserify')
+watchify   = require('watchify')
+source     = require('vinyl-source-stream')
+reactify   = require('coffee-reactify')
+connect    = require('gulp-connect')
+config     = require('../config')
+
 handleErrors = require('./handle_errors');
 
 bundle = (bundler, outName) ->

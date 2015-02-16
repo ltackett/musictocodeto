@@ -9,5 +9,6 @@ gulp.task 'build', (cb)->
     'copy_fonts',
     ['browserify', 'css'],
     'autoprefixer',
+    'uglify',
     cb
   )

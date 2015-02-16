@@ -1,8 +1,8 @@
-gulp         = require('gulp')
-postcss      = require('gulp-postcss')
-sourcemaps   = require('gulp-sourcemaps')
+gulp       = require('gulp')
+postcss    = require('gulp-postcss')
+sourcemaps = require('gulp-sourcemaps')
 autoprefix = require('autoprefixer-core')
-config       = require('../config')
+config     = require('../config')
 
 # Auto-prefix CSS3 properties based on caniuse.com
 
