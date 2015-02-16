@@ -2,10 +2,12 @@ React  = require("react/addons")
 Router = require("react-router")
 
 {$} = require('../constants/style_constants')
+{scrollToBottom} = require('../utils/scroll_to_bottom')
 
-{RouteHandler, Link} = Router
+{RouteHandler} = Router
 
 module.exports = (context) ->
+  {events} = context
 
   Banner    = require('./banner')(context)
   Lines     = require('./lines')(context)
@@ -31,6 +33,10 @@ module.exports = (context) ->
         <Spinner/>
         <RouteHandler/>
       </div>
+
+    componentDidMount: ->
+      events.on 'command:running', (running) ->
+        if !running then scrollToBottom()
 
     mainStyle:
       textShadow: $.phosphorusGlow

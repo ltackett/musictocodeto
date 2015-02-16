@@ -1,27 +1,49 @@
-{stdout} = require('./stdout')
+module.exports = (context) ->
+  {stdout} = require('./stdout')
+  {events,checkFlag,formatting} = context
 
 
-module.exports = (context) -> {
-  programs:
+  programs =
     play:     require('./programs/play')(context)
     userinfo: require('./programs/userinfo')(context)
     ls:       require('./programs/ls')(context)
     cd:       require('./programs/cd')(context)
+    fork:     require('./programs/fork')(context)
 
     help:
-      run: (params) ->
+      helpText: '''
+        Displays a list of all programs and help information for each.
+
+        -v, --verbose : Displays additional help information per program.
+      '''
+
+      helpTextVerbose: -> """
+        #{@helpText}
+        Programs also accept -h or --help flags to display their help text
+      """
+
+      run: (cmd, params) ->
+        verboseFlag = checkFlag(params, "-v") || checkFlag(params, "--verbose")
+        keys        = Object.keys(programs)
+
         stdout ' '
 
-        for key in Object.keys(programs)
+
+        for key in keys
           if programs[key].helpText
-            stdout "<span class='highlight'>#{key}</span>"
-            stdout programs[key].helpText
+            stdout '--------------------------------------------------------------------------------'
+            stdout formatting.highlight(key)
 
-            console.log params
-            if (params[0] == "-v" || params[0] == "--verbose") && programs[key].helpTextVerbose
-              stdout ' '
-              stdout programs[key].helpTextVerbose
+            if verboseFlag && programs[key].helpTextVerbose
+              stdout programs[key].helpTextVerbose()
+            else
+              stdout programs[key].helpText
 
-            stdout ' '
+            # Are we the last key in the array?
+            if key == keys[keys.length-1]
+              stdout '--------------------------------------------------------------------------------'
+
             events.emit('command:running', false)
-}
+
+  return new Object
+    programs: programs
