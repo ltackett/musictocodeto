@@ -10,35 +10,35 @@ module.exports = (context) ->
 
   errorFunctions = require('../../utils/error_functions')(context)
 
-  # Get user's tracks from permalink
+  # Get user's playlists from permalink
   # =============================================================================
-  getUserTracks = (cmd, params) ->
+  getUserPlaylists = (cmd, params) ->
     reqParams = 1
 
     if params.length == reqParams
       artistSlug = params[0]
-      request    = api.userTracks(artistSlug)
+      request    = api.userPlaylists(artistSlug)
 
       # Request
       request.onValue (data) ->
 
         # Output
         if !data.errors
-          trackLinks = data.map (track) ->
+          playlistLinks = data.map (playlist) ->
             return new Object
-              username: track.user.username
-              id: track.id
+              username: playlist.user.username
+              id:       playlist.id
 
           localStorage.clear()
-          localStorage.setItem('usertracks', JSON.stringify(trackLinks))
+          localStorage.setItem('userplaylists', JSON.stringify(playlistLinks))
 
-          stdout formatting.highlight("Track list for #{data[0].user.username}.")
+          stdout formatting.highlight("Playlists for #{data[0].user.username}.")
           stdout " "
-          data.map (track, index) ->
-            stdout "#{formatting.highlight("#{index}:")} #{track.title}"
+          data.map (playlist, index) ->
+            stdout "#{formatting.highlight("#{index}:")} #{playlist.title}"
 
           stdout " "
-          stdout "run #{formatting.highlight('play [i]')} to play a track from the list."
+          stdout "run #{formatting.highlight('play list [i]')} to play a playlist from the list."
           stdout " "
 
         # Errors
@@ -56,11 +56,11 @@ module.exports = (context) ->
   # =============================================================================
 
   return new Object
-    helpText: 'usertracks [artist-permalink] -- Get all tracks belonging to a user'
+    helpText: 'userplaylists [artist-permalink] -- Get all playlists belonging to a user'
 
     helpTextVerbose: -> """
       #{@helpText}
-      This program also populates localStorage with the list of tracks for easier playback.
+      This program also populates localStorage with the list of playlists for easier playback.
     """
 
     run: (cmd, params) ->
@@ -75,4 +75,4 @@ module.exports = (context) ->
         events.emit('command:running', false)
 
       # Run program
-      else getUserTracks(cmd, params)
+      else getUserPlaylists(cmd, params)

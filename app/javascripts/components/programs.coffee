@@ -11,14 +11,15 @@ module.exports = (context) ->
   # Programs
   # =============================================================================
   programs =
-    userinfo:   require('./programs/userinfo')(context)
-    usertracks: require('./programs/usertracks')(context)
-    play:       require('./programs/play')(context)
-    player:     require('./programs/player')(context)
-    ls:         require('./programs/ls')(context)
-    cd:         require('./programs/cd')(context)
-    about:      require('./programs/about')(context)
-    fork:       require('./programs/fork')(context)
+    userinfo:      require('./programs/userinfo')(context)
+    usertracks:    require('./programs/usertracks')(context)
+    userplaylists: require('./programs/userplaylists')(context)
+    play:          require('./programs/play')(context)
+    player:        require('./programs/player')(context)
+    ls:            require('./programs/ls')(context)
+    cd:            require('./programs/cd')(context)
+    about:         require('./programs/about')(context)
+    fork:          require('./programs/fork')(context)
 
     # Help Program
     # =============================================================================

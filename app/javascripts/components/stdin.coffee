@@ -27,14 +27,14 @@ module.exports = (context) ->
       caretPosition = 0
 
       output = () =>
-        # IE Support
+        # IE
         if document.selection
           field.focus()                                   # Set focus on the element
           sel = document.selection.createRange()          # To get cursor position, get empty selection range
           sel.moveStart('character', -field.value.length) # Move selection start to 0 position
           caretPosition = sel.text.length                 # The caret position is selection length
 
-        # Firefox support
+        # Errbody else
         else if field.selectionStart || field.selectionStart == '0'
           caretPosition = field.selectionStart
 
