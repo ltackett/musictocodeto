@@ -16,8 +16,8 @@ module.exports = (context) ->
     reqParams = 1
 
     if params.length == reqParams
-      artistSlug = params[0]
-      request    = api.userinfo(artistSlug)
+      userSlug = params[0]
+      request  = api.userinfo(userSlug)
 
       # Request
       request.onValue (data) ->

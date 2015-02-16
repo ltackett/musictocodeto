@@ -35,9 +35,6 @@ module.exports = (context) ->
         verboseFlag = checkFlag(params, "-v") || checkFlag(params, "--verbose")
         keys        = Object.keys(programs)
 
-        stdout ' '
-
-
         for key in keys
           if programs[key].helpText
             stdout ' '
@@ -54,6 +51,7 @@ module.exports = (context) ->
             if key == keys[keys.length-1]
               stdout ' '
               stdout '--------------------------------------------------------------------------------'
+              stdout ' '
 
             events.emit('command:running', false)
 

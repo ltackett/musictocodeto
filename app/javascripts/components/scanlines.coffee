@@ -21,9 +21,9 @@ module.exports = (context) ->
     componentDidMount: ->
       do moveThin = () =>
         offset = @state.offsetThin
-        @setState { offsetThin: offset - 1 }
+        @setState { offsetThin: offset + 1 }
 
-        setTimeout moveThin, 150
+        setTimeout moveThin, 20
 
       do moveFat = () =>
         windowHeight = (window.outerHeight + @fatLineHeight)
