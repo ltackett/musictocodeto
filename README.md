@@ -1,3 +1,9 @@
+MTCT is a CLI-like interface for SoundCloud written in React.
+
+Check it out at [musictocodeto.com](http://musictocodeto.com)
+
+---
+
 ```
  ██▀███   ▒█████   ▄████▄   ██ ▄█▀    ▒█████   █    ██ ▄▄▄█████▓
 ▓██ ▒ ██▒▒██▒  ██▒▒██▀ ▀█   ██▄█▒    ▒██▒  ██▒ ██  ▓██▒▓  ██▒ ▓▒
