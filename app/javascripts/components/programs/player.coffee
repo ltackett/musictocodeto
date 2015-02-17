@@ -22,6 +22,7 @@ module.exports = (context) ->
         stdout "#{formatting.highlight('Loading random-ish playlist:')}"
         stdout ' '
         events.emit('run', {cmd: 'play list random'})
+        mixpanel.track("Error", { 'type': 'player:no-track', 'cmd': cmd, 'params': params.join(' ')})
 
       else if params[0] == 'play'   &&  player.paused then player.play()
       else if params[0] == 'pause'  && !player.paused then player.pause()
