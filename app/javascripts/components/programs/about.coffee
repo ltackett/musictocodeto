@@ -8,6 +8,26 @@ module.exports = (context) ->
     formatting
   } = context
 
+  aboutText = () ->
+
+    """
+    --------------------------------------------------------------------------------
+
+    #{formatting.highlight('MTCT')} was created by #{formatting.highlight('Lorin Tackett.')}
+    It is powered by #{formatting.highlight('React.')}
+
+    musictocodeto started out in 2010 as a bunch of playlists on playlists.com.
+    I've repurposed it for music discovery. Use MTCT to play an endless stream of
+    random-ish curated playlists from SoundCloud.
+
+    Right now there aren't very many playlists, but I'll be adding lots soon.
+
+    Got a ton of stuff planned. Stay tuned.
+    —Lorin
+
+    --------------------------------------------------------------------------------
+    """
+
   # Return object
   # =============================================================================
   return new Object
@@ -25,18 +45,7 @@ module.exports = (context) ->
         events.emit('command:running', false)
 
       else
-        stdout '--------------------------------------------------------------------------------'
-        stdout " "
-        stdout """
-          #{formatting.highlight('MTCT')} was created by #{formatting.highlight('Lorin Tackett.')}
-          It is powered by #{formatting.highlight('React.')}
-
-          It's not particularly useful, but it was fun to build.
-          This is my I-want-to-play-with-new-technology project.
-          Previously, it has been powered by Angular, Ember, SocketStream, Backbone, and Rails.
-        """
-        stdout " "
-        stdout '--------------------------------------------------------------------------------'
-        stdout " "
-
+        stdout ' '
+        stdout aboutText()
+        stdout ' '
         events.emit('command:running', false)
