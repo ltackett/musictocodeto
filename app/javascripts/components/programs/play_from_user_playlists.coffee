@@ -12,10 +12,9 @@ module.exports = (context, cmd, params) ->
 
   # Play tracks function
   # =============================================================================
-  playTracks = (currentTrack, tracks) ->
-
-    # Player
-    player     = document.getElementById('player')
+  playTracks = (currentTrack, playlist) ->
+    tracks = playlist.tracks
+    player = document.getElementById('player')
 
     # Play audio
     player.src = api.streamURL(currentTrack.stream_url)
@@ -34,6 +33,7 @@ module.exports = (context, cmd, params) ->
       stdout "#{formatting.highlight('now playing:')} #{currentTrack.user.username} - #{currentTrack.title}"
       stdout " "
       events.emit('command:running', false)
+      mixpanel.track("Playing", { 'type': 'from-playlist', 'playlist': playlist.permalink, 'user': currentTrack.user.permalink, 'track': currentTrack.permalink })
     , false)
 
   # Play from user/track permalink pair
@@ -64,16 +64,17 @@ module.exports = (context, cmd, params) ->
           stdout "#{formatting.highlight("#{index}:")} #{track.title}"
 
         # Play tracks
-        playTracks(currentTrack, tracks)
+        playTracks(currentTrack, data)
 
         # Output for Track
         stdout " "
         stdout "#{formatting.highlight('now playing:')} #{currentTrack.user.username} - #{currentTrack.title}"
         stdout " "
         events.emit('command:running', false)
+        mixpanel.track("Playing", { 'type': 'from-playlist', 'playlist': data.permalink, 'user': currentTrack.user.permalink, 'track': currentTrack.permalink })
 
       # Errors
-      else errorFunctions.requestError(data)
+      else errorFunctions.requestError(cmd, params, data)
 
       # End program
       events.emit('command:running', false)

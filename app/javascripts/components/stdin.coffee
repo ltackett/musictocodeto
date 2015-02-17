@@ -132,15 +132,18 @@ module.exports = (context) ->
       # Run the program
       if typeof programs[cmd] == "object"
         programs[cmd].run(cmd, params)
+        mixpanel.track("Command", { 'type': 'successful-command', 'cmd': cmd, 'params': params.join(' ') })
 
       # Empty command
       else if cmd == ''
         events.emit('command:running', false)
+        mixpanel.track("Command", { 'type': 'empty-command', 'cmd': cmd, 'params': params.join(' ') })
 
       # Command not found
       else
         stdout "#{formatting.error('error:')} command not found #{formatting.highlight(cmd)}"
         events.emit('command:running', false)
+        mixpanel.track("Command", { 'type': 'no-command', 'cmd': cmd, 'params': params.join(' ') })
 
         # Add blankline
         stdout " "

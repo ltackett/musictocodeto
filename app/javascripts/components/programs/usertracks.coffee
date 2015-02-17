@@ -42,7 +42,7 @@ module.exports = (context) ->
           stdout " "
 
         # Errors
-        else errorFunctions.requestError(data)
+        else errorFunctions.requestError(cmd, params, data)
 
         # End program
         events.emit('command:running', false)

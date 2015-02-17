@@ -34,7 +34,7 @@ module.exports = (context, cmd, params) ->
         events.emit('command:running', false)
 
       # Errors
-      else errorFunctions.requestError(data)
+      else errorFunctions.requestError(cmd, params, data)
 
       # End program
       events.emit('command:running', false)
