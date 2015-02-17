@@ -10,30 +10,37 @@ module.exports = (context, cmd, params) ->
 
   errorFunctions = require('../../utils/error_functions')(context)
 
+  # Output for playlist track
+  # =============================================================================
+  playlistTrackStdout = (currentTrack, playlist) ->
+    # Output for Track
+    stdout " "
+    stdout "#{formatting.highlight('now playing:')} #{currentTrack.user.username} - #{currentTrack.title}"
+    stdout " "
+    events.emit('command:running', false)
+    mixpanel.track("Playing", { 'type': 'from-playlist', 'playlist': playlist.permalink, 'user': currentTrack.user.permalink, 'track': currentTrack.permalink })
+
   # Play tracks function
   # =============================================================================
   playTracks = (currentTrack, playlist) ->
-    tracks = playlist.tracks
-    player = document.getElementById('player')
+    tracks     = playlist.tracks
+    player     = document.getElementById('player')
+    player.src = api.streamURL(currentTrack.stream_url)
 
     # Play audio
-    player.src = api.streamURL(currentTrack.stream_url)
     player.play()
+    playlistTrackStdout(currentTrack, playlist)
+
     player.addEventListener("ended", (event) ->
 
       # Get array of tracks, and which one is playing
       tracksPlaying = tracks.map (track, index) -> track.id == currentTrack.id
-      currentTrack = tracks[tracksPlaying.indexOf(true)+1]
+      currentTrack  = tracks[tracksPlaying.indexOf(true)+1]
 
       # Play audio
       player.src = api.streamURL(currentTrack.stream_url)
       player.play()
-
-      # Output for Track
-      stdout "#{formatting.highlight('now playing:')} #{currentTrack.user.username} - #{currentTrack.title}"
-      stdout " "
-      events.emit('command:running', false)
-      mixpanel.track("Playing", { 'type': 'from-playlist', 'playlist': playlist.permalink, 'user': currentTrack.user.permalink, 'track': currentTrack.permalink })
+      playlistTrackStdout(currentTrack, playlist)
     , false)
 
   # Play from user/track permalink pair
@@ -41,43 +48,26 @@ module.exports = (context, cmd, params) ->
   reqParams = 2
 
   if params.length == reqParams
-    playlists = JSON.parse(localStorage.userplaylists)
-    playlist  = playlists[params[1]]
-    request   = api.playlist(playlist.id)
+    playlists    = JSON.parse(localStorage.userplaylists)
+    playlist     = playlists[params[1]]
+    tracks       = playlist.tracks
+    currentTrack = tracks[0]
 
-    # Request
-    request.onValue (data) ->
-      if !data.errors
-        currentTrack = data.tracks[0]
+    # Set usertracks to playlist tracks
+    localStorage.clear()
+    localStorage.setItem('usertracks', JSON.stringify(tracks))
 
-        # Build track IDs
-        tracks = data.tracks
+    # Output for Playlist
+    stdout formatting.highlight("Track list for #{playlist.user.username}'s playlist: #{playlist.title}.")
+    stdout " "
+    tracks.map (track, index) ->
+      stdout "#{formatting.highlight("#{index}:")} #{track.title}"
 
-        # Set usertracks to playlist tracks
-        localStorage.clear()
-        localStorage.setItem('usertracks', JSON.stringify(tracks))
+    # Play tracks
+    playTracks(currentTrack, playlist)
 
-        # Output for Playlist
-        stdout formatting.highlight("Track list for #{data.user.username}'s playlist: #{data.title}.")
-        stdout " "
-        data.tracks.map (track, index) ->
-          stdout "#{formatting.highlight("#{index}:")} #{track.title}"
-
-        # Play tracks
-        playTracks(currentTrack, data)
-
-        # Output for Track
-        stdout " "
-        stdout "#{formatting.highlight('now playing:')} #{currentTrack.user.username} - #{currentTrack.title}"
-        stdout " "
-        events.emit('command:running', false)
-        mixpanel.track("Playing", { 'type': 'from-playlist', 'playlist': data.permalink, 'user': currentTrack.user.permalink, 'track': currentTrack.permalink })
-
-      # Errors
-      else errorFunctions.requestError(cmd, params, data)
-
-      # End program
-      events.emit('command:running', false)
+    # End program
+    events.emit('command:running', false)
 
   # Params mismatch
   else errorFunctions.paramsMismatch(cmd, params, reqParams)

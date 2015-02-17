@@ -24,13 +24,8 @@ module.exports = (context) ->
 
         # Output
         if !data.errors
-          playlistLinks = data.map (playlist) ->
-            return new Object
-              username: playlist.user.username
-              id:       playlist.id
-
           localStorage.clear()
-          localStorage.setItem('userplaylists', JSON.stringify(playlistLinks))
+          localStorage.setItem('userplaylists', JSON.stringify(data))
 
           stdout formatting.highlight("Playlists for #{data[0].user.username}.")
           stdout " "

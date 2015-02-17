@@ -15,29 +15,19 @@ module.exports = (context, cmd, params) ->
   reqParams = 1
 
   if params.length == reqParams
-    tracks  = JSON.parse(localStorage.usertracks)
-    track   = tracks[params[0]]
-    request = api.track(track.id)
+    tracks     = JSON.parse(localStorage.usertracks)
+    track      = tracks[params[0]]
+    player     = document.getElementById('player')
+    player.src = api.streamURL(track.stream_url)
 
-    # Request
-    request.onValue (data) ->
-      if !data.errors
-        player     = document.getElementById('player')
-        player.src = api.streamURL(data.stream_url)
+    # Play audio
+    player.play()
 
-        # Play audio
-        player.play()
-
-        # Output
-        stdout "#{formatting.highlight('now playing:')} #{track.username} - #{data.title}"
-        stdout " "
-        events.emit('command:running', false)
-
-      # Errors
-      else errorFunctions.requestError(cmd, params, data)
-
-      # End program
-      events.emit('command:running', false)
+    # Output
+    stdout "#{formatting.highlight('now playing:')} #{track.user.username} - #{track.title}"
+    stdout " "
+    events.emit('command:running', false)
+    mixpanel.track("Playing", { 'type': 'from-tracks', 'user': track.user.permalink, 'track': track.permalink })
 
   # Params mismatch
   else errorFunctions.paramsMismatch(cmd, params, reqParams)

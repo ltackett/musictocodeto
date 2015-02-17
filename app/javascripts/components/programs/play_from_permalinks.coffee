@@ -32,6 +32,7 @@ module.exports = (context, cmd, params) ->
         stdout "#{formatting.highlight('now playing:')} #{data.user.username} - #{data.title}"
         stdout " "
         events.emit('command:running', false)
+        mixpanel.track("Playing", { 'type': 'from-permalinks', 'user': data.user.permalink, 'track': data.permalink })
 
       # Errors
       else errorFunctions.requestError(cmd, params, data)

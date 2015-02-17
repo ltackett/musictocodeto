@@ -24,13 +24,8 @@ module.exports = (context) ->
 
         # Output
         if !data.errors
-          trackLinks = data.map (track) ->
-            return new Object
-              username: track.user.username
-              id: track.id
-
           localStorage.clear()
-          localStorage.setItem('usertracks', JSON.stringify(trackLinks))
+          localStorage.setItem('usertracks', JSON.stringify(data))
 
           stdout formatting.highlight("Track list for #{data[0].user.username}.")
           stdout " "
