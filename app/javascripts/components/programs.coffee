@@ -66,24 +66,16 @@ module.exports = (context) ->
         verboseFlag = checkFlag(params, "-v") || checkFlag(params, "--verbose")
         keys        = Object.keys(programs)
 
+
+        stdout ' '
+        stdout 'Programs list:'
+        stdout '--------------------------------------------------------------------------------'
+        stdout ' '
+
         for key in keys
-          if programs[key].helpText
-            stdout ' '
-            stdout '--------------------------------------------------------------------------------'
-            stdout ' '
-            stdout formatting.highlight(key)
+          stdout formatting.highlight(key)
 
-            if verboseFlag && programs[key].helpTextVerbose
-              stdout programs[key].helpTextVerbose()
-            else
-              stdout programs[key].helpText
-
-            # Are we the last key in the array?
-            if key == keys[keys.length-1]
-              stdout ' '
-              stdout '--------------------------------------------------------------------------------'
-              stdout ' '
-
+        stdout ' '
         mainHelpText()
         stdout ' '
 
