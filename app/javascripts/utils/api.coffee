@@ -31,5 +31,10 @@ module.exports = ({api_wrapper}) ->
       method: "GET"
       path: "/users/#{userSlug}/playlists.json"
 
+  playlistByGenre: (tag) ->
+    api_wrapper
+      method: "GET"
+      path: "/playlists.json?tags=#{tag}"
+
   streamURL: (url) -> api_wrapper(url)
 

@@ -103,6 +103,9 @@ module.exports = (context) ->
       @inputDOMNode.focus()
       @setCaretPosition(@inputDOMNode)
 
+      events.on 'run', (data) =>
+        @runCmd(data.cmd)
+
 
     # This is the main function for running commands.
     # It splits things up into the command and its params, and

@@ -15,11 +15,13 @@ module.exports = (context) ->
     player    = document.getElementById('player')
 
     if params.length >= minParams
-      # errors first
+
+      # No track loaded in the player? Play a random-ish playlist.
       if player.src == ''
-        stdout "#{formatting.error('error:')} no song loaded."
+        stdout "#{formatting.error('error:')} no track loaded."
+        stdout "#{formatting.highlight('Loading random-ish playlist:')}"
         stdout ' '
-        mixpanel.track("Error", { 'type': 'player:no-song', 'cmd': cmd, 'params': params.join(' ')})
+        events.emit('run', {cmd: 'play list random'})
 
       else if params[0] == 'play'   &&  player.paused then player.play()
       else if params[0] == 'pause'  && !player.paused then player.pause()

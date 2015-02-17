@@ -8,10 +8,11 @@ module.exports = (context) ->
     formatting
   } = context
 
-  errorFunctions        = require('../../utils/error_functions')(context)
-  playFromUserTracks    = require('./play_from_user_tracks')
-  playFromUserPlaylists = require('./play_from_user_playlists')
-  playFromPermalinks    = require('./play_from_permalinks')
+  errorFunctions          = require('../../utils/error_functions')(context)
+  playFromUserTracks      = require('./play_from_user_tracks')
+  playFromUserPlaylists   = require('./play_from_user_playlists')
+  playFromRandomPlaylists = require('./play_from_random_playlists')
+  playFromPermalinks      = require('./play_from_permalinks')
 
 
   # Return object
@@ -29,11 +30,13 @@ module.exports = (context) ->
       else
         firstParamIsNumber = !isNaN(params[0])
         firstParamIsList   = params[0] == "list"
+        playRandomPlaylist =
 
-        hasUserTracks = (firstParamIsNumber && localStorage.usertracks)
-        hasUserLists  = (firstParamIsList   && localStorage.userplaylists)
+        hasUserTracks  = (firstParamIsNumber && localStorage.usertracks)
+        hasUserLists   = (firstParamIsList   && localStorage.userplaylists)
+        randomPlaylist = (params[0] == "list" && params[1] == "random")
 
-        if      hasUserTracks then  playFromUserTracks(context, cmd, params)
-        else if hasUserLists  then  playFromUserPlaylists(context, cmd, params)
-        else                        playFromPermalinks(context, cmd, params)
-
+        if      hasUserTracks   then  playFromUserTracks(context, cmd, params)
+        else if hasUserLists    then  playFromUserPlaylists(context, cmd, params)
+        else if randomPlaylist  then  playFromRandomPlaylists(context, cmd, params)
+        else                          playFromPermalinks(context, cmd, params)
