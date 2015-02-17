@@ -8,8 +8,10 @@ module.exports = (context) ->
     displayName: 'Scanlines'
 
     getInitialState: ->
-      offsetThin: 0
-      offsetFat: 0
+      thinLinesOffset:  0
+      thinLinesOpacity: 0
+      fatLineOffset:    0
+      fatLineMoving:    0
 
     render: ->
       <div id="scanlines">
@@ -20,19 +22,25 @@ module.exports = (context) ->
 
     componentDidMount: ->
       do moveThin = () =>
-        offset = @state.offsetThin
-        @setState { offsetThin: offset + 1 }
+        randomOffset  = Math.floor(Math.random() * 6) + 1
+        randomOpacity = Math.floor(Math.random() * 2) / 100
 
-        setTimeout moveThin, 20
+        @setState
+          thinLinesOffset:  randomOffset
+          thinLinesOpacity: randomOpacity
+
+        setTimeout moveThin, 100
 
       do moveFat = () =>
         windowHeight = (window.outerHeight + @fatLineHeight)
-        offset       = @state.offsetFat
+        offset       = @state.fatLineOffset
 
-        if offset <= 0 then @setState { offsetFat: windowHeight }
-        else                @setState { offsetFat: offset - 5 }
+        @setState { fatLineOffset: 100, fatLineMoving: 0 }
+        delayed = () =>
+          @setState { fatLineOffset: -50, fatLineMoving: 1 }
+        setTimeout delayed, 50
 
-        setTimeout moveFat, 25
+        setTimeout moveFat, 6000
 
     thinLineStyle: ->
       if @isMounted()
@@ -43,7 +51,8 @@ module.exports = (context) ->
           background:    'url(images/scanlines.png)'
 
         moveStyles = new Object
-          backgroundPosition: "0 #{@state.offsetThin}px"
+          backgroundPosition: "0 #{@state.thinLinesOffset}px"
+          opacity:            "#{1 - @state.thinLinesOpacity}"
 
         return Merge(positionFixed, styles, moveStyles)
 
@@ -54,13 +63,18 @@ module.exports = (context) ->
           background: 'linear-gradient(#000000, transparent)'
           opacity:    0.08
 
-          marginTop: -@fatLineHeight
-          top:       @state.offsetFat
+          top:       "#{@state.fatLineOffset}%"
           bottom:    'auto'
           height:    @fatLineHeight
 
+        animationStyles = [
+          {transition: 'top 0'}
+          {transition: 'top 7s linear'}
+        ]
 
-        return Merge(positionFixed, styles)
+
+
+        return Merge(positionFixed, styles, animationStyles[@state.fatLineMoving])
 
     fatLineHeight: 200
 
