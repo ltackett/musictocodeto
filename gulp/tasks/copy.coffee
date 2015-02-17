@@ -2,7 +2,7 @@ gulp   = require('gulp')
 config = require('../config')
 
 gulp.task 'copy_html', (callback)->
-  gulp.src('./app/index.html')
+  gulp.src('./app/*.html')
     .pipe(gulp.dest("#{config.dest}"))
     .pipe(global.connect.reload())
 
