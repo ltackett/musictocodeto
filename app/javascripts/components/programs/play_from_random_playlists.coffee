@@ -49,23 +49,29 @@ module.exports = (context, cmd, params) ->
   reqParams = 2
 
   if params.length == reqParams
-    tags = [
-      'ambient'
-      'indie'
-      'glitch'
-      'code'
-      'programming'
+    playlistSeeds = [
+      {user: 'eddy-lerner',               playlist: 'music-to-code-to'}
+      {user: 'plyturon',                  playlist: 'programming-music'}
+      {user: 'attilam',                   playlist: 'music-for-programming-1'}
+      {user: 'conversemusic',             playlist: 'converse-rubber-tracks-sample'}
+      {user: 'niraj-chauhan-2',           playlist: 'coding-programming'}
+      {user: 'tim_go',                    playlist: 'atmospheric'}
+      {user: 'loscil',                    playlist: 'loscil'}
+      {user: 'electronicvoicephenomena',  playlist: 'analog-morphology-ii-1'}
     ]
+    rp = shuffle(playlistSeeds)[0]
 
+    # Hm. Another race condition. I should look into this.
+    # Probably doing something stupid.
     setRunning = () -> events.emit('command:running', true)
     setTimeout setRunning, 5
 
-    request = api.playlistByGenre(shuffle(tags)[0])
+    console.log rp
+
+    request = api.userPlaylist(rp.user, rp.playlist)
     request.onValue (data) ->
       if !data.errors
-        atRandomIndex = Math.floor(Math.random() * data.length) + 1
-        playlists     = data
-        playlist      = playlists[atRandomIndex]
+        playlist      = data
         tracks        = playlist.tracks
         currentTrack  = tracks[0]
 
