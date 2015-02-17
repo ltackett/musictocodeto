@@ -22,6 +22,7 @@ module.exports = (context) ->
       document.getElementsByTagName('input')[0].focus()
 
     render: ->
+      mixpanel.track("Page Visit")
       <div id="MTCT" style={@mainStyle} onClick={@handleClick}>
         <Scanlines/>
 
