@@ -19,7 +19,7 @@ module.exports = (context) ->
       if player.src == ''
         stdout "#{formatting.error('error:')} no song loaded."
         stdout ' '
-        mixpanel.track("Error", { 'type': 'player:no-song', 'cmd': cmd, 'params': params.join(' '))
+        mixpanel.track("Error", { 'type': 'player:no-song', 'cmd': cmd, 'params': params.join(' ')})
 
       else if params[0] == 'play'   &&  player.paused then player.play()
       else if params[0] == 'pause'  && !player.paused then player.pause()
@@ -33,7 +33,7 @@ module.exports = (context) ->
       else
         stdout "#{formatting.error('error:')} unable to process command"
         stdout ' '
-        mixpanel.track("Error", { 'type': 'player:catch-all', 'cmd': cmd, 'params': params.join(' '))
+        mixpanel.track("Error", { 'type': 'player:catch-all', 'cmd': cmd, 'params': params.join(' ')})
 
       # End program
       events.emit('command:running', false)
