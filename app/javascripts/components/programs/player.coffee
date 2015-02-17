@@ -15,13 +15,25 @@ module.exports = (context) ->
     player    = document.getElementById('player')
 
     if params.length >= minParams
-      if params[0] == 'play'   &&  player.paused then player.play()
-      if params[0] == 'pause'  && !player.paused then player.pause()
-      if params[0] == 'rewind' && !player.paused then player.currentTime = 0
-      if params[0] == 'skip'   && !player.paused then player.currentTime = (player.currentTime + parseFloat(params[1]))
-      if params[0] == 'stop'   && !player.paused
+      # errors first
+      if player.src == ''
+        stdout "#{formatting.error('error:')} no song loaded."
+        stdout ' '
+        mixpanel.track("Error", { 'type': 'player:no-song', 'cmd': cmd, 'params': params.join(' '))
+
+      else if params[0] == 'play'   &&  player.paused then player.play()
+      else if params[0] == 'pause'  && !player.paused then player.pause()
+      else if params[0] == 'rewind' && !player.paused then player.currentTime = 0
+      else if params[0] == 'skip'   && !player.paused then player.currentTime = (player.currentTime + parseFloat(params[1]))
+      else if params[0] == 'stop'   && !player.paused
         player.pause()
         player.currentTime = 0;
+
+      # Catch-all error
+      else
+        stdout "#{formatting.error('error:')} unable to process command"
+        stdout ' '
+        mixpanel.track("Error", { 'type': 'player:catch-all', 'cmd': cmd, 'params': params.join(' '))
 
       # End program
       events.emit('command:running', false)
