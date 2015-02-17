@@ -8,40 +8,8 @@ module.exports = (context, cmd, params) ->
     formatting
   } = context
 
-  errorFunctions = require('../../utils/error_functions')(context)
-
-  # Output for playlist track
-  # =============================================================================
-  playlistTrackStdout = (currentTrack, playlist) ->
-    # Output for Track
-    stdout " "
-    stdout "#{formatting.highlight('now playing:')} #{currentTrack.user.username} - #{currentTrack.title}"
-    stdout " "
-    events.emit('command:running', false)
-    mixpanel.track("Playing", { 'type': 'from-playlist', 'playlist': playlist.permalink, 'user': currentTrack.user.permalink, 'track': currentTrack.permalink })
-
-  # Play tracks function
-  # =============================================================================
-  playTracks = (currentTrack, playlist) ->
-    tracks     = playlist.tracks
-    player     = document.getElementById('player')
-    player.src = api.streamURL(currentTrack.stream_url)
-
-    # Play audio
-    player.play()
-    playlistTrackStdout(currentTrack, playlist)
-
-    player.addEventListener("ended", (event) ->
-
-      # Get array of tracks, and which one is playing
-      tracksPlaying = tracks.map (track, index) -> track.id == currentTrack.id
-      currentTrack  = tracks[tracksPlaying.indexOf(true)+1]
-
-      # Play audio
-      player.src = api.streamURL(currentTrack.stream_url)
-      player.play()
-      playlistTrackStdout(currentTrack, playlist)
-    , false)
+  errorFunctions   = require('../../utils/error_functions')(context)
+  {playlistPlayer} = require('./playlist_player')(context, cmd, params)
 
   # Play from user/track permalink pair
   # =============================================================================
@@ -64,7 +32,7 @@ module.exports = (context, cmd, params) ->
       stdout "#{formatting.highlight("#{index}:")} #{track.title}"
 
     # Play tracks
-    playTracks(currentTrack, playlist)
+    playlistPlayer(currentTrack, playlist)
 
     # End program
     events.emit('command:running', false)
