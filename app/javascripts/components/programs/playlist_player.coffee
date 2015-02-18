@@ -35,7 +35,6 @@ module.exports = (context, cmd, params) ->
         currentTrack  = tracks[tracksPlaying.indexOf(true)+1]
 
         # Play audio
-        console.log currentTrack
         if currentTrack
           player.src = api.streamURL(currentTrack.stream_url)
           player.play()

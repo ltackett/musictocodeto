@@ -36,8 +36,6 @@ module.exports = (context, cmd, params) ->
     setRunning = () -> events.emit('command:running', true)
     setTimeout setRunning, 5
 
-    console.log rp
-
     request = api.userPlaylist(rp.user, rp.playlist)
     request.onValue (data) ->
       if !data.errors
