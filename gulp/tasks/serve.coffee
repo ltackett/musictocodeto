@@ -6,6 +6,7 @@ gulp.task 'serve', ['watchify'], (callback)->
   gulp.watch "app/*.html", ['copy_html']
   gulp.watch "app/images/**", ['copy_images']
   gulp.watch "app/fonts/**", ['copy_fonts']
+  gulp.watch "app/javascripts/vendor/**", ['copy_vendor_js']
 
   global.connect.server(
     root: config.dest

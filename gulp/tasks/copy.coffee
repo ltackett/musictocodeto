@@ -13,3 +13,7 @@ gulp.task 'copy_images', (callback)->
 gulp.task 'copy_fonts', (callback)->
   gulp.src('./app/fonts/**')
     .pipe(gulp.dest("#{config.dest}/fonts"))
+
+gulp.task 'copy_vendor_js', (callback)->
+  gulp.src('./app/javascripts/vendor/**')
+    .pipe(gulp.dest("#{config.dest}/javascripts"))

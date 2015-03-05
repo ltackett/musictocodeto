@@ -7,6 +7,7 @@ gulp.task 'build', (cb)->
     'copy_html',
     'copy_images',
     'copy_fonts',
+    'copy_vendor_js',
     ['browserify', 'css'],
     'autoprefixer',
     'uglify',
