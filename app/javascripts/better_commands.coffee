@@ -33,9 +33,10 @@ module.exports = () ->
       else
         path = []
 
-      # Going back one dir
-      if newPath == ('..' || '../')
-        path.pop()
+      # Going back one or multiple dirs
+      if newPath.indexOf('..') > -1
+        newPath.split('/').map (p) ->
+          if p == '..' then path.pop()
 
       # Add new path to path array.
       # We will need to do error checking on this
@@ -69,6 +70,9 @@ module.exports = () ->
 
     # player controls
     # =============================================================================
-    pause: () -> # pause all players
-    play:  () -> # plays current active player
-    stop:  () -> # stops all players
+    pause:   ()  -> # pause all players
+    unpause: ()  -> # plays current active player
+    play:    ()  -> # plays current active player
+    stop:    ()  -> # stops all players
+    rewind:  ()  -> # skips to the beginning of the current track
+    skip:    (s) -> # skip by `n` seconds. Negative number can be used to go back.
