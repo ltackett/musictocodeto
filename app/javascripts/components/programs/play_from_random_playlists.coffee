@@ -19,7 +19,9 @@ module.exports = (context, cmd, params) ->
   if params.length == reqParams
     playlistSeeds = [
       {user: 'musictocodeto',             playlist: 'mtct-stack-overflow-02-2015'}
+      {user: 'musictocodeto',             playlist: 'mtct-stack-overflow-03-2015'}
       {user: 'musictocodeto',             playlist: 'mtct-mellow-02-2015'}
+      {user: 'musictocodeto',             playlist: 'mtct-mellow-03-2015'}
       {user: 'eddy-lerner',               playlist: 'music-to-code-to'}
       {user: 'plyturon',                  playlist: 'programming-music'}
       {user: 'attilam',                   playlist: 'music-for-programming-1'}
