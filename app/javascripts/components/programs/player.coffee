@@ -6,18 +6,20 @@ module.exports = (context) ->
     events
     errors
     formatting
+    player
   } = context
 
   # Run player commands
   # =============================================================================
   runPlayer = (cmd, params) ->
     minParams = 1
-    player    = document.getElementById('player')
 
     if params.length >= minParams
+      console.log player.soundIDs
 
+      ###
       # No track loaded in the player? Play a random-ish playlist.
-      if player.src == ''
+      if player.soundIDs.length == 0
         stdout "#{formatting.error('error:')} no track loaded."
         stdout "#{formatting.highlight('Loading random-ish playlist:')}"
         stdout ' '
@@ -37,6 +39,8 @@ module.exports = (context) ->
         stdout "#{formatting.error('error:')} unable to process command"
         stdout ' '
         mixpanel.track("Error", { 'type': 'player:catch-all', 'cmd': cmd, 'params': params.join(' ')})
+
+      ###
 
       # End program
       events.emit('command:running', false)

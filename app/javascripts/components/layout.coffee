@@ -26,8 +26,6 @@ module.exports = (context) ->
       <div id="MTCT" style={@mainStyle} onClick={@handleClick}>
         <Scanlines/>
 
-        <audio id="player"></audio>
-
         <pre style={whiteSpace: 'pre-wrap'}>
           <Banner/>
           <Lines/>

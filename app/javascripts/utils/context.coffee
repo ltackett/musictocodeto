@@ -10,6 +10,7 @@ module.exports = (config) ->
     if i >= 0 then return true
     else           return false
 
+
   formatting =
     highlight: (text) -> "<span class='highlight'>#{text}</span>"
     error:     (text) -> "<span class='error'>#{text}</span>"
@@ -17,6 +18,8 @@ module.exports = (config) ->
   errors =
     requiredParameters: (cmd, params, reqParams) ->
       "#{formatting.error('Error:')} #{formatting.highlight(cmd)} requires #{reqParams} parameters, you provided #{params.length}."
+  
+  player = soundManager
 
   return new Object
     events:      new EventEmitter()
@@ -25,3 +28,4 @@ module.exports = (config) ->
     errors:      errors
     api_wrapper: api_wrapper
     api:         api
+    player:      player
