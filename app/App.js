@@ -1,50 +1,57 @@
 /** @jsx React.DOM */
-var React = require('react');
-var Store = require('./Store.js');
+var React   = require('react');
+var Store   = require('./Store.js');
 var actions = require('./actions.js');
 
 var App = React.createClass({
   getInitialState: function () {
     return {
-      messages: Store.getMessages(),
-      newMessage: ''
+      lines: Store.getLines(),
+      STDIN: ''
     };
   },
+
   componentWillMount: function () {
     Store.addChangeListener(this.changeState);
   },
+
   componentWillUnmount: function () {
     Store.removeChangeListener(this.changeState);
   },
+
   changeState: function () {
     this.setState({
-      messages: Store.getMessages()
+      lines: Store.getLines()
     });
   },
-  addMessage: function (event) {
+
+  runCommand: function (event) {
     event.preventDefault();
-    var input = this.refs.newMessage.getDOMNode();
-    actions.addMessage(input.value);
+    var input = this.refs.STDIN.getDOMNode();
+    actions.STDOUT(input.value);
     this.setState({
-      newMessage: ''
+      STDIN: ''
     });
   },
-  updateNewMessage: function (event) {
+
+  updateSTDIN: function (event) {
     this.setState({
-      newMessage: event.target.value
+      STDIN: event.target.value
     });
   },
-  renderMessages: function (message) {
+
+  renderLine: function (message) {
     return (
       <div>{message}</div>
     );
   },
+
 	render: function() {
 		return (
 			<div>
-        {this.state.messages.map(this.renderMessages)}
-        <form onSubmit={this.addMessage}>
-          <input ref="newMessage" type="text" value={this.state.newMessage} onChange={this.updateNewMessage}/>
+        {this.state.lines.map(this.renderLine)}
+        <form onSubmit={this.runCommand}>
+          <input ref="STDIN" type="text" value={this.state.STDIN} onChange={this.updateSTDIN}/>
         </form>
       </div>
 		);
