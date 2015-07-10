@@ -1,13 +1,10 @@
 {
-  "name": "flux-react-boilerplate",
-  "version": "3.0.0",
-  "description": "React application boilerplate",
-  "author": "Christian Alfoni",
-  "license": "ISC",
+  "name": "MTCT",
+  "version": "0.1.0",
+  "description": "A CLI-like front-end for SoundCloud",
   "devDependencies": {
     "browserify": "^6.2.0",
     "glob": "^4.0.6",
-    "gulp": "^3.8.9",
     "gulp-concat": "^2.3.4",
     "gulp-cssmin": "^0.1.6",
     "gulp-if": "^1.2.4",
@@ -25,7 +22,18 @@
     "watchify": "^2.1.1"
   },
   "dependencies": {
-    "flux-react": "^2.6.0",
-    "react": "^0.12.0"
-  }
+    "gulp": "^3.8.9",
+    "flux-react": "^2.6.6",
+    "react": "^0.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ltackett/musictocodeto.git"
+  },
+  "author": "Lorin Tackett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ltackett/musictocodeto/issues"
+  },
+  "homepage": "https://github.com/ltackett/musictocodeto"
 }
