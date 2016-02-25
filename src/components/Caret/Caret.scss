@@ -1,0 +1,21 @@
+@import "../../theme/variables.scss";
+
+@keyframes blink {
+  0% { opacity: 1 }
+  30% { opacity: 1; }
+  80%, 95% { opacity: 0 }
+  100% { opacity: 1; }
+}
+
+.caret {
+  animation-duration: 0.75s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+
+  background: $phosphorus;
+  box-shadow: $phosphorus $glow;
+  display: inline-block;
+  vertical-align: middle;
+  width: 10px;
+  height: 20px;
+}

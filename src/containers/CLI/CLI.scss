@@ -1,0 +1,14 @@
+@import "../../theme/variables.scss";
+
+.CLI {
+  overflow: 'auto';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: #0a0a0a;
+  color: $phosphorus;
+  text-shadow: $phosphorus $glow;
+}

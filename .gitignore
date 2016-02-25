@@ -1,7 +1,10 @@
-# Node / Bower
+.idea/
+node_modules/
+dist/
+*.iml
+webpack-assets.json
+webpack-stats.json
 npm-debug.log
-node_modules
-bower_components
 
 # OS
 .DS_Store
@@ -12,8 +15,3 @@ bower_components
 Icon?
 ehthumbs.db
 Thumbs.db
-
-# Etc.
-build
-coverage
-data/db/**/*
