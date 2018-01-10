@@ -1,7 +1,6 @@
 # Node / Bower
 npm-debug.log
 node_modules
-bower_components
 
 # OS
 .DS_Store
@@ -14,6 +13,6 @@ ehthumbs.db
 Thumbs.db
 
 # Etc.
-build
-coverage
+dist
+.cache
 data/db/**/*

@@ -1,4 +1,4 @@
-MTCT is a CLI-like interface for SoundCloud written in React.  
+MTCT is a CLI-like interface for SoundCloud written in React.
 Check it out at [musictocodeto.com](http://musictocodeto.com)
 
 ### Running MTCT locally
@@ -7,7 +7,7 @@ Assuming you've got Node and NPM installed, just install the NPM package and run
 
 ```
 npm install
-gulp serve
+npm start
 ```
 
 ---
