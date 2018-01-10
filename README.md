@@ -3,7 +3,7 @@ Check it out at [musictocodeto.com](http://musictocodeto.com)
 
 ### Running MTCT locally
 
-Assuming you've got Node and NPM installed, just install the NPM package and run the server:
+You'll need [parcel](https://parceljs.org/) installed globally. That said:
 
 ```
 npm install
