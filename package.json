@@ -1,13 +1,6 @@
 {
-  "name": "mtct",
+  "name": "MTCT - Music To Code To",
   "version": "0.2.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "parcel build ./src/index.html",
-    "start": "parcel ./src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ltackett/musictocodeto.com.git"
@@ -18,27 +11,28 @@
     "url": "https://github.com/ltackett/musictocodeto.com/issues"
   },
   "homepage": "https://github.com/ltackett/musictocodeto.com#readme",
-  "devDependencies": {
-    "autoprefixer": "^7.2.4",
-    "babel-plugin-transform-do-expressions": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "node-sass": "^4.7.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+  "dependencies": {
+    "node-sass": "^4.9.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "2.0.0-next.3e165448"
   },
-  "postcss": {
-    "modules": false,
-    "plugins": {
-      "autoprefixer": {
-        "browsers": [
-          ">1%",
-          "last 4 versions",
-          "Firefox ESR",
-          "not ie < 9"
-        ],
-        "flexbox": "no-2009"
-      }
-    }
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "development": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions"
+    ],
+    "production": [
+      ">0.25%",
+      "not op_mini all",
+      "ie 11"
+    ]
   }
 }

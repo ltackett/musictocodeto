@@ -3,11 +3,11 @@ Check it out at [musictocodeto.com](http://musictocodeto.com)
 
 ### Running MTCT locally
 
-You'll need [parcel](https://parceljs.org/) installed globally. That said:
+Assuming you've got Node and Yarn installed, just install the modules and run the server:
 
 ```
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ---

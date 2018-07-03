@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import CommandLine from './CommandLine';
-import runCommand from '../runCommand';
+import runCommand from './runCommand';
 
 import './App.scss';
 

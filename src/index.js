@@ -1,6 +1,8 @@
 import React from 'react';
-import { render } from "react-dom";
-import App from './components/App';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
 
-const wrapper = document.getElementById('app');
-wrapper ? render(<App />, wrapper) : false;
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
