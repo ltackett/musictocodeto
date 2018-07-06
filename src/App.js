@@ -37,6 +37,9 @@ class App extends Component {
     runCommand(commandObject).then(data => {
       this.toggleCommandRunning(false);
       if (data.stdOut) { this.appendLinesToStdOut(data.stdOut); }
+
+      // If an action is passed back from the program, run it
+      // if (data.action) { this.runAction(data.action) }
     }).catch(data => {
       this.toggleCommandRunning(false);
       if (data.stdOut) { this.appendLinesToStdOut(data.stdOut); }

@@ -1,5 +1,6 @@
 {
-  "name": "MTCT - Music To Code To",
+  "name": "MTCT",
+  "description": "Music To Code To",
   "version": "0.2.0",
   "repository": {
     "type": "git",
