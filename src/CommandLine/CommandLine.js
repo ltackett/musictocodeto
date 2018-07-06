@@ -59,7 +59,7 @@ class CommandLine extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.historyIndex != this.props.historyIndex) {
+    if (prevProps.historyIndex !== this.props.historyIndex) {
       this.valueFromHistory();
     }
   }

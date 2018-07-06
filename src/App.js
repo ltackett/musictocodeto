@@ -104,14 +104,7 @@ class App extends Component {
   }
 
   render() {
-    const {
-      commandRunning,
-      history,
-      historyIndex,
-      stdOut,
-    } = this.state;
-
-    console.log('env: ', process.env);
+    const { stdOut } = this.state;
 
     return (
       <div>
