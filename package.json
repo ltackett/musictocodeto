@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/ltackett/musictocodeto.com#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "node-sass": "^4.9.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
