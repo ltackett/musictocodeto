@@ -23,7 +23,7 @@ const runCommand = (commandObject) => new Promise((resolve, reject) => {
   // Otherwise, error out.
   } else {
     reject({
-      stdOut: ['Command not found.', '']
+      stdErr: ['Command not found.']
     })
   }
 });
