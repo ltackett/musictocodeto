@@ -32,22 +32,26 @@ class App extends Component {
 
     // Run the command
     this.toggleCommandRunning(true);
-    runCommand(commandObject).then(data => {
-      this.toggleCommandRunning(false);
-      if (data.stdOut) { this.appendLinesToStdOut(data.stdOut.concat('')); }
+    runCommand(commandObject)
+      .then(data => {
+        this.toggleCommandRunning(false);
+        if (data.stdOut) { this.appendLinesToStdOut(data.stdOut.concat('')); }
 
-      // If an action is passed back from the program, run it
-      // if (data.action) { this.runAction(data.action) }
-    }).catch(data => {
-      this.toggleCommandRunning(false);
-      if (data.stdErr) {
-        this.appendLinesToStdOut(
-          data.stdErr.map(err =>
-            <R><em className="err">Error:</em> {err}</R>
-          ).concat('')
-        )
-      }
-    })
+        // If an action is passed back from the program, run it
+        // if (data.action) { this.runAction(data.action) }
+      })
+
+      // Catch errors
+      .catch(data => {
+        this.toggleCommandRunning(false);
+        if (data.stdErr) {
+          this.appendLinesToStdOut(
+            data.stdErr.map(err =>
+              <R><em className="err">Error:</em> {err}</R>
+            ).concat('')
+          )
+        }
+      })
 
     // Add command to history
     this.appendToHistory(commandObject);
