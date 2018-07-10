@@ -13,22 +13,25 @@ const keys = {
 };
 
 class CommandLine extends Component {
-  constructor() {
-    super();
-    this.state = {
-      cmd: '',
-    };
+  state = {
+    cmd: '',
   }
 
-  handleSubmit(event) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.historyIndex !== this.props.historyIndex) {
+      this.valueFromHistory();
+    }
+  }
+
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const { cmd } = event.target;
     this.props.onCommand(cmd.value);
     this.setState({ cmd: '' });
-  };
+  }
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -38,12 +41,12 @@ class CommandLine extends Component {
     });
   }
 
-  handleKeyPressed(event) {
+  handleKeyPressed = (event) => {
     if (event.keyCode === keys.UP) { this.props.onPreviousCommand(); }
     if (event.keyCode === keys.DOWN) { this.props.onNextCommand(); }
   }
 
-  valueFromHistory() {
+  valueFromHistory = () => {
     const { history, historyIndex } = this.props
 
     if (historyIndex === 0) {
@@ -54,14 +57,9 @@ class CommandLine extends Component {
     }
   }
 
-  componentDidMount() {
-    this.cmdInput.focus();
-  }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.historyIndex !== this.props.historyIndex) {
-      this.valueFromHistory();
-    }
+  focusInput = (input) => {
+    return input && input.focus()
   }
 
   render() {
@@ -78,14 +76,15 @@ class CommandLine extends Component {
           )}
         </span>
 
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             name="cmd"
             value={this.state.cmd}
-            onChange={(e) => this.handleInputChange(e)}
-            onKeyDown={(e) => this.handleKeyPressed(e)}
-            ref={(input) => {this.cmdInput = input}}
+            ref={(input) => this.focusInput(input)}
+            onBlur={(e) => this.focusInput(e.target)}
+            onChange={this.handleInputChange}
+            onKeyDown={this.handleKeyPressed}
           />
 
           <button type="submit">Submit</button>

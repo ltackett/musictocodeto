@@ -18,6 +18,10 @@ form {
 em {
   @include colorize-text(#fff);
   font-style: normal;
+
+  &.err {
+    @include colorize-text(#F00);
+  }
 }
 
 ul {

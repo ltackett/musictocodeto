@@ -6,15 +6,12 @@ const runCommand = (commandObject) => new Promise((resolve, reject) => {
   // Check programs object
   // If there is a match, run it.
   if (typeof programs[program] === 'function') {
-    runProgram(
-      programs[program],
-      commandObject,
-      (data) => {
-        // Kinda hacky way to append a newLine at
-        // the end of every successful command
-        resolve(Object.assign(data, {
-          stdOut: data.stdOut.concat('')
-        }));
+    runProgram(programs[program], commandObject, (data) => {
+        // Reject if there are any errors
+        if (data.stdErr) { reject(data) }
+
+        // Otherwise, resolve
+        resolve(data)
       }
     );
 
@@ -32,7 +29,9 @@ const runCommand = (commandObject) => new Promise((resolve, reject) => {
 });
 
 const runProgram = (program, commandObject, callback) => {
-  program(commandObject).then((data) => callback(data));
+  program(commandObject)
+    .then((data) => callback(data))
+    .catch((data) => callback(data));
 };
 
 export default runCommand;

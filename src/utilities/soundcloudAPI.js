@@ -5,6 +5,7 @@ const apiKey = process.env.REACT_APP_SOUNDCLOUD_API_KEY || ''
 
 const api = axios.create({
   baseURL: apiRoot,
+  timeout: 5000,
   params: {
     client_id: apiKey
   }
