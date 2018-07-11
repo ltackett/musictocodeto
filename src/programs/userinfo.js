@@ -8,14 +8,14 @@ const userinfo = ({ params }) => new Promise((resolve, reject) => {
   const username = params[0]
 
   if (!username) {
-    reject({ stdErr: ['No username provided'] })
+    reject({ lines: ['No username provided'] })
   }
 
   paths.resolve(username).then(res => {
     const { data } = res
 
     resolve({
-      stdOut: [
+      lines: [
         <R><em>User ID:</em> {data.id}</R>,
         <R><em>Username:</em> {data.username}</R>,
         <R><em>Location:</em> {data.city}, {data.country}</R>,
@@ -23,7 +23,7 @@ const userinfo = ({ params }) => new Promise((resolve, reject) => {
       ]
     })
   }).catch(err => {
-    reject({ stdErr: [err.message] })
+    reject({ lines: [err.message] })
   })
 });
 

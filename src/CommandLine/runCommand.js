@@ -1,4 +1,4 @@
-import programs from './programs';
+import programs from '../programs';
 
 const runCommand = (commandObject) => new Promise((resolve, reject) => {
   const { program } = commandObject;
@@ -8,7 +8,7 @@ const runCommand = (commandObject) => new Promise((resolve, reject) => {
   if (typeof programs[program] === 'function') {
     runProgram(programs[program], commandObject, (data) => {
         // Reject if there are any errors
-        if (data.stdErr) { reject(data) }
+        if (data.error) { reject(data) }
 
         // Otherwise, resolve
         resolve(data)
@@ -22,9 +22,7 @@ const runCommand = (commandObject) => new Promise((resolve, reject) => {
 
   // Otherwise, error out.
   } else {
-    reject({
-      stdErr: ['Command not found.']
-    })
+    reject({ error: 'Command not found' })
   }
 });
 

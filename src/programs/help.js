@@ -30,7 +30,7 @@ const helpText = [
 
 
 const help = (cmdObject) => new Promise((resolve, reject) => {
-  resolve({ stdOut: helpText});
+  resolve({ lines: helpText});
 });
 
 export default help;

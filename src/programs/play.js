@@ -7,7 +7,7 @@ const playText = [
 ]
 
 const play = (cmdObject) => new Promise((resolve, reject) => {
-  resolve({ stdOut: playText});
+  resolve({ lines: playText});
 });
 
 export default play;
