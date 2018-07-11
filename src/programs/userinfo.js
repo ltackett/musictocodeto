@@ -1,8 +1,11 @@
 import React from 'react';
 import soundcloudAPI from '../utilities/soundcloudAPI'
+import { store } from '../store'
+import { stdoutMultiline } from '../modules/stdout'
 
-const R = React.Fragment // Alias React.Fragment for shorthand JSX preprocessing per line
+const { dispatch } = store
 const { paths } = soundcloudAPI
+const R = React.Fragment
 
 const userinfo = ({ params }) => new Promise((resolve, reject) => {
   const username = params[0]
@@ -14,16 +17,15 @@ const userinfo = ({ params }) => new Promise((resolve, reject) => {
   paths.resolve(username).then(res => {
     const { data } = res
 
-    resolve({
-      lines: [
-        <R><em>User ID:</em> {data.id}</R>,
-        <R><em>Username:</em> {data.username}</R>,
-        <R><em>Location:</em> {data.city}, {data.country}</R>,
-        <R><em>Description:</em> {data.description}</R>,
-      ]
-    })
+    dispatch(stdoutMultiline([
+      <R><em>User ID:</em> {data.id}</R>,
+      <R><em>Username:</em> {data.username}</R>,
+      <R><em>Location:</em> {data.city}, {data.country}</R>,
+      <R><em>Description:</em> {data.description}</R>,
+    ]))
+    resolve()
   }).catch(err => {
-    reject({ lines: [err.message] })
+    reject({ error: [err.message] })
   })
 });
 

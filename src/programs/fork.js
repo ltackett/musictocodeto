@@ -1,6 +1,9 @@
 import React from 'react';
 import { shuffle } from 'lodash'
+import { store } from '../store'
+import { stdout, stdoutMultiline } from '../modules/stdout'
 
+const { dispatch } = store
 const R = React.Fragment
 
 const forkMessages = [
@@ -16,15 +19,17 @@ const fork = (cmdObject) => new Promise((resolve, reject) => {
   const { params } = cmdObject
 
   if (params.indexOf('-h') >= 0 || params.indexOf('--help') >= 0) {
-    resolve({ lines: ['View musictocodeto on GitHub.'] })
+    dispatch(stdout('Fork me to view MusicToCodeTo on GitHub'))
+    resolve()
   } else {
-    resolve({ lines: [
+    dispatch(stdoutMultiline([
       <R><em>{shuffle(forkMessages)[0]}</em></R>,
       <R><em className="err">Exiting...</em></R>
-    ] });
+    ]))
 
     // Redirect
     setTimeout(() => {
+      resolve()
       window.location = "http://github.com/ltackett/musictocodeto/"
     }, 2000)
   }

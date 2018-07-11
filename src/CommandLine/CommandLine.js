@@ -74,7 +74,6 @@ class CommandLine extends Component {
     runCommand(cmdObject)
       .then(data => {
         this.props.stopCmd();
-        if (data.lines) { this.props.stdoutMultiline(data.lines); }
         if (cmdObject.cmd !== '') { this.props.stdout('') }
         this.scrollToBottom();
 
@@ -86,7 +85,6 @@ class CommandLine extends Component {
       .catch(data => {
         this.props.stopCmd();
         if (data.error) { this.props.stdout(<R><em className="err">Error:</em> {data.error}</R>) }
-        if (data.lines) { this.props.stdoutMultiline(data.lines); }
         if (cmdObject.cmd !== '') { this.props.stdout('') }
         this.scrollToBottom();
       })
