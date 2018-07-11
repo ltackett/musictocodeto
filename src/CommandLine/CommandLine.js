@@ -20,6 +20,12 @@ import Bang from './Bang';
 import Caret from './Caret';
 import Spinner from './Spinner';
 
+import Highlight from '../Components/Text_Highlight'
+import $ from '../constants'
+
+const R = React.Fragment
+const H = Highlight
+
 const keys = {
   UP:    38,
   DOWN:  40,
@@ -27,8 +33,6 @@ const keys = {
   RIGHT: 39,
   ENTER: 13,
 };
-
-const R = React.Fragment
 
 class CommandLine extends Component {
   state = {
@@ -84,7 +88,7 @@ class CommandLine extends Component {
       // Catch errors
       .catch(data => {
         this.props.stopCmd();
-        if (data.error) { this.props.stdout(<R><em className="err">Error:</em> {data.error}</R>) }
+        if (data.error) { this.props.stdout(<R><H color={$.danger}>Error:</H> {data.error}</R>) }
         if (cmdObject.cmd !== '') { this.props.stdout('') }
         this.scrollToBottom();
       })

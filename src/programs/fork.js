@@ -3,8 +3,14 @@ import { shuffle } from 'lodash'
 import { store } from '../store'
 import { stdout, stdoutMultiline } from '../modules/stdout'
 
-const { dispatch } = store
+import Highlight from '../Components/Text_Highlight'
+import MagicalRaindbow from '../Components/Text_MagicalRainbow'
+import $ from '../constants'
+
 const R = React.Fragment
+const H = Highlight
+
+const { dispatch } = store
 
 const forkMessages = [
   "fork me hard!",
@@ -19,12 +25,12 @@ const fork = (cmdObject) => new Promise((resolve, reject) => {
   const { params } = cmdObject
 
   if (params.indexOf('-h') >= 0 || params.indexOf('--help') >= 0) {
-    dispatch(stdout('Fork me to view MusicToCodeTo on GitHub'))
+    dispatch(stdout(<H>View <MagicalRaindbow>MusicToCodeTo</MagicalRaindbow> on GitHub</H>))
     resolve()
   } else {
     dispatch(stdoutMultiline([
-      <R><em>{shuffle(forkMessages)[0]}</em></R>,
-      <R><em className="err">Exiting...</em></R>
+      <R><H>{shuffle(forkMessages)[0]}</H></R>,
+      <R><H color={$.danger}>Exiting...</H></R>
     ]))
 
     // Redirect

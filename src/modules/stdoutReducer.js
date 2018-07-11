@@ -1,3 +1,5 @@
+import banner from './banner'
+
 export const ADD_LINE = 'stdout/ADD_LINE'
 export const ADD_LINES = 'stdout/ADD_LINES'
 
@@ -10,7 +12,7 @@ export const START_CMD = 'stdout/START_CMD'
 export const STOP_CMD = 'stdout/STOP_CMD'
 
 export const initialState = {
-  stdoutLines: [],
+  stdoutLines: banner,
   cmdHistory: [],
   cmdHistoryIndex: 0,
   cmdRunning: false,
