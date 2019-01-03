@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Fragment as R } from 'react';
 import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
 import { stdoutMultiline } from 'modules/stdout'
 
+import theme from 'utilities/theme'
+import H from 'Components/Text_Highlight'
+
 const { dispatch } = store
 const { paths } = soundcloudAPI
-const R = React.Fragment
 
 const userinfo = ({ params }) => new Promise((resolve, reject) => {
   const username = params[0]
@@ -18,10 +20,10 @@ const userinfo = ({ params }) => new Promise((resolve, reject) => {
     const { data } = res
 
     dispatch(stdoutMultiline([
-      <R><em>User ID:</em> {data.id}</R>,
-      <R><em>Username:</em> {data.username}</R>,
-      <R><em>Location:</em> {data.city}, {data.country}</R>,
-      <R><em>Description:</em> {data.description}</R>,
+      <R><H color={theme.cyan}>User ID:</H> <H>{data.id}</H></R>,
+      <R><H color={theme.cyan}>Username:</H> <H>{data.username}</H></R>,
+      <R><H color={theme.cyan}>Location:</H> <H>{data.city}, {data.country}</H></R>,
+      <R><H color={theme.cyan}>Description:</H> <H>{data.description}</H></R>,
     ]))
     resolve()
   }).catch(err => {
