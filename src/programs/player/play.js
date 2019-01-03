@@ -1,7 +1,7 @@
 // import React from 'react';
-import soundcloudAPI from '../utilities/soundcloudAPI'
-import { store } from '../store'
-import { stdoutMultiline } from '../modules/stdout'
+import soundcloudAPI from 'utilities/soundcloudAPI'
+import { store } from 'store'
+import { stdoutMultiline } from 'modules/stdout'
 
 const { dispatch } = store
 

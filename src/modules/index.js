@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import stdout from './stdoutReducer'
+import stdout from 'modules/stdoutReducer'
 
 export const stdoutPersistConfig = {
   key: 'stdout',

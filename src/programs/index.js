@@ -1,13 +1,13 @@
-import fork from './fork';
-import help from './help';
-import play from './play';
-import userinfo from './userinfo';
+import fork from 'programs/fork';
+import help from 'programs/help';
+import userinfo from 'programs/userinfo';
+import player from 'programs/player'
 
 const programs = {
   fork,
   help,
-  play,
   userinfo,
+  ...player
 }
 
 export default programs;

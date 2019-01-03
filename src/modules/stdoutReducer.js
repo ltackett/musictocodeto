@@ -1,4 +1,4 @@
-import banner from './banner'
+import banner from 'modules/banner'
 
 export const ADD_LINE = 'stdout/ADD_LINE'
 export const ADD_LINES = 'stdout/ADD_LINES'

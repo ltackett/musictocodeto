@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import runCommand from './runCommand';
+import runCommand from 'CommandLine/runCommand';
 
 import {
   stdout,
@@ -14,14 +14,14 @@ import {
 
   startCmd,
   stopCmd,
-} from '../modules/stdout'
+} from 'modules/stdout'
 
-import Bang from './Bang';
-import Caret from './Caret';
-import Spinner from './Spinner';
+import Bang from 'CommandLine/Bang';
+import Caret from 'CommandLine/Caret';
+import Spinner from 'CommandLine/Spinner';
 
-import Highlight from '../Components/Text_Highlight'
-import $ from '../constants'
+import Highlight from 'Components/Text_Highlight'
+import $ from 'constants'
 
 const R = React.Fragment
 const H = Highlight

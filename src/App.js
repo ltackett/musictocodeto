@@ -1,9 +1,9 @@
 import React from 'react';
 
-import CommandLine from './CommandLine';
-import Stdout from './Stdout'
+import CommandLine from 'CommandLine';
+import Stdout from 'Stdout'
 
-import './App.scss';
+import 'App.scss';
 
 export default () => (
   <div>

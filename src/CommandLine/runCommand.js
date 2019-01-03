@@ -1,4 +1,4 @@
-import programs from '../programs';
+import programs from 'programs';
 
 const runCommand = (commandObject) => new Promise((resolve, reject) => {
   const { program } = commandObject;

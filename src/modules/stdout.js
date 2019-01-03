@@ -9,7 +9,7 @@ import reducer, {
 
   START_CMD,
   STOP_CMD,
-} from './stdoutReducer'
+} from 'modules/stdoutReducer'
 
 export { reducer as default, ADD_LINE, ADD_LINES }
 

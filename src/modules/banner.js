@@ -1,5 +1,5 @@
 import React from 'react'
-import Highlight from '../Components/Text_Highlight'
+import Highlight from 'Components/Text_Highlight'
 
 const R = React.Fragment
 const H = Highlight

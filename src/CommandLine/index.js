@@ -1,2 +1,2 @@
-import CommandLine from './CommandLine';
+import CommandLine from 'CommandLine';
 export default CommandLine;

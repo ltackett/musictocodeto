@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Bang.scss';
+import 'CommandLine/Bang.scss';
 
 const Bang = (props) => (
   <span id="bang">

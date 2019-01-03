@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Caret.scss'
+import 'CommandLine/Caret.scss'
 
 const Caret = () => (
   <span id="caret" />

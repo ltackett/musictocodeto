@@ -1,11 +1,11 @@
 import React from 'react';
 import { shuffle } from 'lodash'
-import { store } from '../store'
-import { stdout, stdoutMultiline } from '../modules/stdout'
+import { store } from 'store'
+import { stdout, stdoutMultiline } from 'modules/stdout'
 
-import Highlight from '../Components/Text_Highlight'
-import MagicalRaindbow from '../Components/Text_MagicalRainbow'
-import $ from '../constants'
+import Highlight from 'Components/Text_Highlight'
+import MagicalRaindbow from 'Components/Text_MagicalRainbow'
+import $ from 'constants'
 
 const R = React.Fragment
 const H = Highlight
