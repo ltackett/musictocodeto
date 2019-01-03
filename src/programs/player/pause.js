@@ -1,4 +1,4 @@
-import React, { Fragment as F } from 'react';
+import React from 'react';
 import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
 import { stdoutMultiline } from 'modules/stdout'
@@ -9,17 +9,14 @@ import H from 'Components/Text_Highlight'
 const { dispatch } = store
 
 const lines = [
-  <F>
-    <H color={theme.cyan}>Now playing: </H>
-    <H color={theme.pink}>Artist Name - Song Name</H>
-  </F>,
+  <H color={theme.cyan}>Player paused.</H>,
   `Soundcloud API Key: ${soundcloudAPI.key}`,
   `Soundcloud API Root: ${soundcloudAPI.root}`,
 ]
 
-const play = (cmdObject) => new Promise((resolve, reject) => {
+const pause = (cmdObject) => new Promise((resolve, reject) => {
   dispatch(stdoutMultiline(lines))
   resolve()
 });
 
-export default play;
+export default pause;

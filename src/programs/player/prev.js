@@ -9,6 +9,7 @@ import H from 'Components/Text_Highlight'
 const { dispatch } = store
 
 const lines = [
+  <H color={theme.cyan}>Going to previous song.</H>,
   <F>
     <H color={theme.cyan}>Now playing: </H>
     <H color={theme.pink}>Artist Name - Song Name</H>
@@ -17,9 +18,9 @@ const lines = [
   `Soundcloud API Root: ${soundcloudAPI.root}`,
 ]
 
-const play = (cmdObject) => new Promise((resolve, reject) => {
+const prev = (cmdObject) => new Promise((resolve, reject) => {
   dispatch(stdoutMultiline(lines))
   resolve()
 });
 
-export default play;
+export default prev;
