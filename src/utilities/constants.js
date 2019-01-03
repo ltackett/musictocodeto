@@ -1,4 +1,4 @@
-const baseColors = {
+export const baseColors = {
   blue: '#007bff',
   indigo: '#6610f2',
   purple: '#6f42c1',
@@ -23,7 +23,7 @@ const baseColors = {
   black: '#000',
 }
 
-const namedColors = {
+export const namedColors = {
   primary: baseColors.blue,
   secondary: baseColors.gray_600,
   success: baseColors.green,
@@ -32,9 +32,4 @@ const namedColors = {
   danger: baseColors.red,
   light: baseColors.gray_100,
   dark: baseColors.gray_800,
-}
-
-export default {
-  ...baseColors,
-  ...namedColors
 }

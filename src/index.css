@@ -1,5 +1,8 @@
 body {
+  font: normal 14px/20px monospace;
+  font-family: "mplus-1m", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+  letter-spacing: 0.05em;
+  background: #000;
   margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+  padding: 2ch;
 }

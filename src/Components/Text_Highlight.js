@@ -1,10 +1,13 @@
 import React from 'react'
+import styled from 'styled-components'
+import theme from 'utilities/theme'
+
+const Highlight = styled.em`
+  ${props => theme.colorizeText(props.color ? props.color : '#fff')}
+`
 
 export default (props) => (
-  <em style={{
-    color: props.color ? props.color : '#FFF',
-    textShadow: `${props.color ? props.color : '#FFF'} 0 0 10px`
-  }}>
+  <Highlight {...props}>
     {props.children}
-  </em>
+  </Highlight>
 )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import runCommand from 'CommandLine/runCommand';
+import runCommand from './runCommand';
 
 import {
   stdout,
@@ -16,15 +16,14 @@ import {
   stopCmd,
 } from 'modules/stdout'
 
-import Bang from 'CommandLine/Bang';
-import Caret from 'CommandLine/Caret';
-import Spinner from 'CommandLine/Spinner';
+import Bang from './Bang';
+import Caret from './Caret';
+import Spinner from './Spinner';
 
-import Highlight from 'Components/Text_Highlight'
-import $ from 'constants'
+import HighlightError from 'Components/Text_HighlightError'
 
 const R = React.Fragment
-const H = Highlight
+const E = HighlightError
 
 const keys = {
   UP:    38,
@@ -88,7 +87,7 @@ class CommandLine extends Component {
       // Catch errors
       .catch(data => {
         this.props.stopCmd();
-        if (data.error) { this.props.stdout(<R><H color={$.danger}>Error:</H> {data.error}</R>) }
+        if (data.error) { this.props.stdout(<R><E>Error:</E> {data.error}</R>) }
         if (cmdObject.cmd !== '') { this.props.stdout('') }
         this.scrollToBottom();
       })
