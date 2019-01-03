@@ -93,7 +93,9 @@ class CommandLine extends Component {
       })
 
     // Add command to history
-    this.props.addToCmdHistory(cmdObject);
+    if (!!cmd && cmd !== '') {
+      this.props.addToCmdHistory(cmdObject);
+    }
 
     // Reset historyIndex
     this.props.setCmdHistoryIndex(0);
