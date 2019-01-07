@@ -1,4 +1,4 @@
-import banner from './banner'
+import banner from 'textblocks/banner'
 
 import {
   ADD_LINE,
