@@ -1,7 +1,6 @@
 import React from 'react';
-import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
-import { stdoutMultiline } from 'modules/stdout'
+import { stdout } from 'modules/stdout/actions'
 
 import theme from 'utilities/theme'
 import H from 'Components/Text_Highlight'
@@ -9,13 +8,12 @@ import H from 'Components/Text_Highlight'
 const { dispatch } = store
 
 const lines = [
-  <H color={theme.cyan}>Player paused.</H>,
-  `Soundcloud API Key: ${soundcloudAPI.key}`,
-  `Soundcloud API Root: ${soundcloudAPI.root}`,
+  <H color={theme.cyan}>Player paused.</H>
 ]
 
 const pause = (cmdObject) => new Promise((resolve, reject) => {
-  dispatch(stdoutMultiline(lines))
+  window.player.pause()
+  dispatch(stdout(lines))
   resolve()
 });
 

@@ -1,25 +1,29 @@
 import React, { Fragment as F } from 'react';
-import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
-import { stdoutMultiline } from 'modules/stdout'
+import { stdout } from 'modules/stdout/actions'
 
 import theme from 'utilities/theme'
 import H from 'Components/Text_Highlight'
 
 const { dispatch } = store
 
-const lines = [
-  <F>
-    <H color={theme.cyan}>Now playing: </H>
-    <H color={theme.pink}>Artist Name - Song Name</H>
-  </F>,
-  `Soundcloud API Key: ${soundcloudAPI.key}`,
-  `Soundcloud API Root: ${soundcloudAPI.root}`,
-]
-
 const play = (cmdObject) => new Promise((resolve, reject) => {
-  dispatch(stdoutMultiline(lines))
-  resolve()
+  const playerState = store.getState().player
+  const { nowPlaying } = playerState
+
+  if (nowPlaying !== null) {
+    window.player.play()
+    dispatch(stdout(
+      <F>
+        <H color={theme.cyan}>Now playing: </H>
+        <H color={theme.pink}>{nowPlaying.artist} - {nowPlaying.title}</H>
+      </F>
+    ))
+    return resolve()
+  }
+
+  window.player.pause()
+  reject({ error: 'There is no song loaded.' })
 });
 
 export default play;

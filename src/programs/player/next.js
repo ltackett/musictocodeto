@@ -1,7 +1,8 @@
 import React, { Fragment as F } from 'react';
-import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
-import { stdoutMultiline } from 'modules/stdout'
+import { playNextFromQueue } from 'modules/player/actions'
+import Pause from './pause'
+import Play from './play'
 
 import theme from 'utilities/theme'
 import H from 'Components/Text_Highlight'
@@ -13,14 +14,15 @@ const lines = [
   <F>
     <H color={theme.cyan}>Now playing: </H>
     <H color={theme.pink}>Artist Name - Song Name</H>
-  </F>,
-  `Soundcloud API Key: ${soundcloudAPI.key}`,
-  `Soundcloud API Root: ${soundcloudAPI.root}`,
+  </F>
 ]
 
 const next = (cmdObject) => new Promise((resolve, reject) => {
-  dispatch(stdoutMultiline(lines))
-  resolve()
+  dispatch(playNextFromQueue())
+  Play(cmdObject)
+    .then(() => resolve())
+    .catch(err => reject(err))
+
 });
 
 export default next;
