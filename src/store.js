@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
   const devToolsExtension = window.devToolsExtension
 
   if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
+    enhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
   }
 }
 
