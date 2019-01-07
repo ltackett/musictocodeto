@@ -16,8 +16,8 @@ const Caret = styled.span`
   width: 10px;
   height: 20px;
 
-  -webkit-animation: 0.75s ${pulsate} ease-out;
-  -webkit-animation-iteration-count: infinite;
+  animation: 0.75s ${pulsate} ease-out;
+  animation-iteration-count: infinite;
   opacity: 0;
 `
 

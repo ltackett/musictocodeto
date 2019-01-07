@@ -5,7 +5,6 @@ import runCommand from './runCommand';
 
 import {
   stdout,
-  stdoutMultiline,
 
   addToCmdHistory,
   setCmdHistoryIndex,
@@ -14,11 +13,14 @@ import {
 
   startCmd,
   stopCmd,
-} from 'modules/stdout'
+} from 'modules/stdout/actions'
 
 import Bang from './Bang';
 import Caret from './Caret';
 import Spinner from './Spinner';
+import VideoSync from './VideoSync';
+import Scanlines from './Scanlines';
+import ProgressBar from './ProgressBar';
 
 import HighlightError from 'Components/Text_HighlightError'
 
@@ -162,13 +164,23 @@ class CommandLine extends Component {
   }
 
   render() {
+    const {
+      isPlaying,
+      currentTime,
+      duration,
+      cmdRunning
+    } = this.props
+
     return (
       <div id="command-line">
+        <Scanlines />
+        <VideoSync />
+
         <span className="prompt">
           <Bang symbol={this.props.bang} />
           <span className="cli">{this.state.cmd}</span>
 
-          {this.props.cmdRunning ? (
+          {cmdRunning ? (
             <Spinner />
           ) : (
             <Caret />
@@ -188,6 +200,13 @@ class CommandLine extends Component {
 
           <button type="submit">Submit</button>
         </form>
+
+        {isPlaying &&
+          <React.Fragment>
+            <br />
+            <ProgressBar {...{ currentTime, duration }} />
+          </React.Fragment>
+        }
       </div>
     );
   }
@@ -197,11 +216,14 @@ const mapStateToProps = state => ({
   cmdHistory: state.stdout.cmdHistory,
   cmdHistoryIndex: state.stdout.cmdHistoryIndex,
   cmdRunning: state.stdout.cmdRunning,
+
+  isPlaying: state.player.isPlaying,
+  currentTime: state.player.currentTime,
+  duration: state.player.duration,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   stdout,
-  stdoutMultiline,
 
   startCmd,
   stopCmd,
