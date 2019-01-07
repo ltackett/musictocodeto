@@ -1,7 +1,7 @@
 import React from 'react';
 import { shuffle } from 'lodash'
 import { store } from 'store'
-import { stdout, stdoutMultiline } from 'modules/stdout'
+import { stdout } from 'modules/stdout/actions'
 
 import Highlight from 'Components/Text_Highlight'
 import MagicalRaindbow from 'Components/Text_MagicalRainbow'
@@ -28,7 +28,7 @@ const fork = (cmdObject) => new Promise((resolve, reject) => {
     dispatch(stdout(<H>View <MagicalRaindbow>MusicToCodeTo</MagicalRaindbow> on GitHub</H>))
     resolve()
   } else {
-    dispatch(stdoutMultiline([
+    dispatch(stdout([
       <R><H>{shuffle(forkMessages)[0]}</H></R>,
       <R><H color={$.danger}>Exiting...</H></R>
     ]))

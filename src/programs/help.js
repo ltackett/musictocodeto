@@ -1,6 +1,6 @@
 import React from 'react';
 import { store } from 'store'
-import { stdoutMultiline } from 'modules/stdout'
+import { stdout } from 'modules/stdout/actions'
 
 const { dispatch } = store
 const R = React.Fragment // Alias React.Fragment for shorthand JSX preprocessing per line
@@ -34,7 +34,7 @@ const helpText = [
 
 
 const help = (cmdObject) => new Promise((resolve, reject) => {
-  dispatch(stdoutMultiline(helpText))
+  dispatch(stdout(helpText))
   resolve()
 });
 

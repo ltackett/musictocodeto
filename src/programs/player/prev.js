@@ -1,7 +1,7 @@
 import React, { Fragment as F } from 'react';
 import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
-import { stdoutMultiline } from 'modules/stdout'
+import { stdout } from 'modules/stdout/actions'
 
 import theme from 'utilities/theme'
 import H from 'Components/Text_Highlight'
@@ -19,7 +19,7 @@ const lines = [
 ]
 
 const prev = (cmdObject) => new Promise((resolve, reject) => {
-  dispatch(stdoutMultiline(lines))
+  dispatch(stdout(lines))
   resolve()
 });
 
