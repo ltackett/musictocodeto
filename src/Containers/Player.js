@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
+import next from 'programs/player/next'
+
 import {
   isPlaying,
   updateTimecode
@@ -21,6 +23,9 @@ class Player extends Component {
 
     audioEl.onplay = this.handlePlay
     audioEl.onpause = this.handlePause
+    audioEl.onended = this.handleEnded
+
+    // console.log({ audioEl });
   }
 
   handlePlay = () => {
@@ -36,6 +41,10 @@ class Player extends Component {
   handlePause = () => {
     this.props.dispatch(isPlaying(false))
     clearInterval(this.updateTimecode)
+  }
+
+  handleEnded = () => {
+    next()
   }
 
   render() {
