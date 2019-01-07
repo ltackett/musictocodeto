@@ -22,6 +22,7 @@ const flicker = keyframes`
 export const RootStyles = styled.div`
   ${theme.colorizeText(theme.phosphorus)}
   opacity: 1;
+  max-width: 100vw;
 
   ${window.animate &&
     css`
@@ -43,8 +44,6 @@ export const RootStyles = styled.div`
     margin: 0;
     padding: 0;
     list-style: none;
-
-    white-space: pre;
 
     // Prevent blank lines from collapsing
     li:after {
