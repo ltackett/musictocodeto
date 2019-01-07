@@ -1,15 +1,17 @@
-import banner from 'modules/banner'
+import banner from './banner'
 
-export const ADD_LINE = 'stdout/ADD_LINE'
-export const ADD_LINES = 'stdout/ADD_LINES'
+import {
+  ADD_LINE,
+  ADD_LINES,
 
-export const ADD_TO_CMD_HISTORY = 'stdout/ADD_TO_CMD_HISTORY'
-export const SET_CMD_HISTORY_INDEX = 'stdout/SET_CMD_HISTORY_INDEX'
-export const INCREMENT_CMD_HISTORY_INDEX = 'stdout/INCREMENT_CMD_HISTORY_INDEX'
-export const DECREMENT_CMD_HISTORY_INDEX = 'stdout/DECREMENT_CMD_HISTORY_INDEX'
+  ADD_TO_CMD_HISTORY,
+  SET_CMD_HISTORY_INDEX,
+  INCREMENT_CMD_HISTORY_INDEX,
+  DECREMENT_CMD_HISTORY_INDEX,
 
-export const START_CMD = 'stdout/START_CMD'
-export const STOP_CMD = 'stdout/STOP_CMD'
+  START_CMD,
+  STOP_CMD
+} from './constants'
 
 export const initialState = {
   stdoutLines: banner,

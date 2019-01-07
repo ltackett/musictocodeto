@@ -1,4 +1,4 @@
-import reducer, {
+import {
   ADD_LINE,
   ADD_LINES,
 
@@ -8,24 +8,25 @@ import reducer, {
   DECREMENT_CMD_HISTORY_INDEX,
 
   START_CMD,
-  STOP_CMD,
-} from 'modules/stdoutReducer'
-
-export { reducer as default, ADD_LINE, ADD_LINES }
+  STOP_CMD
+} from './constants'
 
 // ============================================================================
 
-export const stdout = (line) => (dispatch) => dispatch({
-  type: ADD_LINE,
-  line
-})
+export const stdout = (data) => (dispatch) => {
+  if (Array.isArray(data)) {
+    dispatch({
+      type: ADD_LINES,
+      lines: data
+    })
+  } else {
+    dispatch({
+      type: ADD_LINE,
+      line: data
+    })
+  }
+}
 
-// ============================================================================
-
-export const stdoutMultiline = (lines) => (dispatch) => dispatch({
-  type: ADD_LINES,
-  lines
-})
 
 // ============================================================================
 
