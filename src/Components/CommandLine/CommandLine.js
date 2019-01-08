@@ -204,7 +204,8 @@ class CommandLine extends Component {
         {isPlaying &&
           <React.Fragment>
             <br />
-            <ProgressBar {...{ currentTime, duration }} />
+            <br />
+            <ProgressBar {...{ currentTime, duration }} onChange={() => this.scrollToBottom()} />
           </React.Fragment>
         }
       </div>

@@ -5,28 +5,55 @@ import next from 'programs/player/next'
 
 import {
   isPlaying,
-  updateTimecode
+  updateTimecode,
+  playNextFromQueue,
 } from 'modules/player/actions'
+
+import {
+  stdout
+} from 'modules/stdout/actions'
 
 import AudioPlayer from 'react-audio-player'
 
 class Player extends Component {
   componentDidMount() {
+    const beepbeep = new Audio('/beep-beep.mp3')
+    beepbeep.play()
+
     const { audioEl } = this.player
     window.player = {}
 
-    window.player.play = () => audioEl.play()
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err))
+    // Set internal Player API
+    window.player.play = this.play
+    window.player.pause = this.pause
+    window.player.skip = this.skip
 
-    window.player.pause = () => audioEl.pause()
-
+    // Set HTMLAudioElement event handlers
     audioEl.onplay = this.handlePlay
     audioEl.onpause = this.handlePause
     audioEl.onended = this.handleEnded
-
-    // console.log({ audioEl });
   }
+
+  // Internal Player API
+  // ==========================================================================
+
+  play = () => {
+    this.player.audioEl.play()
+  }
+
+  pause = () => {
+    this.player.audioEl.pause()
+  }
+
+  skip = (skipBy) => {
+    const { currentTime } = this.player.audioEl
+    const seekTo = currentTime+skipBy
+
+    this.player.audioEl.currentTime = seekTo
+  }
+
+  // HTMLAudioElement Event Handlers
+  // ==========================================================================
 
   handlePlay = () => {
     const { dispatch } = this.props
@@ -44,8 +71,17 @@ class Player extends Component {
   }
 
   handleEnded = () => {
-    next()
+    const { dispatch, queue } = this.props
+
+    if (!queue[0]) {
+      dispatch(playNextFromQueue())
+      dispatch(stdout('End of queue.'))
+    } else {
+      next()
+    }
   }
+
+  // ==========================================================================
 
   render() {
     return <AudioPlayer
@@ -57,8 +93,10 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
+  currentTime: state.player.currentTime,
   nowPlaying: state.player.nowPlaying,
-  position: state.player.position
+  position: state.player.position,
+  queue: state.player.queue,
 })
 
 export default connect(mapStateToProps, null)(Player)
