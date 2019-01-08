@@ -23,5 +23,5 @@ export const setNowPlaying = (url) => (dispatch) => dispatch({
 })
 
 export const playNextFromQueue = () => (dispatch) => dispatch({
-  type: PLAY_NEXT_FROM_QUEUE
+    type: PLAY_NEXT_FROM_QUEUE
 })

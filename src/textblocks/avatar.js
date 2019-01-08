@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import H from 'Components/Text_Highlight'
 const S = styled.span`
   white-space: pre;
 `

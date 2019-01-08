@@ -3,11 +3,9 @@ import { store } from 'store'
 import { stdout as output } from 'modules/stdout/actions'
 
 import avatar from 'textblocks/avatar'
-import theme from 'utilities/theme'
 
 import H from 'Components/Text_Highlight'
 import MR from 'Components/Text_MagicalRainbow'
-const K = ({ children }) => <H color={theme.orange}>{children}</H>
 
 const { dispatch } = store
 const stdout = (o) => dispatch(output(o))

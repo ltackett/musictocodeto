@@ -20,6 +20,7 @@ const help = (cmdObject) => new Promise((resolve, reject) => {
     <R>&gt; {<Cmd>pause</Cmd>}</R>,
     <R>&gt; {<Cmd>prev</Cmd>}</R>,
     <R>&gt; {<Cmd>next</Cmd>}</R>,
+    <R>&gt; {<Cmd>skip</Cmd>} {<Arg>[seconds]</Arg>}</R>,
     ''
   ])
 

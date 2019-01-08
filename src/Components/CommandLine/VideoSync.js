@@ -1,4 +1,3 @@
-import React, { Component } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
 const sync = keyframes`
