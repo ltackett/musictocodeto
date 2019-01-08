@@ -9,6 +9,8 @@ import 'index.css'
 
 import registerServiceWorker from 'registerServiceWorker';
 
+window.animate = false
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

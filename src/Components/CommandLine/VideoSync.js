@@ -1,3 +1,4 @@
+import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
 const sync = keyframes`
@@ -10,12 +11,10 @@ const VideoSync = styled.div`
   background: linear-gradient(#000, transparent);
   opacity: 0.2;
 
-  ${window.animate &&
-    css`
-      animation: 10s ${sync} linear;
-      animation-iteration-count: infinite;
-    `
-  }
+  ${({ animate }) => animate && css`
+    animation: 10s ${sync} linear;
+    animation-iteration-count: infinite;
+  `}
 
   position: fixed;
   height: 200px;
@@ -24,4 +23,4 @@ const VideoSync = styled.div`
   z-index: 1;
 `
 
-export default VideoSync
+export default () => <VideoSync animate={window.animate} />

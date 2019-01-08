@@ -2,11 +2,11 @@ import React from 'react';
 import styled, { css, keyframes } from 'styled-components'
 import theme from 'utilities/theme'
 
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
 import CommandLine from 'Components/CommandLine';
 import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
-
-window.animate = false
 
 const o0 = 0.95
 const o1 = 1
@@ -24,11 +24,16 @@ export const RootStyles = styled.div`
   opacity: 1;
   max-width: 100vw;
 
-  ${window.animate &&
-    css`
-      animation: 0.15s ${flicker} ease-out;
-      animation-iteration-count: infinite;
-    `
+  ${({ animate }) => animate && css`
+    animation: 0.15s ${flicker} ease-out;
+    animation-iteration-count: infinite;
+  `}
+
+  a {
+    ${theme.colorizeText('#fff')}
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
   }
 
   form {
@@ -53,11 +58,34 @@ export const RootStyles = styled.div`
   }
 `
 
+const Center = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+`
+
 const App = () => (
-  <RootStyles>
-    <Stdout />
-    <CommandLine />
-    <Player/>
+  <RootStyles animate={window.animate}>
+    <Router>
+      <Switch>
+
+        <Route exact path="/" render={() => (
+          <Center>
+            <Link to="/cli">Boot . . .</Link>
+          </Center>
+        )} />
+
+        <Route exact path="/cli" render={() => (
+          <React.Fragment>
+            <Stdout />
+            <CommandLine />
+            <Player/>
+          </React.Fragment>
+        )} />
+
+      </Switch>
+    </Router>
   </RootStyles>
 )
 
