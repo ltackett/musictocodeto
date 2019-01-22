@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-
-let timer;
+import React, { useState, useEffect } from 'react';
 
 const stages = [
   '|',
@@ -9,44 +7,29 @@ const stages = [
   '\\'
 ]
 
-class Spinner extends Component {
-  constructor() {
-    super();
-    this.state = {
-      stage: 0
-    };
-  }
+const Spinner = () => {
+  const [stage, setStage] = useState(0)
 
-  componentDidMount() {
-    const spin = () => {
-      const nextStage = this.state.stage + 1;
-      const totalStages = stages.length - 1;
+  useEffect(() => {
+    const spin = setTimeout(() => {
+      const nextStage = stage + 1
+      const totalStages = stages.length - 1
 
       if (nextStage > totalStages) {
-        this.setState({ stage: 0 });
+        setStage(0)
       } else {
-        this.setState({ stage: nextStage })
+        setStage(nextStage)
       }
+    }, 75)
 
-      timer = setTimeout(spin, 75);
-    }
+    return () => clearTimeout(spin)
+  })
 
-    spin();
-  }
-
-  componentWillUnmount() {
-    clearTimeout(timer);
-  }
-
-  render() {
-    const { stage } = this.state;
-
-    return (
-      <span id="spinner">
-        {stages[stage]}
-      </span>
-    );
-  }
+  return (
+    <span id="spinner">
+      {stages[stage]}
+    </span>
+  );
 }
 
-export default Spinner;
+export default Spinner
