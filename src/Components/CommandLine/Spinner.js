@@ -7,7 +7,7 @@ const stages = [
   '\\'
 ]
 
-const Spinner = () => {
+export default () => {
   const [stage, setStage] = useState(0)
 
   useEffect(() => {
@@ -31,5 +31,3 @@ const Spinner = () => {
     </span>
   );
 }
-
-export default Spinner
