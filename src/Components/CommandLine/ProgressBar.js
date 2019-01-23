@@ -56,8 +56,6 @@ const ProgressBar = ({ currentTime, duration, onChange }) => {
   // Return
   // ============================================================================
   if (!active) return null
-  console.log({ currentTime, duration, elapsed })
-
   return (
     <H onClick={handleClick}>
       <Bar />{" "}<Percent />
