@@ -1,92 +1,54 @@
-import React from 'react';
-import styled, { css, keyframes } from 'styled-components'
-import theme from 'utilities/theme'
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import GlobalContext from 'Containers/GlobalContext'
+import { RootStyles, Center } from 'Components/StyledComponents'
 
-import CommandLine from 'Components/CommandLine';
+import CommandLine from 'Components/CommandLine'
 import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
+import theme from 'utilities/theme'
 
-const o0 = 0.95
-const o1 = 1
+const App = () => {
+  const [context, setContext] = useState({
+    cmdHistory: [],
+    cmdHistoryIndex: 0,
+    cmdRunning: false,
 
-const flicker = keyframes`
-  0% { opacity: ${o0}; }
-  1% { opacity: ${o1}; }
-  50% { opacity: ${o1}; }
-  51% { opacity: ${o0}; }
-  100% { opacity: ${o0}; }
-`
+    isPlaying: false,
+    currentTime: 0,
+    duration: 0,
 
-export const RootStyles = styled.div`
-  ${theme.colorizeText(theme.phosphorus)}
-  opacity: 1;
-  max-width: 100vw;
+    animate: false,
+    theme,
+  })
 
-  ${({ animate }) => animate && css`
-    animation: 0.15s ${flicker} ease-out;
-    animation-iteration-count: infinite;
-  `}
+  return (
+    <GlobalContext.Provider value={{ context, setContext }}>
+      <RootStyles>
+        <Router>
+          <Switch>
 
-  a {
-    ${theme.colorizeText('#fff')}
-    text-decoration: none;
+            <Route exact path="/" render={() => (
+              <Center>
+                <Link to="/cli">Boot . . .</Link>
+              </Center>
+            )} />
 
-    &:hover { text-decoration: underline; }
-  }
+            <Route exact path="/cli" render={() => (
+              <React.Fragment>
+                <Stdout />
+                <CommandLine />
+                <Player/>
+              </React.Fragment>
+            )} />
 
-  form {
-    opacity: 0;
-    position: absolute;
-  }
+          </Switch>
+        </Router>
+      </RootStyles>
+    </GlobalContext.Provider>
+  )
+}
 
-  em {
-    font-style: normal;
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    // Prevent blank lines from collapsing
-    li:after {
-      content: '*';
-      visibility: hidden;
-    }
-  }
-`
-
-const Center = styled.div`
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-`
-
-const App = () => (
-  <RootStyles animate={window.animate}>
-    <Router>
-      <Switch>
-
-        <Route exact path="/" render={() => (
-          <Center>
-            <Link to="/cli">Boot . . .</Link>
-          </Center>
-        )} />
-
-        <Route exact path="/cli" render={() => (
-          <React.Fragment>
-            <Stdout />
-            <CommandLine />
-            <Player/>
-          </React.Fragment>
-        )} />
-
-      </Switch>
-    </Router>
-  </RootStyles>
-)
 
 export default App
