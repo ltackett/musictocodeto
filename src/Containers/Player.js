@@ -62,7 +62,7 @@ class Player extends Component {
     this.updateTimecode = setInterval(() => {
       const { currentTime, duration } = this.player.audioEl
       dispatch(updateTimecode(currentTime, duration))
-    }, 500)
+    }, 100)
   }
 
   handlePause = () => {
