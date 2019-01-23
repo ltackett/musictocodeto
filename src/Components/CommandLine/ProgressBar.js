@@ -3,31 +3,14 @@ import theme from 'utilities/theme'
 
 import H from 'Components/Text_Highlight'
 
-const ProgressBar = ({ currentTime, duration, onChange }) => {
+const ProgressBar = ({ currentTime, duration, isPlaying }) => {
   const width = 90
   const [elapsed, setElapsed] = useState(0)
-  const [active, setActive] = useState(false)
-
-  const handleSetActive = () => {
-    setActive(true)
-    onChange({ active: true })
-  }
-
-  const handleUnsetActive = () => {
-    setActive(false)
-    onChange({ active: false })
-  }
 
   // When props.currentTime updates:
   // Calculate and set the elapsed value to as a single unit of the total width
   useEffect(() => {
     setElapsed(Math.floor(currentTime*width/duration))
-  }, [currentTime])
-
-  // Set active/inactive
-  useEffect(() => {
-    if (currentTime > 0 && !active) handleSetActive()
-    if ((currentTime === 0 || isNaN(currentTime)) && active) handleUnsetActive()
   }, [currentTime])
 
   // Click handler
@@ -55,7 +38,7 @@ const ProgressBar = ({ currentTime, duration, onChange }) => {
 
   // Return
   // ============================================================================
-  if (!active) return null
+  if (!isPlaying) return null
   return (
     <H onClick={handleClick}>
       <Bar />{" "}<Percent />

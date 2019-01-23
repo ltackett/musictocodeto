@@ -45,6 +45,11 @@ class CommandLine extends Component {
     if (prevProps.cmdHistoryIndex !== this.props.cmdHistoryIndex) {
       this.valueFromHistory();
     }
+
+    // Scroll to the bottom when player state changes
+    if (prevProps.isPlaying !== this.props.isPlaying) {
+      this.scrollToBottom()
+    }
   }
 
   // ==========================================================================
@@ -205,7 +210,7 @@ class CommandLine extends Component {
           <React.Fragment>
             <br />
             <br />
-            <ProgressBar {...{ currentTime, duration }} onChange={() => this.scrollToBottom()} />
+            <ProgressBar {...{ currentTime, duration, isPlaying }} />
           </React.Fragment>
         }
       </div>
