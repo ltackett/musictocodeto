@@ -4,8 +4,8 @@ const GlobalContext = React.createContext('GlobalContext')
 export default GlobalContext
 
 export const CTX = (props) => {
-  const Component = props.component
-  const { children, ...passedProps } = props
+  const { component, children, ...passedProps } = props
+  const Component = component
 
   return (
     <GlobalContext.Consumer>
