@@ -3,16 +3,16 @@ import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
 import { stdout } from 'modules/stdout/actions'
 
-import theme from 'utilities/theme'
-import H from 'Components/Text_Highlight'
+import $ from 'utilities/theme'
+import { Highlight as H } from 'Components/Styles'
 
 const { dispatch } = store
 
 const lines = [
-  <H color={theme.cyan}>Going to previous song.</H>,
+  <H color={$.cyan}>Going to previous song.</H>,
   <F>
-    <H color={theme.cyan}>Now playing: </H>
-    <H color={theme.pink}>Artist Name - Song Name</H>
+    <H color={$.cyan}>Now playing: </H>
+    <H color={$.pink}>Artist Name - Song Name</H>
   </F>,
   `Soundcloud API Key: ${soundcloudAPI.key}`,
   `Soundcloud API Root: ${soundcloudAPI.root}`,

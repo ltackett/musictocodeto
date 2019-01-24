@@ -3,8 +3,8 @@ import soundcloudAPI from 'utilities/soundcloudAPI'
 import { store } from 'store'
 import { stdout } from 'modules/stdout/actions'
 
-import theme from 'utilities/theme'
-import H from 'Components/Text_Highlight'
+import $ from 'utilities/theme'
+import { Highlight as H } from 'Components/Styles'
 
 const { dispatch } = store
 const { paths } = soundcloudAPI
@@ -20,10 +20,10 @@ const userinfo = ({ params }) => new Promise((resolve, reject) => {
     const { data } = res
 
     dispatch(stdout([
-      <R><H color={theme.cyan}>User ID:</H> <H>{data.id}</H></R>,
-      <R><H color={theme.cyan}>Username:</H> <H>{data.username}</H></R>,
-      <R><H color={theme.cyan}>Location:</H> <H>{data.city}, {data.country}</H></R>,
-      <R><H color={theme.cyan}>Description:</H> <H>{data.description}</H></R>,
+      <R><H color={$.cyan}>User ID:</H> <H>{data.id}</H></R>,
+      <R><H color={$.cyan}>Username:</H> <H>{data.username}</H></R>,
+      <R><H color={$.cyan}>Location:</H> <H>{data.city}, {data.country}</H></R>,
+      <R><H color={$.cyan}>Description:</H> <H>{data.description}</H></R>,
     ]))
     resolve()
   }).catch(err => {

@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { Fragment as R } from 'react';
 import { shuffle } from 'lodash'
 import { store } from 'store'
 import { stdout } from 'modules/stdout/actions'
 
-import Highlight from 'Components/Text_Highlight'
+import { Highlight as H } from 'Components/Styles'
 import MagicalRaindbow from 'Components/Text_MagicalRainbow'
 import $ from 'constants'
-
-const R = React.Fragment
-const H = Highlight
 
 const { dispatch } = store
 

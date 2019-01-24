@@ -22,10 +22,9 @@ import VideoSync from './VideoSync';
 import Scanlines from './Scanlines';
 import ProgressBar from './ProgressBar';
 
-import HighlightError from 'Components/Text_HighlightError'
+import { Error as E } from 'Components/Styles'
 
 const R = React.Fragment
-const E = HighlightError
 
 const keys = {
   UP:    38,

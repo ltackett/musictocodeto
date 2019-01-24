@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import theme from 'utilities/theme'
 
-import H from 'Components/Text_Highlight'
+import { Highlight as H } from 'Components/Styles'
 
 const ProgressBar = ({ currentTime, duration, isPlaying }) => {
   const width = 90

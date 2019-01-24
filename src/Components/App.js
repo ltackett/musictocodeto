@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import GlobalContext from 'Containers/GlobalContext'
-import { RootStyles, Center } from 'Components/StyledComponents'
+import { RootStyles, Center } from 'Components/Styles'
 
 import CommandLine from 'Components/CommandLine'
 import Stdout from 'Containers/Stdout'

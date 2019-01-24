@@ -4,7 +4,7 @@ import { stdout as output } from 'modules/stdout/actions'
 
 import avatar from 'textblocks/avatar'
 
-import H from 'Components/Text_Highlight'
+import { Highlight as H } from 'Components/Styles'
 import MR from 'Components/Text_MagicalRainbow'
 
 const { dispatch } = store

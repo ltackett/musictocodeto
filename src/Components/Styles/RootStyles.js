@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
-import { CTX } from '../Containers/GlobalContext';
+import { CTX } from 'Containers/GlobalContext'
 
 const o0 = 0.95
 const o1 = 1
@@ -13,9 +13,7 @@ const flicker = keyframes`
   100% { opacity: ${o0}; }
 `
 
-const Styled = {}
-
-Styled.RootStyles = ({ context, children }) => {
+const RootStyles = ({ context, children }) => {
   const { animate, theme } = context
   const $ = theme
 
@@ -61,12 +59,4 @@ Styled.RootStyles = ({ context, children }) => {
   return <Component>{children}</Component>
 }
 
-Styled.Center = styled.div`
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-`
-
-export const RootStyles = ({ children }) => <CTX component={Styled.RootStyles}>{children}</CTX>
-export const Center = ({ children }) => <CTX component={Styled.Center}>{children}</CTX>
+export default ({ children }) => <CTX component={RootStyles}>{children}</CTX>
