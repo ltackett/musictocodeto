@@ -4,8 +4,7 @@ import { stdout as output } from 'modules/stdout/actions'
 
 import avatar from 'textblocks/avatar'
 
-import { Highlight as H } from 'Components/Styles'
-import MR from 'Components/Text_MagicalRainbow'
+import { Highlight as H, MagicalRainbow as MR } from 'Components/Styles'
 
 const { dispatch } = store
 const stdout = (o) => dispatch(output(o))

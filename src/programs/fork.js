@@ -1,11 +1,13 @@
-import React, { Fragment as R } from 'react';
+import React from 'react';
 import { shuffle } from 'lodash'
 import { store } from 'store'
 import { stdout } from 'modules/stdout/actions'
 
-import { Highlight as H } from 'Components/Styles'
-import MagicalRaindbow from 'Components/Text_MagicalRainbow'
-import $ from 'constants'
+import {
+  MagicalRainbow as MR,
+  Highlight as H,
+  Error as E
+} from 'Components/Styles'
 
 const { dispatch } = store
 
@@ -22,19 +24,37 @@ const fork = (cmdObject) => new Promise((resolve, reject) => {
   const { params } = cmdObject
 
   if (params.indexOf('-h') >= 0 || params.indexOf('--help') >= 0) {
-    dispatch(stdout(<H>View <MagicalRaindbow>MusicToCodeTo</MagicalRaindbow> on GitHub</H>))
+    dispatch(stdout(<H>View <MR>MusicToCodeTo</MR> on GitHub</H>))
     resolve()
   } else {
     dispatch(stdout([
-      <R><H>{shuffle(forkMessages)[0]}</H></R>,
-      <R><H color={$.danger}>Exiting...</H></R>
+      <MR>{shuffle(forkMessages)[0]}</MR>,
+      '',
+      <E>Exiting:</E>,
+      <H>5..</H>
     ]))
+
+    setTimeout(() => {
+      dispatch(stdout(<H>4..</H>))
+    }, 1000);
+
+    setTimeout(() => {
+      dispatch(stdout(<H>3..</H>))
+    }, 2000);
+
+    setTimeout(() => {
+      dispatch(stdout(<H>2..</H>))
+    }, 3000);
+
+    setTimeout(() => {
+      dispatch(stdout(<H>1..</H>))
+    }, 4000);
 
     // Redirect
     setTimeout(() => {
       resolve()
       window.location = "http://github.com/ltackett/musictocodeto/"
-    }, 2000)
+    }, 5000)
   }
 });
 
