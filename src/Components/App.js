@@ -9,19 +9,17 @@ import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
 import theme from 'utilities/theme'
 
+let globalContext = {}
 const App = () => {
   const [context, setContext] = useState({
-    cmdHistory: [],
-    cmdHistoryIndex: 0,
-    cmdRunning: false,
-
-    isPlaying: false,
-    currentTime: 0,
-    duration: 0,
-
     animate: false,
     theme,
   })
+
+  globalContext = {
+    context,
+    setContext
+  }
 
   return (
     <GlobalContext.Provider value={{ context, setContext }}>
@@ -50,5 +48,5 @@ const App = () => {
   )
 }
 
-
+export { globalContext }
 export default App
