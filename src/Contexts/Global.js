@@ -11,7 +11,7 @@ export const CTX = (props) => {
     <GlobalContext.Consumer>
       {(context) => (
         <Component {...context} {...passedProps}>
-          {children}
+          {children && children}
         </Component>
       )}
     </GlobalContext.Consumer>

@@ -1,15 +1,9 @@
 import React from 'react';
-import { store } from 'store'
-import { stdout as output } from 'modules/stdout/actions'
 
 import $ from 'utilities/theme'
 import { Highlight as H } from 'Components/Styles'
 
-const { dispatch } = store
-const stdout = (o) => dispatch(output(o))
-
-const pause = ({ params }) => new Promise((resolve, reject) => {
-  const { isPlaying } = store.getState().player
+const skip = ({ params }, { stdout, isPlaying }) => new Promise((resolve, reject) => {
   if (!isPlaying) {
     reject({ error: 'No song currently playing.' })
     return
@@ -35,4 +29,4 @@ const pause = ({ params }) => new Promise((resolve, reject) => {
   resolve()
 });
 
-export default pause;
+export default skip;

@@ -1,24 +1,17 @@
 import React, { Fragment as F } from 'react';
-import { store } from 'store'
-import { stdout } from 'modules/stdout/actions'
 
 import $ from 'utilities/theme'
 import { Highlight as H } from 'Components/Styles'
 
-const { dispatch } = store
-
-const play = (cmdObject) => new Promise((resolve, reject) => {
-  const playerState = store.getState().player
-  const { nowPlaying } = playerState
-
+const play = (cmdObject, { stdout, nowPlaying }) => new Promise((resolve, reject) => {
   if (nowPlaying !== null) {
     window.player.play()
-    dispatch(stdout(
+    stdout(
       <F>
         <H color={$.cyan}>Now playing: </H>
         <H color={$.pink}>{nowPlaying.artist} - {nowPlaying.title}</H>
       </F>
-    ))
+    )
     return resolve()
   }
 

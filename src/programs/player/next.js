@@ -1,14 +1,6 @@
-import { store } from 'store'
-import { playNextFromQueue } from 'modules/player/actions'
-import play from './play'
-
-const { dispatch } = store
-
-const next = (cmdObject) => new Promise((resolve, reject) => {
-  dispatch(playNextFromQueue())
-  play()
-    .then(() => resolve())
-    .catch(err => reject(err))
+const next = (cmdObject, { handleCommand, playNextFromQueue}) => new Promise((resolve, reject) => {
+  playNextFromQueue()
+  return resolve({ command: 'play' })
 });
 
 export default next;

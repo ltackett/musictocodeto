@@ -1,6 +1,6 @@
 import React from 'react'
-import styled, { css, keyframes } from 'styled-components'
-import { CTX } from 'Containers/GlobalContext'
+import { createGlobalStyle, css, keyframes } from 'styled-components'
+import { CTX } from 'Contexts/Global'
 
 const o0 = 0.95
 const o1 = 1
@@ -13,19 +13,21 @@ const flicker = keyframes`
   100% { opacity: ${o0}; }
 `
 
-const RootStyles = ({ context, children }) => {
-  const { animate, theme } = context
+const RootStyles = ({ settings, theme }) => {
+  const { animate } = settings
   const $ = theme
 
-  const Component = styled.div`
-    ${$.colorizeText($.phosphorus)}
-    opacity: 1;
-    max-width: 100vw;
+  const Component = createGlobalStyle`
+    body {
+      ${$.colorizeText($.phosphorus)}
+      opacity: 1;
+      max-width: 100vw;
 
-    ${() => animate && css`
-      animation: 0.15s ${flicker} ease-out;
-      animation-iteration-count: infinite;
-    `}
+      ${() => animate && css`
+        animation: 0.15s ${flicker} ease-out;
+        animation-iteration-count: infinite;
+      `}
+    }
 
     a {
       ${$.colorizeText('#fff')}
@@ -56,7 +58,7 @@ const RootStyles = ({ context, children }) => {
     }
   `
 
-  return <Component>{children}</Component>
+  return <Component />
 }
 
-export default ({ children }) => <CTX component={RootStyles}>{children}</CTX>
+export default () => <CTX component={RootStyles} />

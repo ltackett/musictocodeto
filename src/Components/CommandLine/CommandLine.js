@@ -1,19 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { CTX } from 'Contexts/Global'
+
 import runCommand from './runCommand';
-
-import {
-  stdout,
-
-  addToCmdHistory,
-  setCmdHistoryIndex,
-  incrementCmdHistoryIndex,
-  decrementCmdHistoryIndex,
-
-  startCmd,
-  stopCmd,
-} from 'modules/stdout/actions'
 
 import Bang from './Bang';
 import Caret from './Caret';
@@ -68,7 +56,8 @@ class CommandLine extends Component {
   // The only thing a program needs to do is reject or resolve.
   // ==========================================================================
 
-  handleCommand = (cmd) => {
+  handleCommand = (cmd, echo = true) => {
+
     const cmdObject = {
       cmd: cmd,
       program: cmd.split(/\s/)[0],
@@ -76,18 +65,18 @@ class CommandLine extends Component {
     };
 
     // Echo the command
-    this.props.stdout(`${this.state.bang} ${cmd}`);
+    echo && this.props.stdout(`${this.state.bang} ${cmd}`);
 
     // Run the command
     this.props.startCmd();
-    runCommand(cmdObject)
+    runCommand(cmdObject, this.props)
       .then(data => {
-        this.props.stopCmd();
-        if (cmdObject.cmd !== '') { this.props.stdout('') }
-        this.scrollToBottom();
+        // If a command is passed back from the program, run it
+        if (data.command) { this.handleCommand(data.command, false) }
 
-        // If an action is passed back from the program, run it
-        // if (data.action) { this.runAction(data.action) }
+        if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
+        this.scrollToBottom();
+        this.props.stopCmd();
       })
 
       // Catch errors
@@ -217,29 +206,4 @@ class CommandLine extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  cmdHistory: state.stdout.cmdHistory,
-  cmdHistoryIndex: state.stdout.cmdHistoryIndex,
-  cmdRunning: state.stdout.cmdRunning,
-
-  isPlaying: state.player.isPlaying,
-  currentTime: state.player.currentTime,
-  duration: state.player.duration,
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  stdout,
-
-  startCmd,
-  stopCmd,
-
-  addToCmdHistory,
-  setCmdHistoryIndex,
-  incrementCmdHistoryIndex,
-  decrementCmdHistoryIndex,
-}, dispatch)
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CommandLine)
+export default () => <CTX component={CommandLine} />

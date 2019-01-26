@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CTX } from 'Containers/GlobalContext'
+import { CTX } from 'Contexts/Global'
 
-const TextHighlight = ({ context, children, color}) => {
-  const $ = context.theme
+const TextHighlight = ({ theme, children, color}) => {
+  const $ = theme
   const C = styled.em`
     ${$.colorizeText(color ? color : '#fff')}
   `

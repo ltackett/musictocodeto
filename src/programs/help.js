@@ -1,16 +1,11 @@
 import React, { Fragment as R} from 'react';
-import { store } from 'store'
-import { stdout as output } from 'modules/stdout/actions'
 import $ from 'utilities/theme'
 
 import { Highlight as H } from 'Components/Styles'
 const Cmd = ({ children }) => <R><H color={$.orange}>{children}</H></R>
 const Arg = ({ children }) => <R><H color={$.pink}>{children}</H></R>
 
-const { dispatch } = store
-const stdout = (o) => dispatch(output(o))
-
-const help = (cmdObject) => new Promise((resolve, reject) => {
+const help = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
   stdout([<R>tl;dr — just type <Cmd>play</Cmd> and enjoy the ride.</R>, ''])
 
   stdout([

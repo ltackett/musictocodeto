@@ -1,15 +1,11 @@
 import React from 'react';
 import { shuffle } from 'lodash'
-import { store } from 'store'
-import { stdout } from 'modules/stdout/actions'
 
 import {
   MagicalRainbow as MR,
   Highlight as H,
   Error as E
 } from 'Components/Styles'
-
-const { dispatch } = store
 
 const forkMessages = [
   "fork me hard!",
@@ -20,34 +16,34 @@ const forkMessages = [
   "let's talk about fork lore...",
 ]
 
-const fork = (cmdObject) => new Promise((resolve, reject) => {
+const fork = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
   const { params } = cmdObject
 
   if (params.indexOf('-h') >= 0 || params.indexOf('--help') >= 0) {
-    dispatch(stdout(<H>View <MR>MusicToCodeTo</MR> on GitHub</H>))
+    stdout(<H>View <MR>MusicToCodeTo</MR> on GitHub</H>)
     resolve()
   } else {
-    dispatch(stdout([
+    stdout([
       <MR>{shuffle(forkMessages)[0]}</MR>,
       '',
       <E>Exiting:</E>,
       <H>5..</H>
-    ]))
+    ])
 
     setTimeout(() => {
-      dispatch(stdout(<H>4..</H>))
+      stdout(<H>4..</H>)
     }, 1000);
 
     setTimeout(() => {
-      dispatch(stdout(<H>3..</H>))
+      stdout(<H>3..</H>)
     }, 2000);
 
     setTimeout(() => {
-      dispatch(stdout(<H>2..</H>))
+      stdout(<H>2..</H>)
     }, 3000);
 
     setTimeout(() => {
-      dispatch(stdout(<H>1..</H>))
+      stdout(<H>1..</H>)
     }, 4000);
 
     // Redirect

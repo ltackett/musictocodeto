@@ -1,18 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { CTX } from 'Contexts/Global'
 
 import next from 'programs/player/next'
-
-import {
-  isPlaying,
-  updateTimecode,
-  playNextFromQueue,
-} from 'modules/player/actions'
-
-import {
-  stdout
-} from 'modules/stdout/actions'
-
 import AudioPlayer from 'react-audio-player'
 
 class Player extends Component {
@@ -56,26 +45,24 @@ class Player extends Component {
   // ==========================================================================
 
   handlePlay = () => {
-    const { dispatch } = this.props
-
-    dispatch(isPlaying(true))
+    this.props.setIsPlaying(true)
     this.updateTimecode = setInterval(() => {
       const { currentTime, duration } = this.player.audioEl
-      dispatch(updateTimecode(currentTime, duration))
+      this.props.setTimecode(currentTime, duration)
     }, 100)
   }
 
   handlePause = () => {
-    this.props.dispatch(isPlaying(false))
+    this.props.setIsPlaying(false)
     clearInterval(this.updateTimecode)
   }
 
   handleEnded = () => {
-    const { dispatch, queue } = this.props
+    const { queue } = this.props
 
     if (!queue[0]) {
-      dispatch(playNextFromQueue())
-      dispatch(stdout('End of queue.'))
+      this.props.playNextFromQueue()
+      this.props.stdout('End of queue.')
     } else {
       next()
     }
@@ -86,17 +73,9 @@ class Player extends Component {
   render() {
     return <AudioPlayer
       src={this.props.nowPlaying && this.props.nowPlaying.url}
-      autoPlay
       ref={(el) => { this.player = el }}
     />
   }
 }
 
-const mapStateToProps = state => ({
-  currentTime: state.player.currentTime,
-  nowPlaying: state.player.nowPlaying,
-  position: state.player.position,
-  queue: state.player.queue,
-})
-
-export default connect(mapStateToProps, null)(Player)
+export default () => <CTX component={Player} />

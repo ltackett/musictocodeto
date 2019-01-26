@@ -1,17 +1,16 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux'
+import React from 'react';
+import { CTX } from 'Contexts/Global'
 
-const Stdout = (props) => (
-  <Fragment>
-    {props.stdout.length > 0 &&
+const Stdout = ({ stdoutLines}) => (
+  <React.Fragment>
+    {stdoutLines.length > 0 &&
       <ul id="stdout">
-        {props.stdout.map((line, i) => (
+        {stdoutLines.map((line, i) => (
           <li key={i}>{line}</li>
         ))}
       </ul>
     }
-  </Fragment>
+  </React.Fragment>
 )
 
-const mapStateToProps = state => ({ stdout: state.stdout.stdoutLines })
-export default connect(mapStateToProps, null)(Stdout)
+export default () => <CTX component={Stdout} />

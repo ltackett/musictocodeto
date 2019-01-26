@@ -1,15 +1,9 @@
 import React, { Fragment as R} from 'react';
-import { store } from 'store'
-import { stdout as output } from 'modules/stdout/actions'
-
-import avatar from 'textblocks/avatar'
 
 import { Highlight as H, MagicalRainbow as MR } from 'Components/Styles'
+import avatar from 'textblocks/avatar'
 
-const { dispatch } = store
-const stdout = (o) => dispatch(output(o))
-
-const about = (cmdObject) => new Promise((resolve, reject) => {
+const about = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
   if (cmdObject.params.filter(p => p === '-v' || p === '--verbose').length > 0) {
     stdout(avatar)
   }

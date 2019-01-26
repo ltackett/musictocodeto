@@ -1,12 +1,12 @@
 import programs from 'programs';
 
-const runCommand = (commandObject) => new Promise((resolve, reject) => {
+const runCommand = (commandObject, context) => new Promise((resolve, reject) => {
   const { program } = commandObject;
 
   // Check programs object
   // If there is a match, run it.
   if (typeof programs[program] === 'function') {
-    runProgram(programs[program], commandObject, (data) => {
+    runProgram(programs[program], commandObject, context, (data) => {
         // Reject if there are any errors
         if (data.error) { reject(data) }
 
@@ -26,8 +26,8 @@ const runCommand = (commandObject) => new Promise((resolve, reject) => {
   }
 });
 
-const runProgram = (program, commandObject, callback) => {
-  program(commandObject)
+const runProgram = (program, commandObject, context, callback) => {
+  program(commandObject, context)
     .then((data) => callback(data))
     .catch((data) => callback(data));
 };

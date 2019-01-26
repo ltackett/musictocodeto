@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CTX } from 'Containers/GlobalContext'
+import { CTX } from 'Contexts/Global'
 
 const Center = styled.div`
   position: absolute;
