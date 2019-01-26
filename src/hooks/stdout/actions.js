@@ -7,6 +7,7 @@ import {
   INCREMENT_CMD_HISTORY_INDEX,
   DECREMENT_CMD_HISTORY_INDEX,
 
+  SET_BOOTED,
   START_CMD,
   STOP_CMD
 } from './constants'
@@ -15,6 +16,7 @@ import {
 
 export default (dispatch) => {
 
+  const setBooted = (isBooted) => dispatch({ type: SET_BOOTED, isBooted })
   const startCmd = () => dispatch({ type: START_CMD })
   const stopCmd = () => dispatch({ type: STOP_CMD })
 
@@ -47,9 +49,10 @@ export default (dispatch) => {
   // ============================================================================
 
   return {
-    stdout,
+    setBooted,
     startCmd,
     stopCmd,
+    stdout,
     incrementCmdHistoryIndex,
     decrementCmdHistoryIndex,
     setCmdHistoryIndex,

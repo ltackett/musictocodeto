@@ -1,5 +1,3 @@
-import banner from 'textblocks/banner'
-
 import {
   ADD_LINE,
   ADD_LINES,
@@ -9,15 +7,17 @@ import {
   INCREMENT_CMD_HISTORY_INDEX,
   DECREMENT_CMD_HISTORY_INDEX,
 
+  SET_BOOTED,
   START_CMD,
-  STOP_CMD
+  STOP_CMD,
 } from './constants'
 
 export const initialState = {
-  stdoutLines: banner,
+  stdoutLines: [],
   cmdHistory: [],
   cmdHistoryIndex: 0,
-  cmdRunning: false,
+  isCmdRunning: false,
+  isBooted: false,
 }
 
 // ============================================================================
@@ -54,8 +54,9 @@ export default (state = initialState, action) => {
     case SET_CMD_HISTORY_INDEX:
       return { ...state, cmdHistoryIndex: action.index }
 
-    case START_CMD: return { ...state, cmdRunning: true }
-    case STOP_CMD: return { ...state, cmdRunning: false }
+    case SET_BOOTED: return { ...state, isBooted: action.isBooted }
+    case START_CMD: return { ...state, isCmdRunning: true }
+    case STOP_CMD: return { ...state, isCmdRunning: false }
 
     default:
       return state

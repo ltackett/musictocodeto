@@ -6,7 +6,17 @@ import 'index.css'
 
 import registerServiceWorker from 'registerServiceWorker';
 
-window.animate = false
+const eventFire = (el, etype) => {
+  if (el.fireEvent) {
+    el.fireEvent('on' + etype);
+  } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+}
+
+eventFire(document, 'click');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

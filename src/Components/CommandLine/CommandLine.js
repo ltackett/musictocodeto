@@ -28,6 +28,10 @@ class CommandLine extends Component {
     cmd: '',
   }
 
+  componentDidMount() {
+    this.handleCommand('boot', false)
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.cmdHistoryIndex !== this.props.cmdHistoryIndex) {
       this.valueFromHistory();
@@ -88,7 +92,7 @@ class CommandLine extends Component {
       })
 
     // Add command to history
-    if (!!cmd && cmd !== '') {
+    if (!!cmd && cmd !== '' && echo) {
       this.props.addToCmdHistory(cmdObject);
     }
 
@@ -158,10 +162,11 @@ class CommandLine extends Component {
 
   render() {
     const {
+      isBooted,
       isPlaying,
+      icCmdRunning,
       currentTime,
       duration,
-      cmdRunning
     } = this.props
 
     return (
@@ -169,30 +174,38 @@ class CommandLine extends Component {
         <Scanlines />
         <VideoSync />
 
-        <span className="prompt">
-          <Bang symbol={this.props.bang} />
-          <span className="cli">{this.state.cmd}</span>
+        {isBooted &&
+          <React.Fragment>
+            <span className="prompt">
+              <Bang symbol={this.props.bang} />
+              <span className="cli">{this.state.cmd}</span>
 
-          {cmdRunning ? (
-            <Spinner />
-          ) : (
-            <Caret />
-          )}
-        </span>
+              {icCmdRunning ? (
+                <Spinner />
+              ) : (
+                <Caret />
+              )}
+            </span>
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="cmd"
-            value={this.state.cmd}
-            ref={(input) => this.focusInput(input)}
-            onBlur={(e) => this.focusInput(e.target)}
-            onChange={this.handleInputChange}
-            onKeyDown={this.handleKeyPressed}
-          />
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                name="cmd"
+                value={this.state.cmd}
+                ref={(input) => this.focusInput(input)}
+                onBlur={(e) => this.focusInput(e.target)}
+                onChange={this.handleInputChange}
+                onKeyDown={this.handleKeyPressed}
+              />
 
-          <button type="submit">Submit</button>
-        </form>
+              <button type="submit">Submit</button>
+            </form>
+          </React.Fragment>
+        }
+
+        {!isBooted &&
+          <Caret color={this.props.theme.danger} />
+        }
 
         {isPlaying &&
           <React.Fragment>

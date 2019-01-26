@@ -1,26 +1,33 @@
 import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
+import { CTX } from 'Contexts/Global'
 
 const sync = keyframes`
   0% { top: 110vh; }
   100% { top: -10vh; }
 `
 
-const VideoSync = styled.div`
-  pointer-events: none;
-  background: linear-gradient(#000, transparent);
-  opacity: 0.2;
+const VideoSync = ({ settings }) => {
+  if (!settings.animate) return null
 
-  ${({ animate }) => animate && css`
-    animation: 10s ${sync} linear;
-    animation-iteration-count: infinite;
-  `}
+  const Component = styled.div`
+    pointer-events: none;
+    background: linear-gradient(#000, transparent);
+    opacity: 0.2;
 
-  position: fixed;
-  height: 200px;
-  left: 0;
-  right: 0;
-  z-index: 1;
-`
+    ${settings.animate && css`
+      animation: 10s ${sync} linear;
+      animation-iteration-count: infinite;
+    `}
 
-export default () => <VideoSync animate={window.animate} />
+    position: fixed;
+    height: 200px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  `
+
+  return <Component />
+}
+
+export default () => <CTX component={VideoSync} />

@@ -51,7 +51,9 @@ const App = () => {
             <React.Fragment>
               <Stdout />
               <CommandLine />
-              <Player/>
+              {stdoutState.isBooted &&
+                <Player/>
+              }
             </React.Fragment>
           )} />
 

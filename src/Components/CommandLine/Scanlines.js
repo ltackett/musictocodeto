@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { CTX } from 'Contexts/Global'
 
 const S = styled.div`
   background-image: url('/scanlines.png');
@@ -20,7 +21,7 @@ class Scannlines extends Component {
   }
 
   componentDidMount() {
-    if (window.animate) {
+    if (this.props.settings.animate) {
       this.jitter = setInterval(() => {
         this.setState({
           offset: Math.floor(Math.random() * 6) + 1,
@@ -44,4 +45,4 @@ class Scannlines extends Component {
   }
 }
 
-export default Scannlines
+export default () => <CTX component={Scannlines} />

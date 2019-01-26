@@ -11,8 +11,8 @@ const pulsate = keyframes`
 const Caret = styled.span`
   display: inline-block;
   vertical-align: middle;
-  background: ${theme.phosphorus};
-  box-shadow: ${theme.phosphorus} ${theme.glow};
+  background: ${({ color }) => color ? color : theme.phosphorus};
+  box-shadow: ${({ color }) => color ? color : theme.phosphorus}; ${theme.glow};
   width: 10px;
   height: 20px;
 

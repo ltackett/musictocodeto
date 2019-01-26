@@ -6,5 +6,6 @@ export const SET_CMD_HISTORY_INDEX = 'stdout:SET_CMD_HISTORY_INDEX'
 export const INCREMENT_CMD_HISTORY_INDEX = 'stdout:INCREMENT_CMD_HISTORY_INDEX'
 export const DECREMENT_CMD_HISTORY_INDEX = 'stdout:DECREMENT_CMD_HISTORY_INDEX'
 
+export const SET_BOOTED = 'stdout:SET_BOOTED'
 export const START_CMD = 'stdout:START_CMD'
 export const STOP_CMD = 'stdout:STOP_CMD'
