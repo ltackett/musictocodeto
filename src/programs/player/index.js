@@ -4,6 +4,7 @@ import next from 'programs/player/next'
 import prev from 'programs/player/prev'
 import skip from 'programs/player/skip'
 import repeat from 'programs/player/repeat'
+import rewind from 'programs/player/rewind'
 
 export default {
   play,
@@ -12,6 +13,7 @@ export default {
   prev,
   skip,
   repeat,
+  rewind,
 
   // Aliases
   previous: prev,
