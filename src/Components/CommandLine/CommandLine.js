@@ -39,7 +39,7 @@ class CommandLine extends Component {
 
     // Scroll to the bottom when player state changes
     if (prevProps.isPlaying !== this.props.isPlaying) {
-      this.scrollToBottom()
+      this.props.scrollToBottom()
     }
   }
 
@@ -79,7 +79,7 @@ class CommandLine extends Component {
         if (data.command) { this.handleCommand(data.command, false) }
 
         if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
-        this.scrollToBottom();
+        this.props.scrollToBottom();
         this.props.stopCmd();
       })
 
@@ -88,7 +88,7 @@ class CommandLine extends Component {
         this.props.stopCmd();
         if (data.error) { this.props.stdout(<R><E>Error:</E> {data.error}</R>) }
         if (cmdObject.cmd !== '') { this.props.stdout('') }
-        this.scrollToBottom();
+        this.props.scrollToBottom();
       })
 
     // Add command to history
@@ -152,12 +152,6 @@ class CommandLine extends Component {
 
   focusInput = (input) => {
     return input && input.focus()
-  }
-
-  scrollToBottom() {
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0,document.body.scrollHeight);
-    })
   }
 
   render() {

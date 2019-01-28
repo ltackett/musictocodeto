@@ -6,9 +6,6 @@ import AudioPlayer from 'react-audio-player'
 
 class Player extends Component {
   componentDidMount() {
-    const beepbeep = new Audio('/beep-beep.mp3')
-    beepbeep.play()
-
     const { audioEl } = this.player
     window.player = {}
 

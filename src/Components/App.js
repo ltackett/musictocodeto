@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import GlobalContext from 'Contexts/Global'
@@ -8,11 +8,15 @@ import CommandLine from 'Components/CommandLine'
 import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
 import theme from 'utilities/theme'
+import scrollToBottom from 'utilities/scrollToBottom'
 
 import { usePlayerReducer } from 'hooks'
 import { useStdoutReducer } from '../hooks'
 
 let globalContext = {}
+const whirrrr = new Audio('/whirrrr.mp3')
+const beepbeep = new Audio('/beep-beep.mp3')
+
 const App = () => {
   const [playerState, playerActions] = usePlayerReducer()
   const [stdoutState, stdoutActions] = useStdoutReducer()
@@ -23,6 +27,7 @@ const App = () => {
 
   globalContext = {
     theme,
+    scrollToBottom,
 
     settings,
     setSettings,
@@ -33,6 +38,18 @@ const App = () => {
     ...stdoutState,
     ...stdoutActions,
   }
+
+  useEffect(() => {
+    if (stdoutState.isBooting) {
+      whirrrr.play()
+    }
+  }, [stdoutState.isBooting])
+
+  useEffect(() => {
+    if (stdoutState.isBooted) {
+      beepbeep.play()
+    }
+  }, [stdoutState.isBooted])
 
 
   return (

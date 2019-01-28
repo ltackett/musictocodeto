@@ -16,8 +16,8 @@ const forkMessages = [
   "let's talk about fork lore...",
 ]
 
-const fork = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
-  const { params } = cmdObject
+const fork = ({ params }, { stdout, setBooted, scrollToBottom }) => new Promise((resolve, reject) => {
+  setBooted(false)
 
   if (params.indexOf('-h') >= 0 || params.indexOf('--help') >= 0) {
     stdout(<H>View <MR>MusicToCodeTo</MR> on GitHub</H>)
@@ -26,24 +26,29 @@ const fork = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
     stdout([
       <MR>{shuffle(forkMessages)[0]}</MR>,
       '',
-      <E>Exiting:</E>,
+      <E>Shutting down in:</E>,
       <H>5..</H>
     ])
+    scrollToBottom()
 
     setTimeout(() => {
       stdout(<H>4..</H>)
+      scrollToBottom()
     }, 1000);
 
     setTimeout(() => {
       stdout(<H>3..</H>)
+      scrollToBottom()
     }, 2000);
 
     setTimeout(() => {
       stdout(<H>2..</H>)
+      scrollToBottom()
     }, 3000);
 
     setTimeout(() => {
       stdout(<H>1..</H>)
+      scrollToBottom()
     }, 4000);
 
     // Redirect

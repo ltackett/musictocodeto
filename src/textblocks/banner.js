@@ -7,6 +7,7 @@ const S = styled.span`
 `
 
 export default [
+  { pause: 3000 },
   <S>MMMMMMMM               MMMMMMMMTTTTTTTTTTTTTTTTTTTTTTT       CCCCCCCCCCCCCTTTTTTTTTTTTTTTTTTTTTTT</S>,
   <S>M:::::::M             M:::::::MT:::::::::::::::::::::T    CCC::::::::::::CT:::::::::::::::::::::T</S>,
   <S>M::::::::M           M::::::::MT:::::::::::::::::::::T  CC:::::::::::::::CT:::::::::::::::::::::T</S>,
@@ -22,13 +23,16 @@ export default [
   <S>M::::::M               M::::::M      TT:::::::TT       C:::::CCCCCCCC::::C      TT:::::::TT      </S>,
   <S>M::::::M               M::::::M      T:::::::::T        CC:::::::::::::::C      T:::::::::T      </S>,
   <S>M::::::M               M::::::M      T:::::::::T          CCC::::::::::::C      T:::::::::T      </S>,
-  <S>MMMMMMMM               MMMMMMMM      TTTTTTTTTTT             CCCCCCCCCCCCC      TTTTTTTTTTT      </S>,
+  <S>MMMMMMMM               MMMMMMMM      TTTTTTTTTTT             CCCCCCCCCCCCC      TTTTTTTTTTT  v3.1</S>,
   '',
+  { pause: 2000 },
   <S>          |             |         ' | |                                   |             |       </S>,
   <S>|/~\/~\/~~|_/  /~\|   |~|~  \    /|~|~|/~\   \  //~\|   ||/~\  /~~||/~\/~\|_/  /~\|   |~|~      </S>,
   <S>|   \_/\__| \  \_/ \_/| |    \/\/ | | |   |   \/ \_/ \_/||     \__||   \_/| \  \_/ \_/| |  . . .</S>,
   <S>                                             _/                \__|                             </S>,
+  { pause: 1000 },
   '',
   <S>Type <H>'help'</H> for a list of commands.</S>,
-  ''
+  '',
+  { pause: 3000, last: true },
 ]

@@ -7,15 +7,19 @@ import {
   INCREMENT_CMD_HISTORY_INDEX,
   DECREMENT_CMD_HISTORY_INDEX,
 
+  SET_BOOTING,
   SET_BOOTED,
   START_CMD,
   STOP_CMD
 } from './constants'
 
+const click = () => new Audio('/click.mp3').play()
+
 // ============================================================================
 
 export default (dispatch) => {
 
+  const setBooting = (isBooting) => dispatch({ type: SET_BOOTING, isBooting })
   const setBooted = (isBooted) => dispatch({ type: SET_BOOTED, isBooted })
   const startCmd = () => dispatch({ type: START_CMD })
   const stopCmd = () => dispatch({ type: STOP_CMD })
@@ -24,11 +28,16 @@ export default (dispatch) => {
 
   const stdout = (data) => {
     if (Array.isArray(data)) {
+      click()
+      setTimeout(() => { click() }, 50);
+      setTimeout(() => { click() }, 100);
+
       dispatch({
         type: ADD_LINES,
         lines: data
       })
     } else {
+      click()
       dispatch({
         type: ADD_LINE,
         line: data
@@ -49,6 +58,7 @@ export default (dispatch) => {
   // ============================================================================
 
   return {
+    setBooting,
     setBooted,
     startCmd,
     stopCmd,

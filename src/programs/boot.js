@@ -1,12 +1,7 @@
 import banner from 'textblocks/banner'
 
-const scrollToBottom = () => {
-  window.requestAnimationFrame(() => {
-    window.scrollTo(0,document.body.scrollHeight);
-  })
-}
-
-export default (command, { stdout, setBooted }) => new Promise((resolve, reject) => {
+export default (command, { stdout, setBooting, setBooted, scrollToBottom }) => new Promise((resolve, reject) => {
+  setBooting(true)
   setBooted(false)
 
   let cycle = 0
@@ -14,27 +9,23 @@ export default (command, { stdout, setBooted }) => new Promise((resolve, reject)
   banner.forEach((line, index) => {
     const delay = cycle + jitter(100)
 
-    setTimeout(() => {
-      stdout(line)
-      scrollToBottom()
-    }, delay)
-
-    cycle = delay
-
-    if (index === 16) {
-      cycle = delay + 1500
+    if (line.pause) {
+      cycle = delay + line.pause
+    } else {
+      setTimeout(() => {
+        stdout(line)
+        scrollToBottom()
+      }, delay)
+      cycle = delay
     }
 
-    if (index === 20) {
-      cycle = delay + 1000
-    }
-
-    if (index === banner.length - 1) {
+    if (line.last) {
       setTimeout(() => {
         scrollToBottom()
+        setBooting(false)
         setBooted(true)
         resolve()
-      }, cycle + 2000);
+      }, cycle);
     }
   });
 })
