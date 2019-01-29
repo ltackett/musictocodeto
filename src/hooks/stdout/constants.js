@@ -1,5 +1,6 @@
 export const ADD_LINE = 'stdout:ADD_LINE'
 export const ADD_LINES = 'stdout:ADD_LINES'
+export const CLEAR_SCREEN = 'stdout:CLEAR_SCREEN'
 
 export const ADD_TO_CMD_HISTORY = 'stdout:ADD_TO_CMD_HISTORY'
 export const SET_CMD_HISTORY_INDEX = 'stdout:SET_CMD_HISTORY_INDEX'

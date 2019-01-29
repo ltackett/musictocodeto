@@ -1,6 +1,7 @@
 import {
   ADD_LINE,
   ADD_LINES,
+  CLEAR_SCREEN,
 
   ADD_TO_CMD_HISTORY,
   SET_CMD_HISTORY_INDEX,
@@ -36,6 +37,10 @@ export default (state = initialState, action) => {
     case ADD_LINES:
       stdoutLines = [...state.stdoutLines]
       stdoutLines = stdoutLines.concat(action.lines)
+      return { ...state, stdoutLines }
+
+    case CLEAR_SCREEN:
+      stdoutLines = []
       return { ...state, stdoutLines }
 
     case ADD_TO_CMD_HISTORY:

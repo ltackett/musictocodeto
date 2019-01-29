@@ -1,6 +1,7 @@
 import {
   ADD_LINE,
   ADD_LINES,
+  CLEAR_SCREEN,
 
   ADD_TO_CMD_HISTORY,
   SET_CMD_HISTORY_INDEX,
@@ -10,7 +11,7 @@ import {
   SET_BOOTING,
   SET_BOOTED,
   START_CMD,
-  STOP_CMD
+  STOP_CMD,
 } from './constants'
 
 const click = () => new Audio('/click.mp3').play()
@@ -45,6 +46,8 @@ export default (dispatch) => {
     }
   }
 
+  const clearScreen = () => dispatch({ type: CLEAR_SCREEN })
+
   // ============================================================================
 
   const incrementCmdHistoryIndex = () => dispatch({ type: INCREMENT_CMD_HISTORY_INDEX })
@@ -58,6 +61,7 @@ export default (dispatch) => {
   // ============================================================================
 
   return {
+    clearScreen,
     setBooting,
     setBooted,
     startCmd,
