@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import pkg from '../../package.json'
 import { Highlight as H } from 'Components/Styles'
 
 const S = styled.span`
@@ -23,7 +24,7 @@ export default [
   <S>M::::::M               M::::::M      TT:::::::TT       C:::::CCCCCCCC::::C      TT:::::::TT      </S>,
   <S>M::::::M               M::::::M      T:::::::::T        CC:::::::::::::::C      T:::::::::T      </S>,
   <S>M::::::M               M::::::M      T:::::::::T          CCC::::::::::::C      T:::::::::T      </S>,
-  <S>MMMMMMMM               MMMMMMMM      TTTTTTTTTTT             CCCCCCCCCCCCC      TTTTTTTTTTT  v3.1</S>,
+  <S>MMMMMMMM               MMMMMMMM      TTTTTTTTTTT             CCCCCCCCCCCCC      TTTTTTTTTTT  v{pkg.version}</S>,
   '',
   { pause: 2000 },
   <S>          |             |         ' | |                                   |             |       </S>,
