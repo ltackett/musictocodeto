@@ -1,7 +1,7 @@
 {
   "name": "mtct",
   "description": "Music To Code To",
-  "version": "3.1",
+  "version": "0.3.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ltackett/musictocodeto.com.git"
