@@ -45,22 +45,25 @@ class CommandLine extends Component {
 
   // ==========================================================================
   // handleCommand
-  // This is the function that makes the whole thing chooch.
+  // This is the thing what makes the whole thing chooch.
   //
-  // First, it splits the command string into a command object with:
-  //   cmd:     the original, unmodified string
-  //   program: a string with the command name
-  //   params:  an array containing any parameters
+  //   1. Splits the command string into a command object with the following:
+  //      cmd:     the original, unmodified string
+  //      program: a string with the command name
+  //      params:  an array containing any parameters
   //
-  // Then runs the program you entered, feeding the parameters to it.
+  //   2. Pass the command this.props, which includes
+  //      Player state and actions
+  //      Stdout state and actions
   //
-  // There is some basic error handling, but for the most part, it expects that
-  // the program itself will handle any line output, input interruptions, etc.
+  //   3. If a program matches with the text you've entered, it will be run.
+  //      Essentially, a program is simply a promise.
   //
-  // The only thing a program needs to do is reject or resolve.
+  //   5. If a program resolves with an object containing the key `command`,
+  //      then the string value of that command will be fed back into
+  //      this.handleCommand, to run additional commands as side effects.
   //
-  // Finally, if a command resolves with an object that contains a command,
-  // this.handleCommand will be called with that command as its value.
+  // Any command can be run silently by passing `false` as a second param
   // ==========================================================================
 
   handleCommand = (cmd, echo = true) => {
