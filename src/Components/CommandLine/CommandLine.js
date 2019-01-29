@@ -58,6 +58,9 @@ class CommandLine extends Component {
   // the program itself will handle any line output, input interruptions, etc.
   //
   // The only thing a program needs to do is reject or resolve.
+  //
+  // Finally, if a command resolves with an object that contains a command,
+  // this.handleCommand will be called with that command as its value.
   // ==========================================================================
 
   handleCommand = (cmd, echo = true) => {
