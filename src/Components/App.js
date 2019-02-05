@@ -22,7 +22,8 @@ const App = () => {
   const [stdoutState, stdoutActions] = useStdoutReducer()
 
   const [settings, setSettings] = useState({
-    animate: false,
+    animate: localStorage.getItem('animate') ? JSON.parse(localStorage.getItem('animate')) : false,
+    debug: localStorage.getItem('debug') ? JSON.parse(localStorage.getItem('debug')) : false,
   })
 
   globalContext = {
@@ -30,7 +31,12 @@ const App = () => {
     scrollToBottom,
 
     settings,
-    setSettings,
+    setSettings: (obj) => {
+      Object.keys(obj).forEach(key => {
+        localStorage.setItem(key, obj[key])
+        setSettings(obj)
+      })
+    },
 
     ...playerState,
     ...playerActions,
