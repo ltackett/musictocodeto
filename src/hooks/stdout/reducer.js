@@ -17,7 +17,7 @@ import {
 
 export const initialState = {
   stdoutLines: [],
-  cmdHistory: [],
+  cmdHistory: localStorage.cmdHistory ? JSON.parse(localStorage.cmdHistory) : [],
   cmdHistoryIndex: 0,
   isCmdRunning: false,
   isBooting: false,
@@ -59,6 +59,7 @@ export default (state = initialState, action) => {
     case ADD_TO_CMD_HISTORY:
       cmdHistory = [...state.cmdHistory]
       cmdHistory.push(action.cmdObject)
+      localStorage.setItem('cmdHistory', JSON.stringify(cmdHistory))
       return { ...state, cmdHistory  }
 
     case INCREMENT_CMD_HISTORY_INDEX:

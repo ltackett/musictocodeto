@@ -22,8 +22,8 @@ const App = () => {
   const [stdoutState, stdoutActions] = useStdoutReducer()
 
   const [settings, setSettings] = useState({
-    animate: localStorage.getItem('animate') ? JSON.parse(localStorage.getItem('animate')) : false,
-    debug: localStorage.getItem('debug') ? JSON.parse(localStorage.getItem('debug')) : false,
+    animate: localStorage.animate ? JSON.parse(localStorage.animate) : false,
+    debug: localStorage.debug ? JSON.parse(localStorage.debug) : false,
   })
 
   globalContext = {
