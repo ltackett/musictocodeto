@@ -10,6 +10,7 @@ import {
 
   SET_BOOTING,
   SET_BOOTED,
+  SET_PATH,
   START_CMD,
   STOP_CMD,
 } from './constants'
@@ -21,6 +22,18 @@ export const initialState = {
   isCmdRunning: false,
   isBooting: false,
   isBooted: false,
+  path: localStorage.path ? localStorage.path : '/',
+  fs: {
+    genres: {
+      calm_focus: 'calm_focus',
+      coffee_and_contemplation: 'coffee_and_contemplation',
+      flow: 'flow',
+      retro_hacking: 'retro_hacking',
+      speedcoder: 'speedcoder',
+    },
+    playlists: {},
+    users: {},
+  }
 }
 
 // ============================================================================
@@ -63,6 +76,7 @@ export default (state = initialState, action) => {
 
     case SET_BOOTING: return { ...state, isBooting: action.isBooting }
     case SET_BOOTED: return { ...state, isBooted: action.isBooted }
+    case SET_PATH: return { ...state, path: action.path }
     case START_CMD: return { ...state, isCmdRunning: true }
     case STOP_CMD: return { ...state, isCmdRunning: false }
 

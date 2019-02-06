@@ -6,6 +6,7 @@ import clear from 'programs/clear';
 import fork from 'programs/fork';
 import help from 'programs/help';
 import userinfo from 'programs/userinfo';
+import fs from 'programs/fs'
 import player from 'programs/player'
 
 const programs = {
@@ -17,6 +18,7 @@ const programs = {
   fork,
   help,
   userinfo,
+  ...fs,
   ...player,
 
   cls: clear

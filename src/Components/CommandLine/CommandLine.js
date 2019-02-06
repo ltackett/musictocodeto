@@ -177,6 +177,7 @@ class CommandLine extends Component {
         {isBooted &&
           <React.Fragment>
             <span className="prompt">
+              {`${this.props.path} `}
               <Bang symbol={this.props.bang} />
               <span className="cli">{this.state.cmd}</span>
 
