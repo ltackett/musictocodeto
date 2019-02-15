@@ -1,0 +1,24 @@
+{
+  "type": "directory",
+  "contents": {
+    "genres": {
+      "type": "directory",
+      "contents": {
+        "calm_focus":               { "type": "genre" },
+        "coffee_and_contemplation": { "type": "genre" },
+        "flow":                     { "type": "genre" },
+        "retro_hacking":            { "type": "genre" },
+        "speedcoder":               { "type": "genre" }
+      }
+    },
+
+    "playlists": {
+      "type": "directory",
+      "contents": {}
+    },
+
+    "users": {
+      "type": "lookup"
+    }
+  }
+}

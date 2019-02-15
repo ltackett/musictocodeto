@@ -1,17 +1,32 @@
+import getDirectoryFromPath from 'utilities/getDirectoryFromPath'
+
 const cd = ({ params }, { fs, path, setPath }) => new Promise((resolve, reject) => {
-  if (params[0] === '..' || params[0] === '../') {
-    const pathArray = path.split('/')
-    pathArray.pop()
-    setPath(pathArray.join('/'))
+  if (!params[0]) {
     return resolve()
   }
 
-  if (path === '/') {
-    setPath(`/${params[0]}`)
-  } else {
-    setPath(`${path}/${params[0]}`)
+  if (params[0] === '/') {
+    setPath('/')
+    return resolve()
   }
 
+  if (params[0] === '..' || params[0] === '../') {
+    const pathArray = path.split('/')
+    pathArray.pop()
+    setPath(pathArray.length === 1 ? '/' : pathArray.join('/'))
+    return resolve()
+  }
+
+  let newPath = '/'
+  const currentDirectory = getDirectoryFromPath(fs, path).contentsKeys
+
+  if (currentDirectory.includes(params[0])) {
+    newPath = `${path === '/' ? '/' : `${path}/`}${params[0]}`
+  } else {
+    return reject({ error: 'Directory not found' })
+  }
+
+  setPath(newPath)
   return resolve()
 });
 

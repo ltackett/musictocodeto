@@ -1,7 +1,7 @@
-const ls = (cmdObject, { fs, path, stdout }) => new Promise((resolve, reject) => {
-  const pathSelector = path.replace('/', '.').slice(1)
-  stdout(Object.keys(pathSelector === '' ? fs : fs[pathSelector]))
+import getDirectoryFromPath from 'utilities/getDirectoryFromPath'
 
+const ls = (cmdObject, { fs, path, stdout }) => new Promise((resolve, reject) => {
+  stdout(getDirectoryFromPath(fs, path).contentsKeys)
   return resolve()
 });
 

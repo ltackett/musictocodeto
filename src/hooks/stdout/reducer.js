@@ -1,3 +1,5 @@
+import filesystem from 'filesystem.json'
+
 import {
   ADD_LINE,
   ADD_LINES,
@@ -23,17 +25,7 @@ export const initialState = {
   isBooting: false,
   isBooted: false,
   path: localStorage.path ? localStorage.path : '/',
-  fs: {
-    genres: {
-      calm_focus: 'calm_focus',
-      coffee_and_contemplation: 'coffee_and_contemplation',
-      flow: 'flow',
-      retro_hacking: 'retro_hacking',
-      speedcoder: 'speedcoder',
-    },
-    playlists: {},
-    users: {},
-  }
+  fs: filesystem
 }
 
 // ============================================================================
