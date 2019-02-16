@@ -4,17 +4,29 @@
     "genres": {
       "type": "directory",
       "contents": {
-        "calm_focus":               { "type": "genre" },
+        "calm_focus"              : { "type": "genre" },
         "coffee_and_contemplation": { "type": "genre" },
-        "flow":                     { "type": "genre" },
-        "retro_hacking":            { "type": "genre" },
-        "speedcoder":               { "type": "genre" }
+        "flow"                    : { "type": "genre" },
+        "retro_hacking"           : { "type": "genre" },
+        "speedcoder"              : { "type": "genre" }
       }
     },
 
     "playlists": {
       "type": "directory",
-      "contents": {}
+      "contents": {
+        "antipatterns"                : { "type": "playlist", "genre": "coffee_and_contemplation" },
+        "chasing_rises"               : { "type": "playlist", "genre": "calm_focus" },
+        "chasing_sunsets"             : { "type": "playlist", "genre": "calm_focus" },
+        "grandmasters_of_sound_design": { "type": "playlist", "genre": "flow" },
+        "hackerman"                   : { "type": "playlist", "genre": "retro_hacking" },
+        "lightcycles"                 : { "type": "playlist", "genre": "retro_hacking" },
+        "montage"                     : { "type": "playlist", "genre": "retro_hacking" },
+        "mr_sunshine"                 : { "type": "playlist", "genre": "flow" },
+        "spaceflight"                 : { "type": "playlist", "genre": "calm_focus" },
+        "sountrack_to_a_riot"         : { "type": "playlist", "genre": "speedcoder" },
+        "v_a_p_o_r_w_a_v_e"           : { "type": "playlist", "genre": "retro_hacking" }
+      }
     },
 
     "users": {

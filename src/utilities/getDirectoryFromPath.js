@@ -1,13 +1,15 @@
 export default (fs, path) => {
-  let directory = {}
+  let directory = fs
 
-  if (path === '/') {
-    directory = fs
-  } else {
-    const pathSelector = path.replace('/', '.').slice(1).replace('.', '.contents.')
-    directory = fs.contents[pathSelector]
+  if (path !== '/') {
+    path.slice(1).split('/').forEach(node => {
+      directory = directory.contents ? directory.contents[node] : directory[node]
+    })
   }
 
-  directory.contentsKeys = Object.keys(directory.contents)
+  if (directory.contents) {
+    directory.contentsKeys = Object.keys(directory.contents)
+  }
+
   return directory
 }
