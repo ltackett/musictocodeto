@@ -75,7 +75,7 @@ class CommandLine extends Component {
     };
 
     // Echo the command
-    echo && this.props.stdout(`${this.state.bang} ${cmd}`);
+    echo && this.props.stdout(`${this.state.bang}${this.props.path !== '/' ? ` ${this.props.path}` : ''} ${cmd}`);
 
     // Run the command
     this.props.startCmd();
@@ -93,7 +93,7 @@ class CommandLine extends Component {
       .catch(data => {
         this.props.stopCmd();
         if (data.error) { this.props.stdout(<R><E>Error:</E> {data.error}</R>) }
-        if (cmdObject.cmd !== '') { this.props.stdout('') }
+        if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
         this.props.scrollToBottom();
       })
 
@@ -177,8 +177,8 @@ class CommandLine extends Component {
         {isBooted &&
           <React.Fragment>
             <span className="prompt">
-              {`${this.props.path} `}
               <Bang symbol={this.props.bang} />
+              {this.props.path !== '/' && `${this.props.path} `}
               <span className="cli">{this.state.cmd}</span>
 
               {icCmdRunning ? (
