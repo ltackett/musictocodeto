@@ -15,11 +15,9 @@ export default {
   root: apiRoot,
   key: apiKey,
 
-  paths: {
-    resolve: (url) => api.get(`${apiRoot}/resolve`, {
-      params: {
-        url: `http://soundcloud.com/${url}`
-      }
-    }),
-  }
+  resolve: (url) => api.get(`${apiRoot}/resolve`, {
+    params: {
+      url: `http://soundcloud.com/${url}`
+    }
+  }),
 }

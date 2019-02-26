@@ -4,14 +4,15 @@ import soundcloudAPI from 'utilities/soundcloudAPI'
 import $ from 'utilities/theme'
 import { Highlight as H } from 'Components/Styles'
 
-const { paths } = soundcloudAPI
-
 const userinfo = ({ params }, { stdout }) => new Promise((resolve, reject) => {
+  if (!params.length > 0) {
+    return reject({ error: 'No username entered.' })
+  }
   const username = params[0]
 
   if (!username) { reject({ lines: ['No username provided'] }) }
 
-  paths.resolve(username).then(res => {
+  soundcloudAPI.resolve(username).then(res => {
     const { data } = res
 
     stdout([
@@ -20,9 +21,9 @@ const userinfo = ({ params }, { stdout }) => new Promise((resolve, reject) => {
       <R><H color={$.cyan}>Location:</H> <H>{data.city}, {data.country}</H></R>,
       <R><H color={$.cyan}>Description:</H> <H>{data.description}</H></R>,
     ])
-    resolve()
+    return resolve()
   }).catch(err => {
-    reject({ error: [err.message] })
+    return reject({ error: [err.message] })
   })
 });
 
