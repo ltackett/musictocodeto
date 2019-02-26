@@ -3,7 +3,8 @@ import {
   UPDATE_TIMECODE,
 
   SET_NOW_PLAYING,
-  PLAY_NEXT_FROM_QUEUE
+  PLAY_NEXT_FROM_QUEUE,
+  ADD_TRACK_TO_QUEUE,
 } from './constants'
 
 export const initialState = {
@@ -30,6 +31,8 @@ export const initialState = {
 // ============================================================================
 
 export default (state = initialState, action) => {
+  let nowPlaying, queue
+
   switch (action.type) {
     case IS_PLAYING:
       return {
@@ -47,16 +50,25 @@ export default (state = initialState, action) => {
     case SET_NOW_PLAYING:
       return {
         ...state,
-        nowPlaying: action.nowPlaying
+        nowPlaying: action.track
       }
 
     case PLAY_NEXT_FROM_QUEUE:
-      const nowPlaying = [...state.queue][0] || null
-      const queue = [...state.queue].splice(1, 1)
+      nowPlaying = [...state.queue][0] || null
+      queue = [...state.queue].splice(1, 1)
 
       return {
         ...state,
         nowPlaying,
+        queue
+      }
+
+    case ADD_TRACK_TO_QUEUE:
+      queue = [...state.queue]
+      queue.shift(action.track)
+
+      return {
+        ...state,
         queue
       }
 

@@ -4,6 +4,7 @@ import {
 
   SET_NOW_PLAYING,
   PLAY_NEXT_FROM_QUEUE,
+  ADD_TRACK_TO_QUEUE,
 } from './constants'
 
 export default (dispatch) => {
@@ -18,13 +19,18 @@ export default (dispatch) => {
     duration
   })
 
-  const setNowPlaying = (url) => dispatch({
+  const setNowPlaying = (track) => dispatch({
     type: SET_NOW_PLAYING,
-    url
+    track
   })
 
   const playNextFromQueue = () => dispatch({
-      type: PLAY_NEXT_FROM_QUEUE
+    type: PLAY_NEXT_FROM_QUEUE
+  })
+
+  const addTrackToQueue = (track) => dispatch({
+    type: ADD_TRACK_TO_QUEUE,
+    track
   })
 
   return {
@@ -32,5 +38,6 @@ export default (dispatch) => {
     setTimecode,
     setNowPlaying,
     playNextFromQueue,
+    addTrackToQueue,
   }
 }
