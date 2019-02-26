@@ -1,19 +1,28 @@
 import programs from 'programs';
 
-const runCommand = (commandObject, context) => new Promise((resolve, reject) => {
+const runCommand = (commandObject, props) => new Promise((resolve, reject) => {
   const { program } = commandObject;
 
   // Check programs object
   // If there is a match, run it.
   if (typeof programs[program] === 'function') {
-    runProgram(programs[program], commandObject, context, (data) => {
-        // Reject if there are any errors
-        if (data.error) { reject(data) }
+    props.startCmd();
 
-        // Otherwise, resolve
-        resolve(data)
+    programs[program](commandObject, props)
+    .then(data => {
+      props.stopCmd();
+      resolve(data)
+    })
+    .catch(data => {
+      props.stopCmd();
+
+      // Reject if there are any errors
+      if (data.error) {
+        reject(data)
       }
-    );
+
+      reject({})
+    })
 
   // If the program string is empty,
   // just resolve without any data.
@@ -25,11 +34,5 @@ const runCommand = (commandObject, context) => new Promise((resolve, reject) => 
     reject({ error: 'Command not found' })
   }
 });
-
-const runProgram = (program, commandObject, context, callback) => {
-  program(commandObject, context)
-    .then((data) => callback(data))
-    .catch((data) => callback(data));
-};
 
 export default runCommand;

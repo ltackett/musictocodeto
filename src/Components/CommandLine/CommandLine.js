@@ -78,7 +78,6 @@ class CommandLine extends Component {
     echo && this.props.stdout(`${this.state.bang}${this.props.path !== '/' ? ` ${this.props.path}` : ''} ${cmd}`);
 
     // Run the command
-    this.props.startCmd();
     runCommand(cmdObject, this.props)
       .then(data => {
         // If a command is passed back from the program, run it
@@ -86,12 +85,10 @@ class CommandLine extends Component {
 
         if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
         this.props.scrollToBottom();
-        this.props.stopCmd();
       })
 
       // Catch errors
       .catch(data => {
-        this.props.stopCmd();
         if (data.error) { this.props.stdout(<R><E>Error:</E> {data.error}</R>) }
         if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
         this.props.scrollToBottom();
@@ -164,7 +161,7 @@ class CommandLine extends Component {
     const {
       isBooted,
       isPlaying,
-      icCmdRunning,
+      isCmdRunning,
       currentTime,
       duration,
     } = this.props
@@ -181,7 +178,7 @@ class CommandLine extends Component {
               {this.props.path !== '/' && `${this.props.path} `}
               <span className="cli">{this.state.cmd}</span>
 
-              {icCmdRunning ? (
+              {isCmdRunning ? (
                 <Spinner />
               ) : (
                 <Caret />
