@@ -61,7 +61,7 @@ class Player extends Component {
       this.props.playNextFromQueue()
       this.props.stdout('End of queue.')
     } else {
-      next()
+      next({}, this.props)
     }
   }
 
