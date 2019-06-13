@@ -49,15 +49,20 @@ class Player extends Component {
 
   handlePlay = () => {
     this.props.setIsPlaying(true)
-    this.updateTimecode = setInterval(() => {
+    const updateTimecode = () => {
       const { currentTime, duration } = this.player.audioEl
       this.setState({ currentTime, duration })
-    }, 100)
+    }
+
+    updateTimecode()
+    this.throttledUpdateTimecode = setInterval(() => {
+      updateTimecode()
+    }, 250)
   }
 
   handlePause = () => {
     this.props.setIsPlaying(false)
-    clearInterval(this.updateTimecode)
+    clearInterval(this.throttledUpdateTimecode)
   }
 
   handleEnded = () => {
