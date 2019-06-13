@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { CTX } from 'Contexts/Global'
 
 import runCommand from './runCommand';
@@ -14,6 +14,8 @@ import { Error as E } from 'Components/Styles'
 
 const R = React.Fragment
 
+const bang = '>'
+
 const keys = {
   UP:    38,
   DOWN:  40,
@@ -22,52 +24,60 @@ const keys = {
   ENTER: 13,
 };
 
-class CommandLine extends Component {
-  state = {
-    bang: '>',
-    cmd: '',
-  }
+const CommandLine = (props) => {
+  // Define state getters/setters
+  const [cmd, setCmd] = React.useState('')
+  const [nextCmd, setNextCmd] = React.useState('')
 
-  componentDidMount() {
-    this.handleCommand('boot', false)
-  }
+  // Run the boot command on mount.
+  React.useEffect(() => {
+    window.log('Booted.', { props })
+    handleCommand('boot', false)
+  }, [])
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.cmdHistoryIndex !== this.props.cmdHistoryIndex) {
-      this.valueFromHistory();
+  // If there is a nextCmd to run, run it
+  React.useEffect(() => {
+    if (nextCmd !== '') {
+      handleCommand(nextCmd, false)
+      setNextCmd('')
     }
+  }, [nextCmd])
 
-    // Scroll to the bottom when player state changes
-    if (prevProps.isPlaying !== this.props.isPlaying) {
-      this.props.scrollToBottom()
-    }
-  }
+  // Get value from history when the cmd history index changes
+  React.useEffect(() => {
+    valueFromHistory();
+  }, [props.cmdHistoryIndex])
 
-  // ==========================================================================
-  // handleCommand
-  // This is the thing what makes the whole thing chooch.
-  //
-  //   1. Splits the command string into a command object with the following:
-  //      cmd:     the original, unmodified string
-  //      program: a string with the command name
-  //      params:  an array containing any parameters
-  //
-  //   2. Pass the command this.props, which includes
-  //      Player state and actions
-  //      Stdout state and actions
-  //
-  //   3. If a program matches with the text you've entered, it will be run.
-  //      Essentially, a program is simply a promise.
-  //
-  //   5. If a program resolves with an object containing the key `command`,
-  //      then the string value of that command will be fed back into
-  //      this.handleCommand, to run additional commands as side effects.
-  //
-  // Any command can be run silently by passing `false` as a second param
-  // ==========================================================================
+  // Scroll to the bottom when the playing state changes
+  React.useEffect(() => {
+    props.scrollToBottom()
+  }, [props.isPlaying])
 
-  handleCommand = (cmd, echo = true) => {
-
+  /**
+   * `handleCommand` is the part what makes the whole thing chooch.
+   *
+   * @param {string} cmd raw command string
+   * @param {boolean} echo optionally run the command silently
+   *
+   *
+   *   1. Splits the command string into a command object with the following:
+   *      cmd:     the original, unmodified string
+   *      program: a string with the command name
+   *      params:  an array containing any parameters
+   *
+   *   2. Pass the command props, which includes
+   *      Player state and actions
+   *      Stdout state and actions
+   *
+   *   3. If a program matches with the text you've entered, it will be run.
+   *      Essentially, a program is simply a promise.
+   *
+   *   4. If a program resolves with an object containing the key `command`,
+   *      then the string value of that command will be fed back into
+   *      handleCommand, to run additional commands as side effects.
+   */
+  const handleCommand = (cmd, echo = true) => {
+    // Break down the cmd string into an object
     const cmdObject = {
       cmd: cmd,
       program: cmd.split(/\s/)[0],
@@ -75,61 +85,78 @@ class CommandLine extends Component {
     };
 
     // Echo the command
-    echo && this.props.stdout(`${this.state.bang}${this.props.path !== '/' ? ` ${this.props.path}` : ''} ${cmd}`);
+    echo && props.stdout(`${bang}${props.path !== '/' ? ` ${props.path}` : ''} ${cmd}`);
 
     // Run the command
-    runCommand(cmdObject, this.props)
+    runCommand(cmdObject, props)
       .then(data => {
-        // If a command is passed back from the program, run it
-        if (data.command) { this.handleCommand(data.command, false) }
+        // If a command is passed back from the program, queue it to run next
+        if (data.command) {
+          setNextCmd(data.command)
+        }
 
-        if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
-        this.props.scrollToBottom();
+        if (cmdObject.cmd !== '' && echo) { props.stdout('') }
+        props.scrollToBottom();
       })
 
       // Catch errors
       .catch(data => {
-        if (data.error) { this.props.stdout(<R><E>Error:</E> {data.error}</R>) }
-        if (cmdObject.cmd !== '' && echo) { this.props.stdout('') }
-        this.props.scrollToBottom();
+        if (data.error) { props.stdout(<R><E>Error:</E> {data.error}</R>) }
+        if (cmdObject.cmd !== '' && echo) { props.stdout('') }
+        props.scrollToBottom();
       })
 
     // Add command to history
     if (!!cmd && cmd !== '' && echo) {
-      this.props.addToCmdHistory(cmdObject);
+      props.addToCmdHistory(cmdObject);
     }
 
     // Reset historyIndex
-    this.props.setCmdHistoryIndex(0);
+    props.setCmdHistoryIndex(0);
   }
 
-  // ==========================================================================
-
-  handleSubmit = (event) => {
+  /**
+   * `handleSubmit` is fired when the user presses enter in the CLI.
+   *
+   * @param {event} event
+   *
+   *   1. Suppress the default form submission action.
+   *   2. Call `handleCommand` with the cmd string.
+   *   3. Reset the cmd state.
+   */
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { cmd } = event.target;
-    this.handleCommand(cmd.value);
-    this.setState({ cmd: '' });
+    handleCommand(cmd);
+    setCmd('')
   }
 
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
+  /**
+   * `handleInputChange` updates the cmd state as the user types a command.
+   *
+   * @param {event} event
+   */
+  const handleInputChange = (event) => {
+    setCmd(event.target.value);
   }
 
-  handleKeyPressed = (event) => {
-    if (event.keyCode === keys.UP) { this.handleCurseThroughHistory('decrement'); }
-    if (event.keyCode === keys.DOWN) { this.handleCurseThroughHistory('increment'); }
+  /**
+   * `handleKeyPressed` listens for special keys to trigger certain additional actions.
+   *
+   * @param {event} event
+   */
+  const handleKeyPressed = (event) => {
+    if (event.keyCode === keys.UP) { handleCurseThroughHistory('decrement'); }
+    if (event.keyCode === keys.DOWN) { handleCurseThroughHistory('increment'); }
   }
 
-  handleCurseThroughHistory(direction) {
-    const { cmdHistory, cmdHistoryIndex } = this.props;
+  /**
+   * `handleCurseThroughHistory` fires the actions to increment or decrement the cmd history index
+   *
+   * @param {string} direction
+   */
+  const handleCurseThroughHistory = (direction) => {
+    const { cmdHistory, cmdHistoryIndex } = props;
 
     // historyIndex is a count-backwards-from-zero index, so these boundaries
     // read kinda backwards. It's mathematically correct, however. Since the
@@ -138,83 +165,80 @@ class CommandLine extends Component {
     const upperLimit = (cmdHistoryIndex - 1) <= 0;
 
     // Curse through history, within lower and upper limits
-    if (direction === 'decrement' && lowerLimit) { this.props.decrementCmdHistoryIndex() }
-    if (direction === 'increment' && upperLimit) { this.props.incrementCmdHistoryIndex() }
+    if (direction === 'decrement' && lowerLimit) { props.decrementCmdHistoryIndex() }
+    if (direction === 'increment' && upperLimit) { props.incrementCmdHistoryIndex() }
   }
 
-  valueFromHistory = () => {
-    const { cmdHistory, cmdHistoryIndex } = this.props
+  /**
+   * `valueFromHistory` reads the cmdHistory and cmdHistory index, and fetches the appropriate cmd history entry at the current index.
+   */
+  const valueFromHistory = () => {
+    const { cmdHistory, cmdHistoryIndex } = props
 
     if (cmdHistoryIndex === 0) {
-      this.setState({ cmd: '' });
+      setCmd('');
     } else {
       const value = cmdHistory[(cmdHistory.length) + cmdHistoryIndex];
-      this.setState({ cmd: value ? value.cmd : '' });
+      setCmd(value ? value.cmd : '');
     }
   }
 
-  focusInput = (input) => {
+  /**
+   * `focusInput` sets focus to an input DOM node
+   *
+   * @param {HTMLElement} input
+   */
+  const focusInput = (input) => {
     return input && input.focus()
   }
 
-  render() {
-    const {
-      isBooted,
-      isPlaying,
-      isCmdRunning,
-      currentTime,
-      duration,
-    } = this.props
+  // ==========================================================================
 
-    return (
-      <div id="command-line">
-        <Scanlines />
-        <VideoSync />
+  return (
+    <div id="command-line">
+      <Scanlines />
+      <VideoSync />
 
-        {isBooted &&
-          <React.Fragment>
-            <span className="prompt">
-              <Bang symbol={this.props.bang} />
-              {this.props.path !== '/' && `${this.props.path} `}
-              <span className="cli">{this.state.cmd}</span>
+      {!props.isBooted ? (
+        <Caret color={props.theme.danger} />
+      ) : (
+        <>
+          <span className="prompt">
+            <Bang symbol={props.bang} />
+            {props.path !== '/' && `${props.path} `}
+            <span className="cli">{cmd}</span>
 
-              {isCmdRunning ? (
-                <Spinner />
-              ) : (
-                <Caret />
-              )}
-            </span>
+            {props.isCmdRunning ? (
+              <Spinner />
+            ) : (
+              <Caret />
+            )}
+          </span>
 
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                name="cmd"
-                value={this.state.cmd}
-                ref={(input) => this.focusInput(input)}
-                onBlur={(e) => this.focusInput(e.target)}
-                onChange={this.handleInputChange}
-                onKeyDown={this.handleKeyPressed}
-              />
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={cmd}
+              ref={(input) => focusInput(input)}
+              onBlur={(e) => focusInput(e.target)}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyPressed}
+            />
 
-              <button type="submit">Submit</button>
-            </form>
-          </React.Fragment>
-        }
+            <button type="submit">Submit</button>
+          </form>
+        </>
+      )}
 
-        {!isBooted &&
-          <Caret color={this.props.theme.danger} />
-        }
-
-        {isPlaying &&
-          <React.Fragment>
-            <br />
-            <br />
-            <ProgressBar {...{ currentTime, duration, isPlaying }} />
-          </React.Fragment>
-        }
-      </div>
-    );
-  }
+      {props.isPlaying &&
+        <>
+          <br />
+          <br />
+          <ProgressBar />
+        </>
+      }
+    </div>
+  );
 }
 
 export default () => <CTX component={CommandLine} />
