@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import theme from 'utilities/theme'
+import GlobalContext from 'Contexts/Global'
 
 import { Highlight as H } from 'Components/Styles'
 
-const ProgressBar = ({ currentTime, duration, isPlaying }) => {
+const ProgressBar = () => {
   const width = 90
-  const [elapsed, setElapsed] = useState(0)
+  const [elapsed, setElapsed] = React.useState(0)
+  const [isPlaying, setIsPlaying] = React.useState(false)
 
-  // When props.currentTime updates:
+  const context = React.useContext(GlobalContext)
+  const { currentTime, duration } = context
+
+  // When context.currentTime updates:
   // Calculate and set the elapsed value to as a single unit of the total width
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     setElapsed(Math.floor(currentTime*width/duration))
   }, [currentTime])
+
+  // When context.isPlaying updates:
+  // Set the state of isPlaying. Wrapping this in a layout effect prevents a rendering bug.
+  React.useLayoutEffect(() => {
+    setIsPlaying(context.isPlaying)
+  }, [context.isPlaying])
 
   // Click handler
   const handleClick = () => {
@@ -38,7 +49,7 @@ const ProgressBar = ({ currentTime, duration, isPlaying }) => {
 
   // Return
   // ============================================================================
-  if (!isPlaying) return null
+  if (!isPlaying || !currentTime || !duration) return null
   return (
     <H onClick={handleClick}>
       <Bar />{" "}<Percent />
