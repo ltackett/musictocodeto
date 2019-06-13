@@ -8,7 +8,6 @@ import Caret from './Caret';
 import Spinner from './Spinner';
 import VideoSync from './VideoSync';
 import Scanlines from './Scanlines';
-import ProgressBar from './ProgressBar';
 
 import { Error as E } from 'Components/Styles'
 
@@ -229,14 +228,6 @@ const CommandLine = (props) => {
           </form>
         </>
       )}
-
-      {props.isPlaying &&
-        <>
-          <br />
-          <br />
-          <ProgressBar />
-        </>
-      }
     </div>
   );
 }

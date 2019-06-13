@@ -3,8 +3,14 @@ import { CTX } from 'Contexts/Global'
 
 import play from 'programs/player/play'
 import AudioPlayer from 'react-audio-player'
+import ProgressBar from 'Components/ProgressBar';
 
 class Player extends Component {
+  state = {
+    currentTime: 0,
+    duration: 0,
+  }
+
   componentDidMount() {
     const { audioEl } = this.player
     window.player = {}
@@ -45,7 +51,7 @@ class Player extends Component {
     this.props.setIsPlaying(true)
     this.updateTimecode = setInterval(() => {
       const { currentTime, duration } = this.player.audioEl
-      this.props.setTimecode(currentTime, duration)
+      this.setState({ currentTime, duration })
     }, 100)
   }
 
@@ -71,10 +77,22 @@ class Player extends Component {
   // ==========================================================================
 
   render() {
-    return <AudioPlayer
-      src={this.props.nowPlaying && this.props.nowPlaying.url}
-      ref={(el) => { this.player = el }}
-    />
+    return (
+      <>
+        <AudioPlayer
+          src={this.props.nowPlaying && this.props.nowPlaying.url}
+          ref={(el) => { this.player = el }}
+        />
+
+        {this.props.isPlaying &&
+          <>
+            <br />
+            <ProgressBar currentTime={this.state.currentTime} duration={this.state.duration} />
+          </>
+        }
+      </>
+    )
+
   }
 }
 

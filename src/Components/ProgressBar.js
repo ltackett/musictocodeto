@@ -4,13 +4,12 @@ import GlobalContext from 'Contexts/Global'
 
 import { Highlight as H } from 'Components/Styles'
 
-const ProgressBar = () => {
+const ProgressBar = ({ currentTime, duration }) => {
   const width = 90
   const [elapsed, setElapsed] = React.useState(0)
   const [isPlaying, setIsPlaying] = React.useState(false)
 
   const context = React.useContext(GlobalContext)
-  const { currentTime, duration } = context
 
   // When context.currentTime updates:
   // Calculate and set the elapsed value to as a single unit of the total width

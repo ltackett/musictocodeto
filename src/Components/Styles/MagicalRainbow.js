@@ -40,7 +40,7 @@ export default class MagicalRainbowText extends Component {
       else { i++ }
 
       return (
-        <span key={`${this.props.children} ${i}`} style={{ color: colors[i], textShadow: `${colors[i]} 0 0 10px` }}>
+        <span key={`${letter}-${index}-${i}`} style={{ color: colors[i], textShadow: `${colors[i]} 0 0 10px` }}>
           {letter}
         </span>
       )

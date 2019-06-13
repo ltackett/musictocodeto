@@ -1,6 +1,5 @@
 import {
   IS_PLAYING,
-  UPDATE_TIMECODE,
 
   SET_NOW_PLAYING,
   PLAY_NEXT_FROM_QUEUE,
@@ -24,8 +23,6 @@ export const initialState = {
   position: 0,
 
   isPlaying: false,
-  currentTime: 0,
-  duration: 0,
 }
 
 // ============================================================================
@@ -38,13 +35,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isPlaying: action.status
-      }
-
-    case UPDATE_TIMECODE:
-      return {
-        ...state,
-        currentTime: action.currentTime,
-        duration: action.duration,
       }
 
     case SET_NOW_PLAYING:

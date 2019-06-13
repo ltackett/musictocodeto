@@ -17,6 +17,8 @@ import {
   STOP_CMD,
 } from './constants'
 
+const lineLimit = 150
+
 export const initialState = {
   stdoutLines: [],
   cmdHistory: localStorage.cmdHistory ? JSON.parse(localStorage.cmdHistory) : [],
@@ -37,11 +39,17 @@ export default (state = initialState, action) => {
     case ADD_LINE:
       stdoutLines = [...state.stdoutLines]
       stdoutLines.push(action.line)
+      if (stdoutLines.length > lineLimit) {
+        stdoutLines = stdoutLines.slice(stdoutLines.length - lineLimit)
+      }
       return { ...state, stdoutLines  }
 
     case ADD_LINES:
       stdoutLines = [...state.stdoutLines]
       stdoutLines = stdoutLines.concat(action.lines)
+      if (stdoutLines.length > lineLimit) {
+        stdoutLines = stdoutLines.slice(stdoutLines.length - lineLimit)
+      }
       return { ...state, stdoutLines }
 
     case CLEAR_SCREEN:
