@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { CTX } from 'Contexts/Global'
 
-import next from 'programs/player/next'
+import play from 'programs/player/play'
 import AudioPlayer from 'react-audio-player'
 
 class Player extends Component {
@@ -58,10 +58,13 @@ class Player extends Component {
     const { queue } = this.props
 
     if (!queue[0]) {
+      window.log('End of queue.', { props: this.props})
       this.props.playNextFromQueue()
       this.props.stdout('End of queue.')
     } else {
-      next({}, this.props)
+      window.log('Playing next from queue', { props: this.props})
+      this.props.playNextFromQueue()
+      play({}, this.props)
     }
   }
 
