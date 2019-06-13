@@ -9,6 +9,7 @@ import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
 import theme from 'utilities/theme'
 import scrollToBottom from 'utilities/scrollToBottom'
+import 'utilities/log'
 
 import { usePlayerReducer } from 'hooks'
 import { useStdoutReducer } from '../hooks'
