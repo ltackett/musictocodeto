@@ -15,7 +15,7 @@ import {
   STOP_CMD,
 } from './constants'
 
-const click = () => new Audio('/click.mp3').play()
+const click = () => new Audio('/click2.mp3').play()
 
 // ============================================================================
 

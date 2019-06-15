@@ -8,7 +8,11 @@ const about = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
     stdout(avatar)
   }
 
-  stdout([<><H>MTCT</H> is a labor of love built by <MR>Lorin Tackett</MR>.</>])
+  stdout([
+    <><H>MTCT</H> is a CLI-like interface for SoundCloud written in React.</>,
+    <>Built with love by <a href="http://lorintackett.com" target="_blank" rel="noopener noreferrer"><MR>Lorin Tackett</MR></a>.</>,
+    ''
+  ])
 
   resolve()
 });

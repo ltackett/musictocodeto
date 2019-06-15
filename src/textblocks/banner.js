@@ -33,6 +33,7 @@ export default [
   <S>                                             _/                \__|                             </S>,
   { pause: 1000 },
   '',
+  <S>Type <H>'play'</H> to start listening.</S>,
   <S>Type <H>'help'</H> for a list of commands.</S>,
   '',
   { pause: 3000, last: true },

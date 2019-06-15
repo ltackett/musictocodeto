@@ -91,7 +91,6 @@ class Player extends Component {
 
         {this.props.isPlaying &&
           <>
-            <br />
             <ProgressBar currentTime={this.state.currentTime} duration={this.state.duration} />
           </>
         }
