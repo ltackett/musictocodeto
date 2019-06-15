@@ -36,6 +36,7 @@ const App = () => {
   globalContext = {
     cmd,
     run: setCmd,
+    bang: '>',
 
     theme,
     scrollToBottom,
@@ -133,10 +134,10 @@ const App = () => {
           <Route exact path="/cli" render={() => (
             <>
               <Stdout />
-              <CommandLine />
               {stdoutState.isBooted &&
                 <Player />
               }
+              <CommandLine />
             </>
           )} />
 

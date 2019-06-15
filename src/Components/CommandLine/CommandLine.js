@@ -8,9 +8,6 @@ import VideoSync from './VideoSync';
 import Scanlines from './Scanlines';
 import getCmdObject from 'utilities/getCmdObject';
 
-
-const bang = '>'
-
 const keys = {
   UP:    38,
   DOWN:  40,
@@ -52,8 +49,7 @@ const CommandLine = (props) => {
     event.preventDefault();
 
     // Echo the command
-    props.stdout(`${bang}${props.path !== '/' ? ` ${props.path}` : ''} ${prompt}`);
-    props.stdout('')
+    props.stdout(`${props.bang}${props.path !== '/' ? ` ${props.path}` : ''} ${prompt}`);
 
     // Add command to history
     const cmdObject = getCmdObject(prompt)
