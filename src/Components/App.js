@@ -135,7 +135,7 @@ const App = () => {
               <Stdout />
               <CommandLine />
               {stdoutState.isBooted &&
-                <Player/>
+                <Player />
               }
             </>
           )} />
