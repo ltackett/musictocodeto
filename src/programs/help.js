@@ -28,12 +28,12 @@ const help = (cmdObject, { stdout, bang }) => new Promise((resolve, reject) => {
     ''
   ])
 
-  stdout([
-    <H color={$.cyan}>Discovery</H>,
-    <H color={$.dark}>————————————————————————————————————————————————————————————————————————————————</H>,
-    <>{bang} {<Cmd>user</Cmd>} {<Arg>[user-slug]</Arg>} {<Arg>[info|playlists|tracks]</Arg>}</>,
-    ''
-  ])
+  // stdout([
+  //   <H color={$.cyan}>Discovery</H>,
+  //   <H color={$.dark}>————————————————————————————————————————————————————————————————————————————————</H>,
+  //   <>{bang} {<Cmd>user</Cmd>} {<Arg>[user-slug]</Arg>} {<Arg>[info|playlists|tracks]</Arg>}</>,
+  //   ''
+  // ])
 
   resolve()
 });
