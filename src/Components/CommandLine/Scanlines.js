@@ -27,7 +27,7 @@ class Scannlines extends Component {
           offset: Math.floor(Math.random() * 6) + 1,
           opacity: 1 - (Math.floor(Math.random() * 4) / 20)
         })
-      }, 100)
+      }, 200)
     }
   }
 
