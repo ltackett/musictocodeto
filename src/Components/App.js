@@ -1,5 +1,5 @@
 import React  from 'react'
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import GlobalContext from 'Contexts/Global'
 import { RootStyles, Center } from 'Components/Styles'
