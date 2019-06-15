@@ -31,7 +31,7 @@
         // dummy mixpanel.track function
         window.mixpanel = {
           track: function(){
-            window.log ? window.log.call(this, 'Mixpanel', arguments) : null
+            window.log && window.log.call(this, 'Mixpanel', arguments)
           }
         };
       }

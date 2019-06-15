@@ -40,6 +40,8 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
   // ==========================================================================
   } else if (nowPlaying !== null) {
     window.player.play()
+    window.mixpanel.track('Playing', { type: 'track', track: `${nowPlaying.artist} - ${nowPlaying.title}` })
+
     stdout(
       <>
         <H color={$.cyan}>Now playing: </H>
@@ -60,6 +62,8 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
     soundcloudAPI.resolve(playlist.path)
       .then(({ data }) => {
         window.log('Playlist loaded from SoundCloud', { data, props })
+        window.mixpanel.track('Playing', { type: 'playlist', playlist: data.title })
+
         stdout(`Loaded playlist: ${data.title}`)
         stdout(data.tracks.map((t, i) => <><H>[{i+1}]</H> {t.user.username} - {t.title}</>))
 

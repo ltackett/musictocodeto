@@ -28,7 +28,7 @@ const runCommand = (commandObject, props) => new Promise((resolve, reject) => {
         return
       }
 
-      window.mixpanel.track('Command', { type: 'no-command', params: params.join(' '), cmd })
+      window.mixpanel.track('Error', { type: 'unknown-error', params: params.join(' '), cmd })
       reject({})
     })
 
@@ -40,6 +40,7 @@ const runCommand = (commandObject, props) => new Promise((resolve, reject) => {
 
   // Otherwise, error out.
   } else {
+    window.mixpanel.track('Command', { type: 'no-command', params: params.join(' '), cmd })
     reject({ error: 'Command not found' })
   }
 });
