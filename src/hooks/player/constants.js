@@ -1,4 +1,6 @@
 export const IS_PLAYING = 'player:IS_PLAYING'
 export const SET_NOW_PLAYING = 'player:SET_NOW_PLAYING'
 export const PLAY_NEXT_FROM_QUEUE = 'player:PLAY_NEXT_FROM_QUEUE'
-export const ADD_TRACK_TO_QUEUE = 'player:ADD_TO_QUEUE'
+export const PLAY_PREVIOUS_FROM_HISTORY = 'player:PLAY_PREVIOUS_FROM_HISTORY'
+export const ADD_TRACK_TO_QUEUE = 'player:ADD_TRACK_TO_QUEUE'
+export const ADD_PLAYLIST_TO_QUEUE = 'player:ADD_PLAYLIST_TO_QUEUE'

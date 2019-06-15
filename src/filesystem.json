@@ -15,17 +15,27 @@
     "playlists": {
       "type": "directory",
       "contents": {
-        "antipatterns"                : { "type": "playlist", "genre": "coffee_and_contemplation" },
-        "chasing_rises"               : { "type": "playlist", "genre": "calm_focus" },
-        "chasing_sunsets"             : { "type": "playlist", "genre": "calm_focus" },
-        "grandmasters_of_sound_design": { "type": "playlist", "genre": "flow" },
-        "hackerman"                   : { "type": "playlist", "genre": "retro_hacking" },
-        "lightcycles"                 : { "type": "playlist", "genre": "retro_hacking" },
-        "montage"                     : { "type": "playlist", "genre": "retro_hacking" },
-        "mr_sunshine"                 : { "type": "playlist", "genre": "flow" },
-        "spaceflight"                 : { "type": "playlist", "genre": "calm_focus" },
-        "sountrack_to_a_riot"         : { "type": "playlist", "genre": "speedcoder" },
-        "v_a_p_o_r_w_a_v_e"           : { "type": "playlist", "genre": "retro_hacking" }
+        "antipatterns"                  : { "type": "playlist", "genre": "coffee_and_contemplation", "path": "musictocodeto/sets/antipatterns" },
+        "chasing-sunrises"              : { "type": "playlist", "genre": "calm_focus" },
+        "chasing-sunsets"               : { "type": "playlist", "genre": "calm_focus" },
+        "grandmasters-of-sound-design"  : { "type": "playlist", "genre": "flow" },
+        "hackerman"                     : { "type": "playlist", "genre": "retro_hacking" },
+        "lightcycles"                   : { "type": "playlist", "genre": "retro_hacking", "path": "musictocodeto/sets/lightcycles" },
+        "montage"                       : { "type": "playlist", "genre": "retro_hacking" },
+        "mr-sunshine"                   : { "type": "playlist", "genre": "flow", "path": "musictocodeto/sets/mr-sunshine" },
+        "spaceflight"                   : { "type": "playlist", "genre": "calm_focus" },
+        "sountrack-to-a-riot"           : { "type": "playlist", "genre": "speedcoder" },
+        "v-a-p-o-r-w-a-v-e"             : { "type": "playlist", "genre": "retro_hacking" },
+        "stackoverflow-mar-2015"        : { "type": "playlist", "genre": "retro_hacking", "path": "musictocodeto/sets/mtct-stack-overflow-03-2015" },
+        "stackoverflow-feb-2015"        : { "type": "playlist", "genre": "flow", "path": "musictocodeto/sets/mtct-stack-overflow-02-2015" },
+        "mellow-mar-2015"               : { "type": "playlist", "genre": "coffee_and_contemplation", "path": "musictocodeto/sets/mtct-mellow-03-2015" },
+        "mellow-feb-2015"               : { "type": "playlist", "genre": "coffee_and_contemplation", "path": "musictocodeto/sets/mtct-mellow-02-2015" },
+        "programming-music"             : { "type": "playlist", "genre": "flow", "path": "plyturon/sets/programming-music" },
+        "music-for-programming-1"       : { "type": "playlist", "genre": "flow", "path": "attilam/sets/music-for-programming-1" },
+        "converse-rubber-tracks-sample" : { "type": "playlist", "genre": "flow", "path": "conversemusic/sets/converse-rubber-tracks-sample" },
+        "atmospheric"                   : { "type": "playlist", "genre": "flow", "path": "tim_go/sets/atmospheric" },
+        "loscil"                        : { "type": "playlist", "genre": "coffee_and_contemplation", "path": "loscil/sets/loscil" },
+        "analog-morphology-ii-1"        : { "type": "playlist", "genre": "flow", "path": "electronicvoicephenomena/sets/analog-morphology-ii-1" }
       }
     },
 
