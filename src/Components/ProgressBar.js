@@ -25,9 +25,13 @@ const ProgressBar = ({ currentTime, duration }) => {
 
   // Click handler
   const handleClick = () => {
-    window.player.pause()
-    window.alert('This is no place for mouse events!')
-    window.open('https://www.youtube.com/watch?v=fBGWtVOKTkM')
+    context.run('pause')
+
+    setTimeout(() => {
+      context.stdout('')
+      window.alert('This is no place for mouse events!')
+      window.open('https://www.youtube.com/watch?v=fBGWtVOKTkM')
+    }, 5)
   }
 
   // Bar
@@ -50,9 +54,11 @@ const ProgressBar = ({ currentTime, duration }) => {
   // ============================================================================
   if (!isPlaying || !currentTime || !duration) return null
   return (
-    <H onClick={handleClick}>
-      <Bar />{" "}<Percent />
-    </H>
+    <div onClick={handleClick}>
+      <H>
+        <Bar />{" "}<Percent />
+      </H>
+    </div>
   )
 }
 
