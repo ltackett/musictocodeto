@@ -1,4 +1,4 @@
-import React, { Fragment as R } from 'react';
+import React from 'react';
 import soundcloudAPI from 'utilities/soundcloudAPI'
 
 import $ from 'utilities/theme'
@@ -16,10 +16,10 @@ const userinfo = ({ params }, { stdout }) => new Promise((resolve, reject) => {
     const { data } = res
 
     stdout([
-      <R><H color={$.cyan}>User ID:</H> <H>{data.id}</H></R>,
-      <R><H color={$.cyan}>Username:</H> <H>{data.username}</H></R>,
-      <R><H color={$.cyan}>Location:</H> <H>{data.city}, {data.country}</H></R>,
-      <R><H color={$.cyan}>Description:</H> <H>{data.description}</H></R>,
+      <><H color={$.cyan}>User ID:</H> <H>{data.id}</H></>,
+      <><H color={$.cyan}>Username:</H> <H>{data.username}</H></>,
+      <><H color={$.cyan}>Location:</H> <H>{data.city}, {data.country}</H></>,
+      <><H color={$.cyan}>Description:</H> <H>{data.description}</H></>,
     ])
     return resolve()
   }).catch(err => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React  from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import GlobalContext from 'Contexts/Global'
@@ -24,16 +24,19 @@ const beepbeep = new Audio('/beep-beep.mp3')
 
 const App = () => {
   const [cmd, setCmd] = React.useState('')
-
-  const [playerState, playerActions] = usePlayerReducer()
-  const [stdoutState, stdoutActions] = useStdoutReducer()
-
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = React.useState({
     animate: localStorage.animate ? JSON.parse(localStorage.animate) : false,
     debug: localStorage.debug ? JSON.parse(localStorage.debug) : false,
   })
 
+  const [playerState, playerActions] = usePlayerReducer()
+  const [stdoutState, stdoutActions] = useStdoutReducer()
+
+
   globalContext = {
+    cmd,
+    run: setCmd,
+
     theme,
     scrollToBottom,
 
@@ -45,24 +48,20 @@ const App = () => {
       })
     },
 
-
     ...playerState,
     ...playerActions,
 
     ...stdoutState,
     ...stdoutActions,
-
-    cmd,
-    run: setCmd
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (stdoutState.isBooting) {
       whirrrr.play()
     }
   }, [stdoutState.isBooting])
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (stdoutState.isBooted) {
       beepbeep.play()
     }
@@ -132,13 +131,13 @@ const App = () => {
           )} />
 
           <Route exact path="/cli" render={() => (
-            <React.Fragment>
+            <>
               <Stdout />
               <CommandLine />
               {stdoutState.isBooted &&
                 <Player/>
               }
-            </React.Fragment>
+            </>
           )} />
 
         </Switch>

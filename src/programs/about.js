@@ -1,4 +1,4 @@
-import React, { Fragment as R} from 'react';
+import React from 'react';
 
 import { Highlight as H, MagicalRainbow as MR } from 'Components/Styles'
 import avatar from 'textblocks/avatar'
@@ -8,7 +8,7 @@ const about = (cmdObject, { stdout }) => new Promise((resolve, reject) => {
     stdout(avatar)
   }
 
-  stdout([<R><H>MTCT</H> is a labor of love built by <MR>Lorin Tackett</MR>.</R>])
+  stdout([<><H>MTCT</H> is a labor of love built by <MR>Lorin Tackett</MR>.</>])
 
   resolve()
 });

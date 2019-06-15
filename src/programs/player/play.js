@@ -1,4 +1,4 @@
-import React, { Fragment as F } from 'react'
+import React from 'react'
 import soundcloudAPI from 'utilities/soundcloudAPI'
 
 import $ from 'utilities/theme'
@@ -24,10 +24,10 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
         setTimeout(() => {
           window.player.play()
           stdout(
-            <F>
+            <>
               <H color={$.cyan}>Now playing: </H>
               <H color={$.pink}>{data.user.username} - {data.title}</H>
-            </F>
+            </>
           )
         }, 5);
 
@@ -40,10 +40,10 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
   } else if (nowPlaying !== null) {
     window.player.play()
     stdout(
-      <F>
+      <>
         <H color={$.cyan}>Now playing: </H>
         <H color={$.pink}>{nowPlaying.artist} - {nowPlaying.title}</H>
-      </F>
+      </>
     )
     return resolve()
 
