@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/ltackett/musictocodeto.com/issues"
   },
-  "homepage": "https://github.com/ltackett/musictocodeto.com#readme",
+  "homepage": "./",
   "dependencies": {
     "axios": "^0.18.0",
     "react": "16.8.0-alpha.1",
