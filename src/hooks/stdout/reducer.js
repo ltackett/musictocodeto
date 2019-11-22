@@ -13,6 +13,7 @@ import {
   SET_BOOTING,
   SET_BOOTED,
   SET_PATH,
+  SET_SPINNER_STAGE,
   START_CMD,
   STOP_CMD,
 } from './constants'
@@ -27,6 +28,7 @@ export const initialState = {
   isBooting: false,
   isBooted: false,
   path: localStorage.path ? localStorage.path : '/',
+  spinnerStage: 0,
   fs: filesystem
 }
 
@@ -78,6 +80,7 @@ export default (state = initialState, action) => {
     case SET_BOOTING: return { ...state, isBooting: action.isBooting }
     case SET_BOOTED: return { ...state, isBooted: action.isBooted }
     case SET_PATH: return { ...state, path: action.path }
+    case SET_SPINNER_STAGE: return { ...state, spinnerStage: action.stage }
     case START_CMD: return { ...state, isCmdRunning: true }
     case STOP_CMD: return { ...state, isCmdRunning: false }
 

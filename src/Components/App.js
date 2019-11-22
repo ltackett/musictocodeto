@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import GlobalContext from 'Contexts/Global'
 import { RootStyles, Center } from 'Components/Styles'
 
-import { CLI } from 'Components/CLI'
+import CLI from 'Components/CLI'
 import CommandLine from 'Components/CommandLine'
 import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
@@ -28,6 +28,7 @@ const App = () => {
   const [settings, setSettings] = React.useState({
     animate: localStorage.animate ? JSON.parse(localStorage.animate) : false,
     debug: localStorage.debug ? JSON.parse(localStorage.debug) : false,
+    textOnly: false,
   })
 
   const [playerState, playerActions] = usePlayerReducer()
@@ -45,7 +46,10 @@ const App = () => {
     settings,
     setSettings: (obj) => {
       Object.keys(obj).forEach(key => {
-        localStorage.setItem(key, obj[key])
+        // Persist certain settings
+        if (key === 'animate' || key === 'debug') {
+          localStorage.setItem(key, obj[key])
+        }
         setSettings(obj)
       })
     },
@@ -112,7 +116,13 @@ const App = () => {
 
       // Catch errors
       .catch(data => {
-        if (data.error) { globalContext.stdout(<><E>Error:</E> {data.error}</>) }
+        if (data.error) {
+          if (settings.textOnly) {
+            globalContext.stdout(`Error: ${data.error}`)
+          } else {
+            globalContext.stdout(<><E>Error:</E> {data.error}</>)
+          }
+        }
         globalContext.scrollToBottom();
       })
 
@@ -135,9 +145,6 @@ const App = () => {
           <Route exact path="/cli" render={() => (
             <>
               <Stdout />
-              {stdoutState.isBooted &&
-                <Player />
-              }
               <CommandLine />
             </>
           )} />
@@ -150,6 +157,10 @@ const App = () => {
 
         </Switch>
       </Router>
+
+      {stdoutState.isBooted &&
+        <Player />
+      }
     </GlobalContext.Provider>
   )
 }

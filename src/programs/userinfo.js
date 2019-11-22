@@ -4,7 +4,7 @@ import soundcloudAPI from 'utilities/soundcloudAPI'
 import $ from 'utilities/theme'
 import { Highlight as H } from 'Components/Styles'
 
-const userinfo = ({ params }, { stdout }) => new Promise((resolve, reject) => {
+const userinfo = ({ params }, { stdout, settings }) => new Promise((resolve, reject) => {
   if (!params.length > 0) {
     return reject({ error: 'No username entered.' })
   }
@@ -15,12 +15,21 @@ const userinfo = ({ params }, { stdout }) => new Promise((resolve, reject) => {
   soundcloudAPI.resolve(username).then(res => {
     const { data } = res
 
-    stdout([
-      <><H color={$.cyan}>User ID:</H> <H>{data.id}</H></>,
-      <><H color={$.cyan}>Username:</H> <H>{data.username}</H></>,
-      <><H color={$.cyan}>Location:</H> <H>{data.city}, {data.country}</H></>,
-      <><H color={$.cyan}>Description:</H> <H>{data.description}</H></>,
-    ])
+    if (settings.textOnly) {
+      stdout([
+        `User ID: ${data.id}`,
+        `Username: ${data.username}`,
+        `Location: ${data.city}, ${data.country}`,
+        `Description: ${data.description}`,
+      ])
+    } else {
+      stdout([
+        <><H color={$.cyan}>User ID:</H> <H>{data.id}</H></>,
+        <><H color={$.cyan}>Username:</H> <H>{data.username}</H></>,
+        <><H color={$.cyan}>Location:</H> <H>{data.city}, {data.country}</H></>,
+        <><H color={$.cyan}>Description:</H> <H>{data.description}</H></>,
+      ])
+    }
     return resolve()
   }).catch(err => {
     return reject({ error: [err.message] })

@@ -7,7 +7,7 @@ import { Highlight as H, Error as E } from 'Components/Styles'
 
 const play = (cmdObject, props) => new Promise((resolve, reject) => {
   const { params } = cmdObject
-  const { setNowPlaying, stdout, nowPlaying, addPlaylistToQueue, playNextFromQueue } = props
+  const { setNowPlaying, stdout, nowPlaying, addPlaylistToQueue, playNextFromQueue, settings } = props
 
   // Attempt to play from soundcloud if there are two params passed in
   // ==========================================================================
@@ -24,6 +24,18 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
 
         setTimeout(() => {
           window.player.play()
+
+          if (settings.textOnly) {
+            stdout(`Now playing: ${data.user.username} - ${data.title}`)
+          } else {
+            stdout(
+              <>
+                <H color={$.cyan}>Now playing: </H>
+                <H color={$.pink}>{data.user.username} - {data.title}</H>
+              </>
+            )
+          }
+
           stdout(
             <>
               <H color={$.cyan}>Now playing: </H>
@@ -42,12 +54,16 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
     window.player.play()
     window.mixpanel.track('Playing', { type: 'track', track: `${nowPlaying.artist} - ${nowPlaying.title}` })
 
-    stdout(
-      <>
-        <H color={$.cyan}>Now playing: </H>
-        <H color={$.pink}>{nowPlaying.artist} - {nowPlaying.title}</H>
-      </>
-    )
+    if (settings.textOnly) {
+      stdout(`Now playing: ${nowPlaying.artist} - ${nowPlaying.title}`)
+    } else {
+      stdout(
+        <>
+          <H color={$.cyan}>Now playing: </H>
+          <H color={$.pink}>{nowPlaying.artist} - {nowPlaying.title}</H>
+        </>
+      )
+    }
     return resolve()
 
   // Otherwise, nothing is loaded. Exit
@@ -55,7 +71,11 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
   } else {
     window.player.pause()
 
-    stdout(<E>There are no songs in the queue.</E>)
+    if (settings.textOnly) {
+      stdout(`There are no songs in the queue.`)
+    } else {
+      stdout(<E>There are no songs in the queue.</E>)
+    }
     const playlist = getRandomPlaylist()
     stdout('Loading a new playlist...')
 
@@ -65,7 +85,11 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
         window.mixpanel.track('Playing', { type: 'playlist', playlist: data.title })
 
         stdout(`Loaded playlist: ${data.title}`)
-        stdout(data.tracks.map((t, i) => <><H>[{i+1}]</H> {t.user.username} - {t.title}</>))
+        if (settings.textOnly) {
+          stdout(data.tracks.map((t, i) => `[${i+1}] ${t.user.username} - ${t.title}`))
+        } else {
+          stdout(data.tracks.map((t, i) => <><H>[{i+1}]</H> {t.user.username} - {t.title}</>))
+        }
 
         const tracks = data.tracks.map(t => ({
           url: `${t.stream_url}?client_id=${soundcloudAPI.key}`,
@@ -74,12 +98,16 @@ const play = (cmdObject, props) => new Promise((resolve, reject) => {
         }))
 
         addPlaylistToQueue(tracks)
-        stdout(
-          <>
-            <H color={$.cyan}>Now playing: </H>
-            <H color={$.pink}>{tracks[0].artist} - {tracks[0].title}</H>
-          </>
-        )
+        if (settings.textOnly) {
+          stdout(`Now playing: ${tracks[0].artist} - ${tracks[0].title}`)
+        } else {
+          stdout(
+            <>
+              <H color={$.cyan}>Now playing: </H>
+              <H color={$.pink}>{tracks[0].artist} - {tracks[0].title}</H>
+            </>
+          )
+        }
 
         setTimeout(() => {
           playNextFromQueue()

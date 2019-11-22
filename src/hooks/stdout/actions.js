@@ -11,6 +11,7 @@ import {
   SET_BOOTING,
   SET_BOOTED,
   SET_PATH,
+  SET_SPINNER_STAGE,
   START_CMD,
   STOP_CMD,
 } from './constants'
@@ -24,6 +25,7 @@ export default (dispatch) => {
   const setBooting = (isBooting) => dispatch({ type: SET_BOOTING, isBooting })
   const setBooted = (isBooted) => dispatch({ type: SET_BOOTED, isBooted })
   const setPath = (path) => dispatch({ type: SET_PATH, path })
+  const setSpinnerStage = (stage) => dispatch({ type: SET_SPINNER_STAGE, stage })
   const startCmd = () => dispatch({ type: START_CMD })
   const stopCmd = () => dispatch({ type: STOP_CMD })
 
@@ -67,6 +69,7 @@ export default (dispatch) => {
     setBooting,
     setBooted,
     setPath,
+    setSpinnerStage,
     startCmd,
     stopCmd,
     stdout,

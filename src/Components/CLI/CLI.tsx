@@ -4,6 +4,8 @@ import * as GUI from "babylonjs-gui";
 import Screen, { SceneEventArgs } from "./Screen";
 
 import 'babylonjs-loaders'
+import { CTX } from "../../Contexts/Global";
+import Spinner, { spinnerStages } from "../CommandLine/Spinner";
 
 let scene: BABYLON.Scene;
 let engine: BABYLON.Engine;
@@ -16,32 +18,47 @@ let textBlock: GUI.TextBlock
 
 const defaultCursor = '\u2593'
 let cursorSwitch = 0
+let cursorInterval: any
 
-export const CLI: React.FC = () => {
-  const font_size = 12;
-  const line_height = 1.25;
-  const font_type = "Consolas";
-  const font = `${font_size}px ${font_type}`;
-
+export const CLI: React.FC = (props: any) => {
   const [cursor, setCursor] = React.useState(defaultCursor)
   const [cmd, setCmd] = React.useState('')
-  const [lines, setLines] = React.useState([
-    '::::    ::::  :::::::::::  ::::::::  :::::::::::  ',
-    '+:+:+: :+:+:+     :+:     :+:    :+:     :+:',
-    '+:+ +:+:+ +:+     +:+     +:+            +:+',
-    '+#+  +:+  +#+     +#+     +#+            +#+',
-    '+#+       +#+     +#+     +#+            +#+',
-    '#+#       #+#     #+#     #+#    #+#     #+#    Music To Code To, v3.11',
-    '###       ###     ###      ########      ###    Rock out while you grok out.',
-    '',
-    'type \'play\' to start the fun, or',
-    'type \'help\' for some useful commands',
-    ''
-  ])
 
-  // Component mounted
+  const ps1 = `${props.bang} ${props.path === '/' ? '' : props.path} ${cmd}`;
+
+  const startCursorInterval = () => {
+    cursorInterval = setInterval(() => {
+      if (cursorSwitch === 0) {
+        setCursor('');
+        cursorSwitch = 1
+      } else {
+        setCursor(defaultCursor)
+        cursorSwitch = 0
+      }
+    }, 500)
+  }
+
+  const stopCursorInterval = () => {
+    clearInterval(cursorInterval)
+  }
+
+  // Cursor Blinking
   React.useEffect(() => {
-    textBlock = new GUI.TextBlock('lines_text', lines.join('\n'));
+    if (props.isBooted) {
+      startCursorInterval();
+    }
+
+    return stopCursorInterval
+  }, [props.isBooted])
+
+  // Boot
+  React.useEffect(() => {
+    props.setSettings({ textOnly: true });
+  }, [])
+
+  // Setup textBlock
+  React.useEffect(() => {
+    textBlock = new GUI.TextBlock('lines_text', props.stdoutLines.join('\n'));
     textBlock.textWrapping = true;
     textBlock.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
     textBlock.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
@@ -55,20 +72,19 @@ export const CLI: React.FC = () => {
     textBlock.paddingBottom = padding
     textBlock.paddingLeft = padding
 
-    setInterval(() => {
-      if (cursorSwitch === 0) {
-        setCursor('');
-        cursorSwitch = 1
-      } else {
-        setCursor(defaultCursor)
-        cursorSwitch = 0
-      }
-    }, 500)
+    return stopCursorInterval
   }, [])
 
   const applyLinesToScreen = () => {
+    const displayedLines = [...props.stdoutLines]
+    if (displayedLines.length >= 24) {
+      displayedLines.reverse()
+      displayedLines.splice(23, 1000)
+      displayedLines.reverse()
+    }
+
     if (linesTexture && screenMat && screenPlane) {
-      textBlock.text = lines.concat([`> ${cmd}${cursor}`]).join('\n')
+      textBlock.text = displayedLines.concat([`${ps1}${props.isCmdRunning ? spinnerStages[props.spinnerStage] : cursor}`]).join('\n')
     }
   }
 
@@ -95,7 +111,7 @@ export const CLI: React.FC = () => {
     camera.setTarget(BABYLON.Vector3.Zero());
 
     // This attaches the camera to the canvas
-    // camera.attachControl(canvas, true);
+    camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     const light = new BABYLON.HemisphericLight(
@@ -112,13 +128,15 @@ export const CLI: React.FC = () => {
     const planeHeight = planeWidth * 0.66;
 
     // Load old computer
-    // BABYLON.SceneLoader.ImportMesh(null, './models/', 'old_computer_no_screen.glb', scene, (meshes) => {
-    //  meshes[0].scaling = new BABYLON.Vector3(15, 15, -15)
-    //  meshes[0].translate(new BABYLON.Vector3(-1, 0, 0), 35)  // X
-    //  meshes[0].translate(new BABYLON.Vector3(0, -1, 0), 170) // Y
-    //  meshes[0].translate(new BABYLON.Vector3(0, 0, 1), 75)   // Z
-    //  meshes[0].rotate(new BABYLON.Vector3(0, 1, 0), Math.PI)
-    // })
+    BABYLON.SceneLoader.ImportMesh(null, './models/', 'old_computer_no_screen.glb', scene, (meshes) => {
+     meshes[0].scaling = new BABYLON.Vector3(15, 15, -15)
+     meshes[0].translate(new BABYLON.Vector3(-1, 0, 0), 35)  // X
+     meshes[0].translate(new BABYLON.Vector3(0, -1, 0), 170) // Y
+     meshes[0].translate(new BABYLON.Vector3(0, 0, 1), 75)   // Z
+     meshes[0].rotate(new BABYLON.Vector3(0, 1, 0), Math.PI)
+
+     props.run('boot', false);
+    })
 
     const assetContainer = await BABYLON.SceneLoader.LoadAssetContainerAsync('./models/', 'old_computer_screen.glb', scene)
 
@@ -152,14 +170,10 @@ export const CLI: React.FC = () => {
 
       applyLinesToScreen()
 
-      // BUUUURN, BABY BURN
+      // Emissive textures should glow
       const glow = new BABYLON.GlowLayer('glow', scene, {
         mainTextureSamples: 4
       })
-
-      setInterval(() => {
-        glow.intensity = 0.75*Math.random()
-      }, 66)
     }
 
 
@@ -173,16 +187,10 @@ export const CLI: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedLines = [...lines, `> ${(event.target as any).line.value}`, '']
+    console.log({props})
 
-    if (updatedLines.length >= 24) {
-
-      updatedLines.reverse()
-      updatedLines.splice(23, 1000)
-      updatedLines.reverse()
-    }
-
-    setLines(updatedLines);
+    props.stdout([ps1, ''])
+    props.run(cmd);
     setCmd('');
     (event.target as any).line.value = ""
   }
@@ -195,16 +203,23 @@ export const CLI: React.FC = () => {
     return input && input.focus()
   }
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     applyLinesToScreen()
-  }, [lines, cmd, cursor])
+  }, [props.stdoutLines, props.path, props.isCmdRunning, props.spinnerStage, cmd, cursor])
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="line" onChange={handleChange} ref={(input: HTMLInputElement) => focusInput(input)} onBlur={(e) => focusInput(e.target)}/>
-        <input type="submit" />
-      </form>
+      {props.isBooted && !props.isCmdRunning &&
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="line" onChange={handleChange} ref={(input: HTMLInputElement) => focusInput(input)} onBlur={(e) => focusInput(e.target)}/>
+          <input type="submit" />
+        </form>
+      }
+
+      {props.isCmdRunning &&
+        <Spinner />
+      }
+
       <Screen
         onSceneMount={onSceneMount}
         width={window.innerWidth}
@@ -213,3 +228,5 @@ export const CLI: React.FC = () => {
     </div>
   );
 }
+
+export default () => <CTX component={CLI} />

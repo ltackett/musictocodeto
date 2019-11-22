@@ -1,4 +1,5 @@
 import banner from 'textblocks/banner'
+import bannerTextOnly from 'textblocks/banner.textonly'
 import pkg from '../../package.json'
 
 export default (command, { stdout, settings, setBooting, setBooted, scrollToBottom }) => new Promise((resolve, reject) => {
@@ -6,9 +7,10 @@ export default (command, { stdout, settings, setBooting, setBooted, scrollToBott
   setBooted(false)
 
   if (!settings.debug) {
+    const bannerLines = settings.textOnly ? bannerTextOnly : banner
     let cycle = 0
     let jitter = (n) => (n * Math.random()) + 10
-    banner.forEach((line, index) => {
+    bannerLines.forEach((line, index) => {
       const delay = cycle + jitter(100)
 
       if (line.pause) {

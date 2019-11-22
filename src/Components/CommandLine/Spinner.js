@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import { CTX } from 'Contexts/Global';
 
-const stages = [
+export const spinnerStages = [
   '|',
   '/',
   '‒',
   '\\'
 ]
 
-export default () => {
-  const [stage, setStage] = useState(0)
+let spin
 
+const Spinner = ({ settings, isCmdRunning, spinnerStage, setSpinnerStage }) => {
   useEffect(() => {
-    const spin = setTimeout(() => {
-      const nextStage = stage + 1
-      const totalStages = stages.length - 1
+    if (isCmdRunning) {
+      spin = setInterval(() => {
+        const nextStage = spinnerStage + 1
+        const totalStages = spinnerStages.length - 1
 
-      if (nextStage > totalStages) {
-        setStage(0)
-      } else {
-        setStage(nextStage)
-      }
-    }, 75)
+        if (nextStage > totalStages) {
+          setSpinnerStage(0)
+        } else {
+          setSpinnerStage(nextStage)
+        }
+      }, 75)
+    }
 
-    return () => clearTimeout(spin)
-  })
+    return () => clearInterval(spin)
+  }, [isCmdRunning])
+
+  if (settings.textOnly) {
+    return <></>
+  }
 
   return (
     <span id="spinner">
-      {stages[stage]}
+      {spinnerStages[spinnerStage]}
     </span>
   );
 }
+
+export default () => <CTX component={Spinner} />
