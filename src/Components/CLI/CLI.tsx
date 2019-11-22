@@ -26,15 +26,16 @@ export const CLI: React.FC = () => {
   const [cursor, setCursor] = React.useState(defaultCursor)
   const [cmd, setCmd] = React.useState('')
   const [lines, setLines] = React.useState([
-    '::::    ::::  :::::::::::  ::::::::  :::::::::::',
+    '::::    ::::  :::::::::::  ::::::::  :::::::::::  ',
     '+:+:+: :+:+:+     :+:     :+:    :+:     :+:',
     '+:+ +:+:+ +:+     +:+     +:+            +:+',
     '+#+  +:+  +#+     +#+     +#+            +#+',
     '+#+       +#+     +#+     +#+            +#+',
-    '#+#       #+#     #+#     #+#    #+#     #+#',
-    '###       ###     ###      ########      ###',
+    '#+#       #+#     #+#     #+#    #+#     #+#    Music To Code To, v3.11',
+    '###       ###     ###      ########      ###    Rock out while you grok out.',
     '',
-    'Rock out with your grok out.',
+    'type \'play\' to start the fun, or',
+    'type \'help\' for some useful commands',
     ''
   ])
 
@@ -83,8 +84,8 @@ export const CLI: React.FC = () => {
       "camera1",
       -Math.PI / 2,
       Math.PI / 2,
-      5000,
-      new BABYLON.Vector3(-2000, 100, 500),
+      3000,
+      new BABYLON.Vector3(0, 0, 0),
       scene
     );
 
@@ -94,7 +95,7 @@ export const CLI: React.FC = () => {
     camera.setTarget(BABYLON.Vector3.Zero());
 
     // This attaches the camera to the canvas
-    camera.attachControl(canvas, true);
+    // camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
     const light = new BABYLON.HemisphericLight(
@@ -111,13 +112,13 @@ export const CLI: React.FC = () => {
     const planeHeight = planeWidth * 0.66;
 
     // Load old computer
-    BABYLON.SceneLoader.ImportMesh(null, './models/', 'old_computer_no_screen.glb', scene, (meshes) => {
-     meshes[0].scaling = new BABYLON.Vector3(15, 15, -15)
-     meshes[0].translate(new BABYLON.Vector3(-1, 0, 0), 35)  // X
-     meshes[0].translate(new BABYLON.Vector3(0, -1, 0), 170) // Y
-     meshes[0].translate(new BABYLON.Vector3(0, 0, 1), 75)   // Z
-     meshes[0].rotate(new BABYLON.Vector3(0, 1, 0), Math.PI)
-    })
+    // BABYLON.SceneLoader.ImportMesh(null, './models/', 'old_computer_no_screen.glb', scene, (meshes) => {
+    //  meshes[0].scaling = new BABYLON.Vector3(15, 15, -15)
+    //  meshes[0].translate(new BABYLON.Vector3(-1, 0, 0), 35)  // X
+    //  meshes[0].translate(new BABYLON.Vector3(0, -1, 0), 170) // Y
+    //  meshes[0].translate(new BABYLON.Vector3(0, 0, 1), 75)   // Z
+    //  meshes[0].rotate(new BABYLON.Vector3(0, 1, 0), Math.PI)
+    // })
 
     const assetContainer = await BABYLON.SceneLoader.LoadAssetContainerAsync('./models/', 'old_computer_screen.glb', scene)
 
