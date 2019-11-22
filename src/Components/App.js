@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import GlobalContext from 'Contexts/Global'
 import { RootStyles, Center } from 'Components/Styles'
 
+import { CLI } from 'Components/CLI'
 import CommandLine from 'Components/CommandLine'
 import Stdout from 'Containers/Stdout'
 import Player from 'Containers/Player'
@@ -127,7 +128,7 @@ const App = () => {
 
           <Route exact path="/" render={() => (
             <Center>
-              <Link to="/cli">Boot . . .</Link>
+              <Link to="/new-cli">Boot . . .</Link>
             </Center>
           )} />
 
@@ -138,6 +139,12 @@ const App = () => {
                 <Player />
               }
               <CommandLine />
+            </>
+          )} />
+
+          <Route exact path="/new-cli" render={() => (
+            <>
+              <CLI />
             </>
           )} />
 

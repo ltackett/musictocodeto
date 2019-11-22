@@ -1,0 +1,34 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "files.trimTrailingWhitespace": true,
+  "editor.insertSpaces": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/coverage": true
+  },
+  "files.watcherExclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+
+  "search.exclude": {
+    "common": true,
+    "**/node_modules": true,
+    "**/dist": true
+  },
+
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 140,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
+  "editor.formatOnSave": false,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "tslint.enable": true,
+  "tslint.rulesDirectory": ["./node_modules/omve-tslint-rules/dist"],
+  "tslint.autoFixOnSave": false,
+  "tslint.alwaysShowStatus": true,
+  "typescript.preferences.importModuleSpecifier": "relative"
+}
