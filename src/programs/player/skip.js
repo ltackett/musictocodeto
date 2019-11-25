@@ -3,7 +3,7 @@ import React from 'react';
 import $ from 'utilities/theme'
 import { Highlight as H } from 'Components/Styles'
 
-const skip = ({ params }, { stdout, isPlaying }) => new Promise((resolve, reject) => {
+const skip = ({ params }, { stdout, isPlaying, settings }) => new Promise((resolve, reject) => {
   if (!isPlaying) {
     reject({ error: 'No song currently playing.' })
     return
@@ -20,10 +20,11 @@ const skip = ({ params }, { stdout, isPlaying }) => new Promise((resolve, reject
     });
 
     window.player.skip(skipBy)
-    stdout(
-      <H color={$.cyan}>
-        Skipped {skipBy > 0 ? 'forward' : 'back'} {skipBy > 0 ? skipBy : -skipBy} seconds.</H>
-    )
+    if (settings.textOnly) {
+      stdout(`Skipped ${skipBy > 0 ? 'forward' : 'back'} ${skipBy > 0 ? skipBy : -skipBy} seconds.`)
+    } else {
+      stdout(<H color={$.cyan}>Skipped {skipBy > 0 ? 'forward' : 'back'} {skipBy > 0 ? skipBy : -skipBy} seconds.</H>)
+    }
   }
 
   resolve()
