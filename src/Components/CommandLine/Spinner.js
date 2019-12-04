@@ -13,7 +13,7 @@ let spin
 const Spinner = ({ settings, isCmdRunning, spinnerStage, setSpinnerStage }) => {
   useEffect(() => {
     if (isCmdRunning) {
-      spin = setInterval(() => {
+      spin = setTimeout(() => {
         const nextStage = spinnerStage + 1
         const totalStages = spinnerStages.length - 1
 
@@ -25,8 +25,8 @@ const Spinner = ({ settings, isCmdRunning, spinnerStage, setSpinnerStage }) => {
       }, 75)
     }
 
-    return () => clearInterval(spin)
-  }, [isCmdRunning])
+    return () => clearTimeout(spin)
+  }, [isCmdRunning, spinnerStage])
 
   if (settings.textOnly) {
     return <></>
